@@ -33,7 +33,9 @@ const Login = () => {
     if (data) {
       try {
         await AsyncStorage.setItem('token', data.token);
-        navigation.navigate('Home');
+        navigation.navigate('Bottomnavigator', {
+          screen: 'Home',
+        });
         setEmail('');
         setPassword('');
       } catch (error) {
