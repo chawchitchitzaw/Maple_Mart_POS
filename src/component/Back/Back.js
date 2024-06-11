@@ -32,8 +32,7 @@ export default Back;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAFAFA',
-    // backgroundColor: 'green',
-    padding: 15,
+    padding:hp('1%') ,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -42,7 +41,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'DMSans',
     color: '#000000',
-    // paddingHorizontal:50
   },
   lab: {
     width: wp('100%'),
@@ -60,6 +58,6 @@ const styles = StyleSheet.create({
     padding: wp('2%'),
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 2,
+    elevation: 1,
   },
 });

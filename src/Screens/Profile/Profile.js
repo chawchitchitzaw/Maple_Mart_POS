@@ -26,18 +26,6 @@ const Profile = () => {
           source={require('../../Assets/backgound.jpg')}
           resizeMode="cover">
           <Text style={styles.title}>Profile</Text>
-          {/* <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              // backgroundColor: 'green',
-              padding: 10,
-              zIndex: 2,
-            }}>
-            <Text style={styles.title}>Profile</Text>
-          </View> */}
-
           <View style={styles.imgtxt}>
             <View style={styles.imageborder}>
               <Image
@@ -103,12 +91,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'yellow',
   },
   title: {
-    fontSize: hp('3%'),
+    fontSize: hp('3.5%'),
     fontFamily: 'DMSans',
     fontWeight: '500',
     color: '#FAFAFA',
     textAlign: 'center',
-    marginTop: hp('2%'),
+    marginHorizontal: hp('1%'),
   },
   tail: {
     alignItems: 'center',

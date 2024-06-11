@@ -36,7 +36,7 @@ const Home = () => {
           source={item.img}
           resizeMode="contain"
         />
-        <View style={{alignSelf: 'flex-start'}}>
+        <View style={{alignSelf: 'flex-start', marginTop: hp('1%')}}>
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.price}>{item.price}</Text>
         </View>
@@ -68,7 +68,10 @@ const Home = () => {
 
         <Text style={styles.textidea}>Revenue</Text>
 
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{marginLeft: wp(3.5)}}>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Sale</Text>
           </View>
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sentences: {
-    fontSize: hp('3.5%'),
+    fontSize: hp('3%'),
     fontFamily: 'DMSans',
     marginHorizontal: wp('5%'),
     paddingVertical: hp('2.5%'),
@@ -97,42 +100,51 @@ const styles = StyleSheet.create({
   textidea: {
     fontWeight: '500',
     fontFamily: 'DMSans',
-    fontSize: hp('2.5%'),
+    fontSize: hp('2.2%'),
     color: '#4F4F4F',
-    paddingVertical: hp('2%'),
     marginHorizontal: wp('5%'),
+    marginVertical: hp('2%'),
   },
   name: {
-    fontSize: hp('2.5%'),
+    fontSize: hp('1.8%'),
     marginHorizontal: wp('2%'),
     color: '#4F4F4F',
     fontWeight: '500',
   },
   price: {
-    fontSize: hp('1.5%'),
+    fontSize: hp('1.2%'),
     marginHorizontal: wp('2%'),
     color: '#4F4F4F',
     fontWeight: '500',
   },
   produceview: {
     marginHorizontal: wp('2%'),
+    marginVertical: hp('1%'),
     backgroundColor: '#FFFFFF',
     elevation: 1,
-    height: hp('30%'),
+    height: hp('25%'),
     borderRadius: hp('2%'),
-    width: wp('45%'),
+    width: wp('40%'),
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
     padding: wp('3%'),
+    // borderWidth: 2,
+    // borderColor: 'red',
+    // shadowColor: 'black',
+    // shadowOpacity: 0.26,
+    // shadowOffset: {width: 0, height: 2},
+    // shadowRadius: 10,
+    // elevation: 3,
+    // backgroundColor: 'white',
   },
   produceimg: {
-    width: wp(100),
-    height: hp(20),
+    width: wp(90),
+    height: hp(15),
     resizeMode: 'contain',
   },
   total: {
-    fontSize: hp('2.5%'),
+    fontSize: hp('2%'),
     fontFamily: 'DMSans',
     padding: wp('2%'),
     fontWeight: '500',
@@ -141,9 +153,10 @@ const styles = StyleSheet.create({
   revenue: {
     marginHorizontal: wp('2%'),
     backgroundColor: '#FFFFFF',
-    elevation: 2,
-    height: hp('15%'),
+    elevation: 1,
+    height: hp('12%'),
     borderRadius: hp('2%'),
-    width: wp('45%'),
+    width: wp('40%'),
+    marginVertical: hp('1%'),
   },
 });

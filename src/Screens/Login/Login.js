@@ -24,7 +24,7 @@ const Login = () => {
   const handleLogin = async () => {
     await axios
       .post(
-        'http://128.199.127.121/api/customer/login',
+        'http://128.199.127.121/fullfil_ecom/public/index.php/api/customer/login',
         {email, password},
         {
           headers: {
@@ -35,7 +35,7 @@ const Login = () => {
         },
       )
       .then(res => {
-        console.log('res', res.data.token);
+        console.log('res', res);
         if (res) {
           try {
             AsyncStorage.setItem('token', res.data.token);
@@ -57,7 +57,7 @@ const Login = () => {
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>
-            Welcom from <Text style={{color: '#FF6D1A'}}>POS</Text> System
+            Welcome from <Text style={{color: '#FF6D1A'}}>POS</Text> System
           </Text>
         </View>
         <View style={styles.inputView}>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   inputView: {
     backgroundColor: '#FFFFFF',
     borderRadius: hp('2%'),
-    elevation: 2,
+    elevation: 1,
     padding: wp('1%'),
     height: hp('6%'),
     marginVertical: hp('1%'),
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
     marginHorizontal: wp('5%'),
     color: '#606F89',
     fontSize: hp('2%'),
-    padding: wp('3%'),
     fontWeight: '500',
     fontFamily: 'DMSans',
   },

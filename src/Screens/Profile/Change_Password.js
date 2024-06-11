@@ -20,14 +20,14 @@ const Change_Password = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FAFAFA'}}>
       <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView style={{flex: 1}} >
+        <KeyboardAvoidingView style={{flex: 1}}>
           <View
             style={{
               flexDirection: 'column',
               flex: 1,
             }}>
             <Back lable={'Change Password?'} />
-            <View>
+            <View style={{marginTop:hp('3%')}}>
               <Text style={styles.txt1}>Current Password</Text>
               <View style={styles.box}>
                 <TextInput
@@ -58,7 +58,7 @@ const Change_Password = () => {
               </View>
             </View>
 
-            <View style={{alignItems: 'flex-end', margin:wp('5%')  }}>
+            <View style={{alignItems: 'flex-end', margin: wp('5%')}}>
               <TouchableOpacity style={styles.savebtn}>
                 <Text style={styles.txt2}>Save</Text>
               </TouchableOpacity>
@@ -74,18 +74,16 @@ export default Change_Password;
 
 const styles = StyleSheet.create({
   txt1: {
-    fontSize: hp('2.5%'),
+    fontSize: hp('2.4%'),
     fontWeight: '500',
     fontFamily: 'DMSans',
     marginHorizontal: wp('5%'),
-    padding: hp('1%'),
     color: '#000000',
   },
   txt2: {
     fontSize: hp('2%'),
     fontWeight: '500',
     fontFamily: 'DMSans',
-    padding: hp('1%'),
     color: '#000000',
   },
   box: {
@@ -97,8 +95,8 @@ const styles = StyleSheet.create({
     marginVertical: hp('1%'),
   },
   write: {
-    fontSize: hp('2%'),
-    padding: wp('3%'),
+    fontSize: hp('1.8%'),
+    marginHorizontal:wp('1%'),
     fontFamily: 'DMSans',
   },
   savebtn: {

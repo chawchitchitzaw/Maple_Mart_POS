@@ -17,17 +17,15 @@ const Searchbox = () => {
     <KeyboardAvoidingView behavior={'position'}>
       <TouchableWithoutFeedback onPress={TextInput.dismiss}>
         <View style={styles.container}>
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="#9C9C9C"
+            style={styles.txt}
+          />
           <Image
             source={require('../../Assets/search_icon.png')}
             style={styles.img}
           />
-          <View style={{flex: 1}}>
-            <TextInput
-              placeholder="Search"
-              placeholderTextColor="#9C9C9C"
-              style={styles.txt}
-            />
-          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -43,7 +41,9 @@ const styles = StyleSheet.create({
     borderRadius: hp('3%'),
     flexDirection: 'row',
     alignItems: 'center',
-    elevation: 2,
+    justifyContent: 'space-between',
+    elevation: 1,
+    flex: 1,
   },
   img: {
     height: hp('2.5%'),
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   txt: {
     fontWeight: '500',
     fontSize: hp('2.5%'),
-    marginHorizontal: wp('1%'),
+    marginHorizontal: wp('5%'),
     fontFamily: 'DMSans',
   },
 });

@@ -80,14 +80,14 @@ const Receipts = () => {
         {/* icon_and_price */}
         <View style={styles.flatbox}>
           <AntDesign name="creditcard" size={25} color={'#606F89'} />
-          <View style={{marginLeft: 10}}>
-            <Text style={styles.caption}>{item.price}</Text>
-            <Text style={styles.dtxt}>{item.date}</Text>
+          <View style={{marginLeft: wp('5%')}}>
+            <Text style={styles.price}>{item.price}</Text>
+            <Text style={styles.date}>{item.date}</Text>
           </View>
         </View>
 
-        <View style={{marginRight: 30}}>
-          <Text style={styles.caption}>{item.barcode}</Text>
+        <View style={{marginRight: wp('5%')}}>
+          <Text style={styles.price}>{item.barcode}</Text>
         </View>
       </View>
     );
@@ -108,18 +108,15 @@ const Receipts = () => {
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <View style={styles.secview}>
-          <Image source={search_icon} style={styles.img} />
-          <View style={{flex: 1}}>
-            <TextInput
-              placeholder="Search"
-              placeholderTextColor="#9C9C9C"
-              value={search}
-              onChangeText={setSearch}
-              style={styles.txt}
-            />
-          </View>
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="#9C9C9C"
+            value={search}
+            onChangeText={setSearch}
+            style={styles.txt}
+          />
           <TouchableOpacity onPress={handleSearch}>
-            <Text>Search</Text>
+            <Image source={search_icon} style={styles.img} />
           </TouchableOpacity>
         </View>
 
@@ -194,9 +191,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     padding: wp('5%'),
   },
-  caption: {
-    fontSize: 20,
-    marginLeft: 15,
+  price: {
+    fontSize: hp('2.2%'),
+    marginLeft: wp('3%'),
     color: '#606F89',
     fontWeight: '500',
     fontFamily: 'DMSans',
@@ -204,16 +201,16 @@ const styles = StyleSheet.create({
   produceview: {
     marginVertical: hp('1%'),
     backgroundColor: '#FFFFFF',
-    elevation: 2,
+    elevation: 1,
     borderRadius: hp('2%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: hp('0.5%'),
   },
-  dtxt: {
-    fontSize: 15,
-    marginLeft: 15,
+  date: {
+    fontSize: hp('1.6%'),
+    marginLeft: wp('3%'),
     color: '#606F89',
     fontWeight: '500',
     fontFamily: 'DMSans',
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
     borderRadius: hp('3%'),
     flexDirection: 'row',
     alignItems: 'center',
-    elevation: 2,
+    elevation: 1,
     marginVertical: hp('2%'),
   },
   img: {
@@ -234,8 +231,9 @@ const styles = StyleSheet.create({
   txt: {
     fontWeight: '500',
     fontSize: hp('2.5%'),
-    marginHorizontal: wp('1%'),
+    marginHorizontal: wp('5%'),
     fontFamily: 'DMSans',
+    flex: 1,
   },
   timedate: {
     flexDirection: 'row',
@@ -244,11 +242,11 @@ const styles = StyleSheet.create({
     margin: hp('1%'),
   },
   timebox: {
-    borderRadius: 15,
+    borderRadius: hp('2%'),
     paddingVertical: hp('1%'),
     paddingHorizontal: wp('3%'),
     backgroundColor: '#FFFFFF',
-    elevation: 2,
+    elevation: 1,
   },
   timetxt: {
     fontSize: hp('2.2%'),
@@ -256,5 +254,5 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
     fontWeight: '500',
   },
-  flatbox: {flexDirection: 'row', alignItems: 'center', marginLeft: 20},
+  flatbox: {flexDirection: 'row', alignItems: 'center', marginLeft: wp('5%')},
 });

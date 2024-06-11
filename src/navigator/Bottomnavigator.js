@@ -11,6 +11,10 @@ import Profile from '../Screens/Profile/Profile';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Scan from '../Screens/Scan';
 import Home from '../Screens/Home';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,11 +28,11 @@ const Bottomnavigator = () => {
         headerShown: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          height: 75,
-          paddingBottom: 10,
+          height: hp('8%'),
+          paddingBottom: hp('1%'),
         },
         tabBarLabelStyle: {
-          fontSize: 14,
+          fontSize: hp('1.5%'),
         },
       }}>
       <Tab.Screen
@@ -74,7 +78,6 @@ const Bottomnavigator = () => {
                 }}>
                 <Ionicons name="scan" size={30} color={'#E3E3E3'} />
               </View>
-              {/* <Text style={{marginBottom: 0}}>Scan</Text> */}
             </View>
           ),
         }}

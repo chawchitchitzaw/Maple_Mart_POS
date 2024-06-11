@@ -27,7 +27,7 @@ export default Profilelist;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-    elevation: 2,
+    elevation: 1,
     borderRadius: hp('2%'),
     backgroundColor: '#FFFFFF',
     padding: wp('2%'),
