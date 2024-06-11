@@ -43,7 +43,7 @@ const SearchScreen = () => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.item}>
-      <Image source={cola} style={{width:150,height:180,alignSelf:'center'}}/>
+      <Image source={cola} style={{width:130,height:160,alignSelf:'center'}}/>
       <Text style={styles.txtname}>{item.name}</Text>
       <Text style={styles.txtprice}>{item.price}</Text>
     </TouchableOpacity>
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       marginTop:10,
       fontWeight:'bold',
+      
       //fontSize:'24',
   },
   container: {
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: width / 2-10,
-    borderRadius:10,
+    borderRadius:hp('2'),
     backgroundColor: '#fff',
     padding: 5,
     elevation: 1,
@@ -157,8 +158,9 @@ const styles = StyleSheet.create({
       borderRadius: 25,
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical:hp('5'),
+      marginVertical:hp('1'),
       width:wp('83%'),
+      height:hp('8%'),
     },
     textsearch: {
       fontWeight: 'bold',

@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: hp('2%'),
     elevation: 1,
     padding: wp('1%'),
-    height: hp('6%'),
+    height: hp('7%'),
     marginVertical: hp('1%'),
   },
   TextInput: {

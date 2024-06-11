@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
   },
   box:{
     marginHorizontal:wp('5'),
-    marginBottom:8,
+    marginBottom:wp('1.5'),
     backgroundColor: '#FFFFFF',
     elevation: 1,
-    borderRadius: 10,
+    borderRadius: hp('2'),
     padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
