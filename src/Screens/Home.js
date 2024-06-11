@@ -6,76 +6,76 @@ import {
   FlatList,
   SafeAreaView,
   ScrollView,
-  Keyboard,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import micky from '../Assets/micky.png';
-import cartoon from '../Assets/cartoon.png';
-import Panda from '../Assets/Panda.png';
+import chips from '../Assets/chips.png';
+import cola from '../Assets/cola.png';
+import sprite from '../Assets/sprite.png';
+import butter from '../Assets/butter.png';
+import food from '../Assets/food.png';
 import Searchbox from '../component/search/Searchbox';
-import {TextInput} from 'react-native-gesture-handler';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 export const data = [
-  {id: 1, name: 'Micky', img: micky, price: '$200'},
-  {id: 2, name: 'SpongeBob', img: cartoon, price: '$250'},
-  {id: 3, name: 'Panda', img: Panda, price: '$500'},
-  {id: 4, name: 'Micky', img: micky, price: '$200'},
+  {id: 1, name: 'chips', img: chips, price: '$20'},
+  {id: 2, name: 'cola', img: cola, price: '$25'},
+  {id: 3, name: 'sprite', img: sprite, price: '$25'},
+  {id: 4, name: 'butter', img: butter, price: '$20'},
+  {id: 5, name: 'food', img: food, price: '$20'},
 ];
 
 const Home = () => {
-  // const navigation = useNavigation();
-
-  // useEffect(() => {
-  //   console.log('test', Keyboard.isVisible());
-  // }, []);
-
-  const testRender = ({item}) => {
+  const produceData = ({item}) => {
     return (
-      <View style={styles.renderview}>
-        <Image style={styles.renderimage} source={item.img} />
-        <Text style={styles.caption}>{item.name}</Text>
-        <Text style={styles.caption}>{item.price}</Text>
+      <View style={styles.produceview}>
+        <Image
+          style={styles.produceimg}
+          source={item.img}
+          resizeMode="contain"
+        />
+        <View style={{alignSelf: 'flex-start'}}>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.price}>{item.price}</Text>
+        </View>
       </View>
     );
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.sentences}>
-              <Text style={{color: '#FF6D1A'}}>POS</Text> System
-            </Text>
-            <Searchbox />
-          </View>
+        <View>
+          <Text style={styles.sentences}>
+            <Text style={{color: '#FF6D1A'}}>POS</Text> System
+          </Text>
+          <Searchbox />
+        </View>
 
-          <View style={styles.cardtitle}>
-            <View>
-              <Text style={styles.textidea}>Best Seller</Text>
-            </View>
-          </View>
+        <Text style={styles.textidea}>Best Seller</Text>
 
-          <View>
-            <FlatList
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={data}
-              keyExtractor={item => item.id.toString()}
-              renderItem={testRender}
-            />
-          </View>
+        <View style={{marginLeft: wp(3.5)}}>
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={data}
+            keyExtractor={item => item.id.toString()}
+            renderItem={produceData}
+          />
+        </View>
 
-          <View style={styles.cardtitle}>
-            <View>
-              <Text style={styles.textidea}>Revenue</Text>
-            </View>
+        <Text style={styles.textidea}>Revenue</Text>
+
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.revenue}>
+            <Text style={styles.total}>Total Sale</Text>
           </View>
           <View style={styles.revenue}>
-            <Text style={styles.total}>Total</Text>
-            <Text style={styles.total}>Profile</Text>
+            <Text style={styles.total}>Total Quantity</Text>
           </View>
-        </View>
+        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -85,62 +85,65 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
-    padding: 10,
   },
   sentences: {
-    fontSize: 30,
+    fontSize: hp('3.5%'),
     fontFamily: 'DMSans',
-    marginLeft: 30,
-    marginBottom: 25,
-    marginTop: 25,
+    marginHorizontal: wp('5%'),
+    paddingVertical: hp('2.5%'),
     color: '#000000',
-    fontWeight: 'bold',
-  },
-  cardtitle: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
+    fontWeight: '500',
   },
   textidea: {
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontWeight: '500',
+    fontFamily: 'DMSans',
+    fontSize: hp('2.5%'),
     color: '#4F4F4F',
+    paddingVertical: hp('2%'),
+    marginHorizontal: wp('5%'),
   },
-  caption: {
-    fontSize: 15,
-    marginLeft: 15,
+  name: {
+    fontSize: hp('2.5%'),
+    marginHorizontal: wp('2%'),
     color: '#4F4F4F',
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
-  renderview: {
-    margin: 10,
+  price: {
+    fontSize: hp('1.5%'),
+    marginHorizontal: wp('2%'),
+    color: '#4F4F4F',
+    fontWeight: '500',
+  },
+  produceview: {
+    marginHorizontal: wp('2%'),
     backgroundColor: '#FFFFFF',
-    elevation: 2,
-    height: 250,
-    borderRadius: 15,
-    marginBottom: 25,
-    width: 200,
+    elevation: 1,
+    height: hp('30%'),
+    borderRadius: hp('2%'),
+    width: wp('45%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    padding: wp('3%'),
   },
-  renderimage: {
-    width: 200,
-    height: 200,
+  produceimg: {
+    width: wp(100),
+    height: hp(20),
     resizeMode: 'contain',
   },
   total: {
-    fontSize: 25,
+    fontSize: hp('2.5%'),
     fontFamily: 'DMSans',
-    marginLeft: 30,
-    marginTop: 25,
-    color: '#000000',
-    fontWeight: 'bold',
+    padding: wp('2%'),
+    fontWeight: '500',
+    marginHorizontal: wp('3%'),
   },
   revenue: {
-    margin: 10,
+    marginHorizontal: wp('2%'),
     backgroundColor: '#FFFFFF',
     elevation: 2,
-    height: 150,
-    borderRadius: 15,
-    marginBottom: 10,
-    width: 300,
+    height: hp('15%'),
+    borderRadius: hp('2%'),
+    width: wp('45%'),
   },
 });

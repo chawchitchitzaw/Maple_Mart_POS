@@ -11,6 +11,10 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,44 +22,41 @@ const Login = () => {
   const navigation = useNavigation();
 
   const handleLogin = async () => {
-    const {data} = await axios.post(
-      'http://128.199.127.121/api/customer/login',
-      {email, password},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          // Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
+    await axios
+      .post(
+        'http://128.199.127.121/api/customer/login',
+        {email, password},
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            // Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
+          },
         },
-      },
-    );
-
-    if (data) {
-      try {
-        await AsyncStorage.setItem('token', data.token);
-        navigation.navigate('Bottomnavigator', {
-          screen: 'Home',
-        });
-        setEmail('');
-        setPassword('');
-      } catch (error) {
-        console.log('error_in', error);
-      }
-    }
+      )
+      .then(res => {
+        console.log('res', res.data.token);
+        if (res) {
+          try {
+            AsyncStorage.setItem('token', res.data.token);
+            console.log('result');
+            navigation.navigate('Bottomnavigator', {
+              screen: 'Home',
+            });
+            setEmail('');
+            setPassword('');
+          } catch (error) {
+            console.log('error_in', error);
+          }
+        }
+      });
   };
 
   return (
     <>
       <View style={styles.container}>
         <View>
-          <Text
-            style={{
-              fontSize: 30,
-              fontFamily: 'DMSans',
-              textAlign: 'center',
-              marginBottom: 100,
-              color: '#000000',
-            }}>
+          <Text style={styles.title}>
             Welcom from <Text style={{color: '#FF6D1A'}}>POS</Text> System
           </Text>
         </View>
@@ -64,7 +65,7 @@ const Login = () => {
             value={email}
             style={styles.TextInput}
             placeholder="Email"
-            placeholderTextColor="#9C9C9C"
+            placeholderTextColor="#606F89"
             onChangeText={setEmail}
           />
         </View>
@@ -73,7 +74,7 @@ const Login = () => {
             value={password}
             style={styles.TextInput}
             placeholder="Password"
-            placeholderTextColor="#9C9C9C"
+            placeholderTextColor="#606F89"
             secureTextEntry={true}
             onChangeText={setPassword}
           />
@@ -93,35 +94,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFAFA',
-    justifyContent: 'center',
-    padding: 10,
+    padding: wp('5%'),
   },
   inputView: {
-    backgroundColor: '#E9E9E9',
-    borderRadius: 30,
-    height: 45,
-    marginBottom: 20,
-    // alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: hp('2%'),
+    elevation: 2,
+    padding: wp('1%'),
+    height: hp('6%'),
+    marginVertical: hp('1%'),
   },
   TextInput: {
-    height: 50,
     flex: 1,
-    padding: 10,
-    marginLeft: 20,
-    color: '#9C9C9C',
-    fontSize: 20,
+    marginHorizontal: wp('5%'),
+    color: '#606F89',
+    fontSize: hp('2%'),
+    padding: wp('3%'),
+    fontWeight: '500',
+    fontFamily: 'DMSans',
   },
 
   loginBtn: {
-    borderRadius: 25,
-    height: 50,
+    borderRadius: hp('2%'),
+    paddingHorizontal: wp('20%'),
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginVertical: hp('5%'),
     backgroundColor: '#FF6D1A',
   },
   loginText: {
-    color: '#ECECEC',
-    fontSize: 20,
+    color: '#FFFFFF',
+    fontSize: hp('2%'),
+    padding: wp('3%'),
+    fontWeight: '500',
+    fontFamily: 'DMSans',
+  },
+  title: {
+    fontSize: hp('3%'),
+    fontFamily: 'DMSans',
+    fontWeight: '500',
+    textAlign: 'center',
+    marginVertical: '30%',
+    color: '#000000',
   },
 });

@@ -1,15 +1,17 @@
-import {View, Text, StyleSheet, Settings} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Receipts from '../Screens/Receipts';
 import Feather from 'react-native-vector-icons/Feather';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Items from '../Screens/Items';
+import Profile from '../Screens/Profile/Profile';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Scan from '../Screens/Scan';
-import Receipts from '../Screens/Receipts';
-import Setting from '../Screens/Setting';
 import Home from '../Screens/Home';
+
 const Tab = createBottomTabNavigator();
 
 const Bottomnavigator = () => {
@@ -19,9 +21,15 @@ const Bottomnavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: '#FF6D1A',
         tabBarInactiveTintColor: 'grey',
-        height: 200,
         headerShown: false,
         tabBarHideOnKeyboard: true,
+        tabBarStyle: {
+          height: 75,
+          paddingBottom: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 14,
+        },
       }}>
       <Tab.Screen
         name="Home"
@@ -49,7 +57,6 @@ const Bottomnavigator = () => {
         name="Scan"
         component={Scan}
         options={{
-          tabBarStyle: {display: 'none'},
           tabBarIcon: () => (
             <View
               style={{
@@ -67,12 +74,9 @@ const Bottomnavigator = () => {
                 }}>
                 <Ionicons name="scan" size={30} color={'#E3E3E3'} />
               </View>
-              <Text style={{marginBottom: 0}}>Scan</Text>
+              {/* <Text style={{marginBottom: 0}}>Scan</Text> */}
             </View>
           ),
-
-          tabBarLabel: '',
-          tabBarShowLabel: true,
         }}
       />
       <Tab.Screen
@@ -87,13 +91,13 @@ const Bottomnavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={Setting}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: ({color, size}) => (
-            <Feather name="settings" size={size} color={color} />
+            <AntDesign name="user" size={size} color={color} />
           ),
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'Profile',
           tabBarShowLabel: true,
         }}
       />

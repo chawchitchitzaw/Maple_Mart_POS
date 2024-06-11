@@ -7,20 +7,25 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
-import search_icon from '../../Assets/search_icon.png';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 const Searchbox = () => {
   return (
-    <KeyboardAvoidingView
-      // style={{flex: 1}}
-      behavior={'position'}>
+    <KeyboardAvoidingView behavior={'position'}>
       <TouchableWithoutFeedback onPress={TextInput.dismiss}>
-        <View style={styles.search}>
-          <Image source={search_icon} style={{height: 20, width: 20}} />
+        <View style={styles.container}>
+          <Image
+            source={require('../../Assets/search_icon.png')}
+            style={styles.img}
+          />
           <View style={{flex: 1}}>
             <TextInput
               placeholder="Search"
               placeholderTextColor="#9C9C9C"
-              style={styles.textsearch}
+              style={styles.txt}
             />
           </View>
         </View>
@@ -31,20 +36,24 @@ const Searchbox = () => {
 
 export default Searchbox;
 const styles = StyleSheet.create({
-  search: {
+  container: {
     backgroundColor: '#FFFFFF',
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    borderRadius: 25,
+    paddingVertical: wp('0.5%'),
+    marginHorizontal: wp('5%'),
+    borderRadius: hp('3%'),
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 50,
+    elevation: 2,
   },
-  textsearch: {
-    fontWeight: 'bold',
-    fontSize: 22,
-    marginLeft: 20,
+  img: {
+    height: hp('2.5%'),
+    width: hp('2.5%'),
+    marginHorizontal: wp('5%'),
+  },
+  txt: {
+    fontWeight: '500',
+    fontSize: hp('2.5%'),
+    marginHorizontal: wp('1%'),
     fontFamily: 'DMSans',
   },
 });
