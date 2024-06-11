@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     borderRadius: hp('2'),
     padding: 15,
+    height:hp('7'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

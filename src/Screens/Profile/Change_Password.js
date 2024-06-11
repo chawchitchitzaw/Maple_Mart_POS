@@ -37,7 +37,7 @@ const Change_Password = () => {
                 />
               </View>
             </View>
-            <View>
+            <View style={{marginTop:hp('2%')}}>
               <Text style={styles.txt1}>New Password</Text>
               <View style={styles.box}>
                 <TextInput
@@ -47,7 +47,7 @@ const Change_Password = () => {
                 />
               </View>
             </View>
-            <View>
+            <View style={{marginTop:hp('2%')}}>
               <Text style={styles.txt1}>Confirm New Password</Text>
               <View style={styles.box}>
                 <TextInput

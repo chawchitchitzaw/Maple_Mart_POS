@@ -63,8 +63,8 @@ const SearchScreen = () => {
           />
         </View>
         <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('category')}>
-        <View >
-          <Text style={styles.txtcategory}>C</Text>
+        <View style={styles.txtcategory}>
+          <Text style={{fontWeight:'900',fontSize:20}}>C</Text>
         </View>
         </TouchableOpacity>
       </View>
@@ -93,18 +93,16 @@ const styles = StyleSheet.create({
     width:wp('13%'),
   },
   txtcategory:{
-    backgroundColor: '#FFFFFF',
-      paddingVertical: 18,
-      paddingHorizontal: 20,
-      //marginHorizontal: 2,
+      backgroundColor: '#fff',
       borderRadius: 15,
+      //marginHorizontal:hp('2.5'),
+      paddingHorizontal:hp('2.5'),
+      //paddingVertical:hp('4'),
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: 10,
-      marginTop:10,
-      fontWeight:'bold',
-      
-      //fontSize:'24',
+      //fontWeight:'bold',
+      height:hp('8'),
+      width:wp('12'),
   },
   container: {
     flex: 1,
@@ -159,7 +157,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       marginVertical:hp('1'),
-      width:wp('83%'),
+      width:wp('81.5%'),
       height:hp('8%'),
     },
     textsearch: {

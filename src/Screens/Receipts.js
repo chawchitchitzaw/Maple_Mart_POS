@@ -199,7 +199,8 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
   },
   produceview: {
-    marginVertical: hp('1%'),
+    marginVertical: hp('0.5%'),
+    height:hp('7.5'),
     backgroundColor: '#FFFFFF',
     elevation: 1,
     borderRadius: hp('2%'),
@@ -254,5 +255,5 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
     fontWeight: '500',
   },
-  flatbox: {flexDirection: 'row', alignItems: 'center', marginLeft: wp('5%')},
+  flatbox: {flexDirection: 'row', alignItems: 'center', marginLeft: wp('5%'),},
 });
