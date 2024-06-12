@@ -141,9 +141,11 @@ const styles = StyleSheet.create({
   txtname:{
     fontSize:16,
     fontWeight:'bold',
+    marginLeft:5,
   },
    txtprice:{
     fontSize:12,
+    marginLeft:5,
   },
 
 

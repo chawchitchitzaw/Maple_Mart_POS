@@ -8,6 +8,7 @@ import Edit_Profile from '../Screens/Profile/Edit_Profile';
 import Back from '../component/Back/Back';
 import Doo from '../Screens/Profile/Doo';
 import category from '../Screens/category';
+import Scanner from '../Screens/Scanner';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ function MyStack() {
       <Stack.Screen name="Back" component={Back} />
       <Stack.Screen name="Doo" component={Doo} />
       <Stack.Screen name="category" component={category} />
+      <Stack.Screen name="Scanner" component={Scanner} />
     </Stack.Navigator>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { View,Text,FlatList,StyleSheet,Image,SafeAreaView,ScrollView } from "react-native";
+import { View,Text,FlatList,StyleSheet,Image,SafeAreaView } from "react-native";
 import { useState } from "react";
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import back_icon from '../Assets/cola.png';
@@ -40,7 +40,7 @@ const Items = () => {
       <View style={styles.bottomflat}>
       <Back lable={'Categories'}/>
     
-      <ScrollView>
+      
       <View>
         <View style={styles.topflat}>
           <FlatList
@@ -53,7 +53,7 @@ const Items = () => {
         </View>
         
       </View>
-      </ScrollView>
+      
       </View>
     </SafeAreaView>
   )
