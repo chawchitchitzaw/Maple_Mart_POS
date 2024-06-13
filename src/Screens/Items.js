@@ -42,7 +42,7 @@ const SearchScreen = () => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail')}>
       <Image source={cola} style={{width:130,height:160,alignSelf:'center'}}/>
       <Text style={styles.txtname}>{item.name}</Text>
       <Text style={styles.txtprice}>{item.price}</Text>

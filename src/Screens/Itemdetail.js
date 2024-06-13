@@ -1,121 +1,86 @@
-import React from "react";
-import { View,Text,FlatList,StyleSheet,Image,SafeAreaView,ScrollView } from "react-native";
-import { useState } from "react";
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import back_icon from '../Assets/cola.png';
-import { useNavigation } from "@react-navigation/native";
-import Back from "../component/Back/Back";
+import React from 'react';
+import { View, ScrollView, Image, Text, Button,SafeAreaView,FlatList } from 'react-native';
+import chips from '../Assets/chips.png';
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-  } from 'react-native-responsive-screen';
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import Back from '../component/Back/Back';
 
 
-export const data = [
-  {id:1, barcode:'Drink', name:'Coca Cola', price:'1500'},
-  {id:2, barcode:'Cake', name:'Pessi', price:'1500'},
-  {id:3, barcode:'Cloths', name:'Cake', price:'2500'},
-  {id:4, barcode:'Snacks', name:'Cake', price:'2500'},
-];
 
 const Itemdetail = () => {
-  const navigation = useNavigation();
-  const [product,setProduct]= useState(data);
 
-  const testRender = ({item}) => {
-    return(
-     <TouchableOpacity>
-    <View style={styles.box}>
+  const details = ({ item }) => {
     <View>
-      <Text style={styles.bar}> {item.barcode} </Text>
+      
     </View>
-
-    </View>
-    </TouchableOpacity>
-    );
   };
-
-  return(
-      <SafeAreaView>
-      <View style={styles.bottomflat}>
-      <Back lable={'Categories'}/>
-    
-      <ScrollView>
+  return (
+    <SafeAreaView>
+      <Back lable={'Details'}/>
+    <ScrollView style = {styles.container} showsVerticalScrollIndicator={false}>
       <View>
-        <View style={styles.topflat}>
-          <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={product}
-          keyExtractor={item=>item.id.toString()}
-          renderItem={testRender}
+        <View style={styles.imagebox}>
+      <Image style={styles.image} source={chips} />
+      </View>
+      <View style={styles.info}>
+        <Text style={styles.name}>Product Name</Text>
+        <Text style={styles.price}>$99.99</Text>
+      <View>
+        <FlatList
 
-          />
-        </View>
-        
+        />
       </View>
-      </ScrollView>
       </View>
+      </View>
+    </ScrollView>
     </SafeAreaView>
-  )
+  );
 };
-export default Itemdetail;
 
-const styles = StyleSheet.create({
-  search: {
-    marginLeft:10,
-    
-    
-    flexDirection: 'row',
-    alignItems: 'center',
+const styles = {
+  container: {
+    marginTop:wp('2'),
     
   },
-  box:{
-    marginHorizontal:wp('5'),
-    marginBottom:8,
-    backgroundColor: '#FFFFFF',
-    elevation: 1,
-    borderRadius: 10,
-    padding: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  imagebox: {
+    
+    backgroundColor: '#fff',
+    width:wp('100'),
+    height:wp('70'),
+    alignSelf:'center'
     
   },
-  bar:{
-    fontFamily: 'DMSans',
-    fontSize: 14,
-    marginLeft: 5,
-    color: '#4F4F4F',
-    fontWeight: 'bold',
+  image: {
+    margin:wp('1'),
+    flex:1,
+    alignSelf:'center'
+    
   },
-  nametxt:{
-    fontFamily: 'DMSans',
-    fontSize: 16,
-    marginLeft: 5,
-    color: '#4F4F4F',
-    fontWeight: 'bold',
+  info: {
+    top:-7,
+    marginTop: 20,
+    marginHorizontal:10,
+    backgroundColor:'#fff',
+    padding:10,
+    borderRadius:5,
   },
-  pricetxt:{
-    fontFamily: 'DMSans',
-    fontSize: 16,
-    marginLeft: 15,
-    color: '#4F4F4F',
-    fontWeight: 'bold',
-  },
-  container:{
-    marginTop:20,
-  },
-  bottomflat:{
-    //marginTop:50,
-  },
-  topflat:{
-    marginTop:20,
-  },
-  caption:{
-    fontFamily: 'DMSans',
+  name: {
     fontSize: 24,
-    marginLeft: 15,
-    color: '#4F4F4F',
     fontWeight: 'bold',
+    marginBottom: 10,
   },
-});
+  price: {
+    fontSize: 18,
+    color: '#999',
+    
+  },
+  description: {
+    fontSize: 16,
+    color: '#333',
+    lineHeight: 24,
+  },
+};
+
+export default Itemdetail;
