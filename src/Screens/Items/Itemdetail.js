@@ -8,7 +8,7 @@ import {
 import Back from '../../component/Back/Back';
 
 export const data = {
-  id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 };
 
 const Itemdetail = () => {

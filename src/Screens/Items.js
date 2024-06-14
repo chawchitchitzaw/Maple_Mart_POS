@@ -1,5 +1,5 @@
 // SearchScreen.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity,SafeAreaView,Image,Dimensions } from 'react-native';import Icon from 'react-native-vector-icons/Ionicons';
 import cola from '../Assets/cola.png';
 import search_icon from '../Assets/search_icon.png';
@@ -8,33 +8,36 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
-export const data = [
-  {id:1, barcode:'#123456789', name:'Coca Cola', price:'1500'},
-  {id:2, barcode:'#123456798', name:'Pessi', price:'1500'},
-  {id:3, barcode:'#123456779', name:'Cake', price:'2500'},
-  {id:4, barcode:'#123456777', name:'asad', price:'2500'},
-  {id:5, barcode:'#123456779', name:'iii', price:'2500'},
-  {id:6, barcode:'#123456779', name:'hhh', price:'2500'},
-  {id:7, barcode:'#123456779', name:'ggg', price:'2500'},
-  {id:8, barcode:'#123456779', name:'fff', price:'2500'},
-  {id:9, barcode:'#123456779', name:'eee', price:'2500'},
-  {id:10, barcode:'#123456779', name:'ddd', price:'2500'},
-  {id:11, barcode:'#123456779', name:'ccc', price:'2500'},
-  {id:12, barcode:'#123456779', name:'bbb', price:'2500'},
-  {id:13, barcode:'#123456779', name:'aaa', price:'2500'},
-];
+import axios from 'axios';
+const apidata='https://fakestoreapi.com/products';
 
 const width = Dimensions.get('window').width-10;
 const SearchScreen = () => {
+  //API
+  const [data,setData] = useState([]);
+  const [error,setError] = useState(null);
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState(data);
 
-  const handleSearch = (text) => {
-    setSearchQuery(text);
-    if (text) {
-      const newData = data.filter(item => item.name.toLowerCase().includes(text.toLowerCase()));
+  useEffect(() => {
+    fetchData(apidata);
+  },[]);
+  const fetchData = async(url) => {
+    try {
+    const response = await axios.get(url);
+    
+    setData(response.data);
+    
+        }catch(error){
+          console.error(error);
+          
+        }
+  }
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const newData = data.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
       setFilteredData(newData);
     } else {
       setFilteredData(data);
@@ -43,8 +46,8 @@ const SearchScreen = () => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail')}>
-      <Image source={cola} style={{width:130,height:160,alignSelf:'center'}}/>
-      <Text style={styles.txtname}>{item.name}</Text>
+      <Image source={{uri:item.image}} style={{width:wp('30'),height:hp('20'),alignSelf:'center',resizeMode:'contain'}}/>
+      <Text style={styles.txtname} numberOfLines={2}>{item.title}</Text>
       <Text style={styles.txtprice}>{item.price}</Text>
     </TouchableOpacity>
   );
@@ -59,7 +62,7 @@ const SearchScreen = () => {
             style={styles.textsearch}
             placeholder="Search"
             value={searchQuery}
-            onChangeText={text => handleSearch(text)}
+            onChangeText={(query) => handleSearch(query)}
           />
         </View>
         <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('category')}>
@@ -70,7 +73,7 @@ const SearchScreen = () => {
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={filteredData}
+        data={data}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
@@ -135,12 +138,12 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginVertical: 3,
     marginHorizontal: 3,
-    //flex: 1,
+    
     
   },
   txtname:{
     fontSize:16,
-    fontWeight:'bold',
+    fontWeight:'650',
     marginLeft:5,
   },
    txtprice:{
