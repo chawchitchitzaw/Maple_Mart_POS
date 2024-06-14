@@ -7,9 +7,9 @@ import Change_Password from '../Screens/Profile/Change_Password';
 import Edit_Profile from '../Screens/Profile/Edit_Profile';
 import Back from '../component/Back/Back';
 import Doo from '../Screens/Profile/Doo';
-import category from '../Screens/category';
+import category from '../Screens/Items/category';
 import Scanner from '../Screens/Scanner';
-import Itemdetail from '../Screens/Itemdetail';
+import Itemdetail from '../Screens/Items/Itemdetail';
 
 const Stack = createStackNavigator();
 

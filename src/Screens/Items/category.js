@@ -2,9 +2,8 @@ import React from "react";
 import { View,Text,FlatList,StyleSheet,Image,SafeAreaView } from "react-native";
 import { useState } from "react";
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import back_icon from '../Assets/cola.png';
 import { useNavigation } from "@react-navigation/native";
-import Back from "../component/Back/Back";
+import Back from "../../component/Back/Back";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,

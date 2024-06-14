@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Image, Text, Button,SafeAreaView,FlatList } from 'react-native';
-import chips from '../Assets/chips.png';
+import chips from '../../Assets/chips.png';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Back from '../component/Back/Back';
+import Back from '../../component/Back/Back';
 
-export const data = [
-  {id:1, barcode:'Barcode', name:'1234567891231', price:'1500'},
-  {id:2, barcode:'Category', name:'Drink', price:'1500'},
-  {id:3, barcode:'Description', name:'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,', price:'2500'},
-  
-];
+export const data = {
+  id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+};
 
 const Itemdetail = () => {
-  const {product,setProduct}= useState(data);
+  //const {product,setProduct}= useState(data);
   
   return (
     <SafeAreaView>
@@ -27,16 +24,30 @@ const Itemdetail = () => {
       <Image style={styles.image} source={chips} />
       </View>
       <View style={styles.info}>
-        <Text style={styles.name}>Product Name</Text>
-        <Text style={styles.pricetxt}>aaa</Text>
+        <Text style={styles.name}>{data.productname}</Text>
+        <Text style={styles.pricetxt}>{data.price}</Text>
       </View>
       <View style={styles.info2}>
-      {data.map((item, index) => (
+      <View>
+        <View style={styles.flatlistbox}>
+            <Text style={styles.nametxt}>Barcode</Text>
+            <Text style={styles.valuetxt} selectable={true}>{data.barcode}</Text>
+        </View> 
+        <View style={styles.flatlistbox}>
+            <Text style={styles.nametxt}>Category</Text>
+            <Text style={styles.valuetxt}>{data.name}</Text>
+        </View> 
+        <View style={styles.flatlistbox}>
+            <Text style={styles.nametxt}>Description</Text>
+            <Text style={styles.valuetxt}>{data.description}</Text>
+        </View> 
+    </View>
+      {/* {data.map((item, index) => (
         <View key={index} style={styles.flatlistbox}>
             <Text style={styles.barcodetxt}>{item.barcode}</Text>
-           <Text style={styles.nametxt}>{item.name}</Text>
+           <Text style={styles.nametxt} selectable={true}>{item.name}</Text>
         </View>
-    ))}
+    ))} */}
       </View>
       
       </View>
@@ -91,6 +102,7 @@ const styles = {
   },
   name: {
     fontSize: 20,
+    fontFamily: 'DMSans',
     fontWeight: 'bold',
     marginBottom: 10,
     
@@ -98,20 +110,22 @@ const styles = {
   },
   pricetxt: {
     fontSize: 18,
+    fontFamily: 'DMSans',
     color: '#999',
     
   },
-  barcodetxt: {
-    flex:1,
-  },
-  nametxt: {
-    flex:2,
-  },
-  description: {
+  valuetxt: {
     fontSize: 16,
-    color: '#333',
+    fontFamily: 'DMSans',
+    flex:2,
     lineHeight: 24,
   },
+  nametxt: {
+    fontFamily: 'DMSans',
+    fontSize: 16,
+    flex:1,
+  },
+  
 };
 
 export default Itemdetail;
