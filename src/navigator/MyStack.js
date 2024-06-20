@@ -16,6 +16,7 @@ import {useSelector} from 'react-redux';
 import category from '../Screens/Items/category';
 import Scanner from '../Screens/Scanner';
 import Itemdetail from '../Screens/Items/Itemdetail';
+import barcode from '../Screens/barcode/barcode';
 
 const Stack = createStackNavigator();
 
@@ -27,23 +28,18 @@ const MyStack = () => {
     <Stack.Navigator
       initialRouteName="Bottomnavigator"
       screenOptions={{headerShown: false}}>
-      {token == null ? (
-        <Stack.Screen name="Login" component={Login} />
-      ) : (
-        <>
-          <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="View_Profile" component={View_Profile} />
-          <Stack.Screen name="Change_Password" component={Change_Password} />
-          <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
-          <Stack.Screen name="Back" component={Back} />
-          <Stack.Screen name="Doo" component={Doo} />
-          <Stack.Screen name="category" component={category} />
-          <Stack.Screen name="Amount" component={Amount} />
-          <Stack.Screen name="Checkout" component={Checkout} />
-          <Stack.Screen name="Itemdetail" component={Itemdetail} />
-        </>
-      )}
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="View_Profile" component={View_Profile} />
+      <Stack.Screen name="Change_Password" component={Change_Password} />
+      <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
+      <Stack.Screen name="Back" component={Back} />
+      <Stack.Screen name="Doo" component={Doo} />
+      <Stack.Screen name="category" component={category} />
+      <Stack.Screen name="Scanner" component={Scanner} />
+      <Stack.Screen name="Itemdetail" component={Itemdetail} />
+      <Stack.Screen name="barcode" component={barcode} />
     </Stack.Navigator>
   );
 };

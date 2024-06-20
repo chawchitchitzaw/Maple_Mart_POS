@@ -19,7 +19,8 @@ const SearchScreen = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const [items,setItems] = useState([]);
+  const [selected,setSelected] = useState(null);
+  const [category,setCategory] = useState([]);
   
 
   useEffect(() => {
@@ -37,18 +38,22 @@ const SearchScreen = () => {
     }
     setLoading(false);
   };
+  //HandleSearch
   const handleSearch = text => {
     setSearchQuery(text);
     const filteredData = data.filter(item => item.title.toLowerCase().includes(text.toLowerCase())
     );
     setData(filteredData);
   };
+//UniqueItems
   const uniqueItems = data.filter((item, index, self) =>
     index === self.findIndex((t) => t.category === item.category)
   );
+//selectitem
+
   const testRender = ({item}) => {
     return(
-     <TouchableOpacity style={styles.box}>
+     <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Itemdetail')}>
     <View>
       <Text style={styles.bar}> {item.category} </Text>
     </View>
