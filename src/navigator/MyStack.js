@@ -7,13 +7,15 @@ import Change_Password from '../Screens/Profile/Change_Password';
 import Edit_Profile from '../Screens/Profile/Edit_Profile';
 import Back from '../component/Back/Back';
 import Doo from '../Screens/Profile/Doo';
-import category from '../Screens/category';
 import {useEffect, useState} from 'react';
 import Amount from '../Screens/Amount/Amount';
 import Checkout from '../Screens/Amount/Checkout';
 import CashBtn from '../component/Product/CashBtn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
+import category from '../Screens/Items/category';
+import Scanner from '../Screens/Scanner';
+import Itemdetail from '../Screens/Items/Itemdetail';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +25,7 @@ const MyStack = () => {
   console.log('token', token);
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Bottomnavigator"
       screenOptions={{headerShown: false}}>
       {token == null ? (
         <Stack.Screen name="Login" component={Login} />

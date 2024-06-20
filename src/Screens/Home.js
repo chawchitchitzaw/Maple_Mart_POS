@@ -18,6 +18,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { Dimensions } from 'react-native';
+const width = Dimensions.get('window').width-10;
 
 export const data = [
   {id: 1, name: 'chips', img: chips, price: '$20'},
@@ -68,17 +70,14 @@ const Home = () => {
 
         <Text style={styles.textidea}>Revenue</Text>
 
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{marginLeft: wp(3.5)}}>
+        <View style={styles.revenuebox} >
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Sale</Text>
           </View>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Quantity</Text>
           </View>
-        </ScrollView>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -102,46 +101,46 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
     fontSize: hp('2.2%'),
     color: '#4F4F4F',
-    marginHorizontal: wp('5%'),
+    marginLeft: wp('5%'),
     marginVertical: hp('2%'),
   },
   name: {
-    fontSize: hp('1.8%'),
+    fontSize: 16,
     marginHorizontal: wp('2%'),
     color: '#4F4F4F',
-    fontWeight: '500',
+    fontWeight: '650',
   },
   price: {
-    fontSize: hp('1.2%'),
+    fontSize: 12,
     marginHorizontal: wp('2%'),
     color: '#4F4F4F',
     fontWeight: '500',
   },
   produceview: {
-    marginHorizontal: wp('2%'),
-    marginVertical: hp('1%'),
-    backgroundColor: '#FFFFFF',
+    //marginHorizontal: wp('2%'),
+    // marginVertical: 2,
+    // backgroundColor: '#FFFFFF',
+    // elevation: 1,
+    // height: hp('25%'),
+    // borderRadius: hp('2%'),
+    // width: wp('40%'),
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // overflow: 'hidden',
+    // padding: wp('3%'),
+    width: width / 2-20,
+    borderRadius:hp('2'),
+    backgroundColor: '#fff',
+    padding: 5,
     elevation: 1,
-    height: hp('25%'),
-    borderRadius: hp('2%'),
-    width: wp('40%'),
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    padding: wp('3%'),
-    // borderWidth: 2,
-    // borderColor: 'red',
-    // shadowColor: 'black',
-    // shadowOpacity: 0.26,
-    // shadowOffset: {width: 0, height: 2},
-    // shadowRadius: 10,
-    // elevation: 3,
-    // backgroundColor: 'white',
+    marginVertical: 3,
+    marginHorizontal: wp('1'),
   },
   produceimg: {
-    width: wp(90),
-    height: hp(15),
+    width: wp('30'),
+    height: hp('20'),
     resizeMode: 'contain',
+    alignSelf:'center',
   },
   total: {
     fontSize: hp('2%'),
@@ -156,7 +155,14 @@ const styles = StyleSheet.create({
     elevation: 1,
     height: hp('12%'),
     borderRadius: hp('2%'),
-    width: wp('40%'),
-    marginVertical: hp('1%'),
+    width: wp('46%'),
+    marginVertical: 1,
+    flex:1,
+  },
+  revenuebox:{
+    flexDirection: 'row',
+    flex:2,
+    //width: width / 2-10,
+    backgroundColor:'orange',
   },
 });

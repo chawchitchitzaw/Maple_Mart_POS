@@ -1,10 +1,9 @@
 import React from "react";
-import { View,Text,FlatList,StyleSheet,Image,SafeAreaView,ScrollView } from "react-native";
+import { View,Text,FlatList,StyleSheet,Image,SafeAreaView } from "react-native";
 import { useState } from "react";
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import back_icon from '../Assets/cola.png';
 import { useNavigation } from "@react-navigation/native";
-import Back from "../component/Back/Back";
+import Back from "../../component/Back/Back";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -18,7 +17,7 @@ export const data = [
   {id:4, barcode:'Snacks', name:'Cake', price:'2500'},
 ];
 
-const Itemdetail = () => {
+const Items = () => {
   const navigation = useNavigation();
   const [product,setProduct]= useState(data);
 
@@ -40,7 +39,7 @@ const Itemdetail = () => {
       <View style={styles.bottomflat}>
       <Back lable={'Categories'}/>
     
-      <ScrollView>
+      
       <View>
         <View style={styles.topflat}>
           <FlatList
@@ -53,12 +52,12 @@ const Itemdetail = () => {
         </View>
         
       </View>
-      </ScrollView>
+      
       </View>
     </SafeAreaView>
   )
 };
-export default Itemdetail;
+export default Items;
 
 const styles = StyleSheet.create({
   search: {
@@ -71,11 +70,12 @@ const styles = StyleSheet.create({
   },
   box:{
     marginHorizontal:wp('5'),
-    marginBottom:8,
+    marginBottom:wp('1.5'),
     backgroundColor: '#FFFFFF',
     elevation: 1,
-    borderRadius: 10,
+    borderRadius: hp('2'),
     padding: 15,
+    height:hp('7'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
