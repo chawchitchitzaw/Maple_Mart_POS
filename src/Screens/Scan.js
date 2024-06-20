@@ -9,7 +9,7 @@ const Scan = () => {
     <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
       <Text>cafdg5yujf</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Scanner')}>
+      <TouchableOpacity onPress={() => navigation.navigate('barcode')}>
         <Text>Go to login</Text>
       </TouchableOpacity>
     </View>

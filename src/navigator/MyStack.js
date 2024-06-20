@@ -10,6 +10,7 @@ import Doo from '../Screens/Profile/Doo';
 import category from '../Screens/Items/category';
 import Scanner from '../Screens/Scanner';
 import Itemdetail from '../Screens/Items/Itemdetail';
+import barcode from '../Screens/barcode/barcode';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ function MyStack() {
       <Stack.Screen name="category" component={category} />
       <Stack.Screen name="Scanner" component={Scanner} />
       <Stack.Screen name="Itemdetail" component={Itemdetail} />
+      <Stack.Screen name="barcode" component={barcode} />
     </Stack.Navigator>
   );
 }
