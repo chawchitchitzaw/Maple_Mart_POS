@@ -18,8 +18,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { Dimensions } from 'react-native';
-const width = Dimensions.get('window').width-10;
+import {Dimensions} from 'react-native';
+const width = Dimensions.get('window').width - 10;
 
 export const data = [
   {id: 1, name: 'chips', img: chips, price: '$20'},
@@ -70,7 +70,7 @@ const Home = () => {
 
         <Text style={styles.textidea}>Revenue</Text>
 
-        <View style={styles.revenuebox} >
+        <View style={styles.revenuebox}>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Sale</Text>
           </View>
@@ -117,20 +117,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   produceview: {
-    //marginHorizontal: wp('2%'),
-    // marginVertical: 2,
-    // backgroundColor: '#FFFFFF',
-    // elevation: 1,
-    // height: hp('25%'),
-    // borderRadius: hp('2%'),
-    // width: wp('40%'),
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // overflow: 'hidden',
-    // padding: wp('3%'),
-    width: width / 2-20,
-    borderRadius:hp('2'),
-    backgroundColor: '#fff',
+    width: width / 2 - 20,
+    borderRadius: hp('2'),
+    backgroundColor: '#FFFFFF',
     padding: 5,
     elevation: 1,
     marginVertical: 3,
@@ -140,7 +129,7 @@ const styles = StyleSheet.create({
     width: wp('30'),
     height: hp('20'),
     resizeMode: 'contain',
-    alignSelf:'center',
+    alignSelf: 'center',
   },
   total: {
     fontSize: hp('2%'),
@@ -157,12 +146,10 @@ const styles = StyleSheet.create({
     borderRadius: hp('2%'),
     width: wp('46%'),
     marginVertical: 1,
-    flex:1,
+    flex: 1,
   },
-  revenuebox:{
+  revenuebox: {
     flexDirection: 'row',
-    flex:2,
-    //width: width / 2-10,
-    backgroundColor:'orange',
+    flex: 2,
   },
 });

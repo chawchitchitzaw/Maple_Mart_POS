@@ -41,6 +41,7 @@ const MyStack = () => {
           <Stack.Screen name="category" component={category} />
           <Stack.Screen name="Amount" component={Amount} />
           <Stack.Screen name="Checkout" component={Checkout} />
+          <Stack.Screen name="Itemdetail" component={Itemdetail} />
         </>
       )}
     </Stack.Navigator>

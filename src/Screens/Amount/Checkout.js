@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: hp('3%'),
     marginBottom: hp('5%'),
-    backgroundColor: 'red',
     flex: 1,
   },
   totaltxt1: {
