@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import lady from '../../Assets/lady.png';
@@ -15,9 +16,28 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../Redux/Slice/UserSlice';
 
 const Profile = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const twoOptionAlert = () => {
+    Alert.alert('Log out of your account?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => {
+          console.log('Cancel');
+        },
+      },
+      {
+        text: 'Ok',
+        onPress: () => {
+          dispatch(logout());
+        },
+      },
+    ]);
+  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FAFAFA'}}>
@@ -57,9 +77,7 @@ const Profile = () => {
         </View>
 
         <View style={{alignItems: 'center', marginVertical: hp('5%')}}>
-          <TouchableOpacity
-            style={styles.tail}
-            onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity style={styles.tail} onPress={twoOptionAlert}>
             <View
               style={{
                 flexDirection: 'row',

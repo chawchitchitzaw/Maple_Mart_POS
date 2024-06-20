@@ -78,17 +78,22 @@ const Receipts = () => {
     return (
       <View style={styles.produceview}>
         {/* icon_and_price */}
-        <View style={styles.flatbox}>
-          <AntDesign name="creditcard" size={25} color={'#606F89'} />
-          <View style={{marginLeft: wp('5%')}}>
-            <Text style={styles.price}>{item.price}</Text>
-            <Text style={styles.date}>{item.date}</Text>
-          </View>
+
+        <AntDesign
+          name="creditcard"
+          size={25}
+          color={'#606F89'}
+          style={{
+            marginHorizontal: wp('3%'),
+            flex: 1,
+          }}
+        />
+        <View style={{marginHorizontal: wp('2%'), flex: 2}}>
+          <Text style={styles.price}>{item.price}</Text>
+          <Text style={styles.date}>{item.date}</Text>
         </View>
 
-        <View style={{marginRight: wp('5%')}}>
-          <Text style={styles.price}>{item.barcode}</Text>
-        </View>
+        <Text style={styles.bar}>{item.barcode}</Text>
       </View>
     );
   };
@@ -146,7 +151,7 @@ const Receipts = () => {
               setOpenDateModal(false);
             }}
           />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.timebox}
             onPress={() => setOpenTimeModal(true)}>
             <Text style={styles.timetxt}>{moment(time).format('LTS')}</Text>
@@ -169,7 +174,7 @@ const Receipts = () => {
             onCancel={() => {
               setOpenTimeModal(false);
             }}
-          />
+          /> */}
         </View>
         <View style={{marginTop: 10}}>
           <FlatList
@@ -198,9 +203,17 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'DMSans',
   },
+  bar: {
+    fontSize: hp('2.2%'),
+    color: '#606F89',
+    fontWeight: '500',
+    fontFamily: 'DMSans',
+    flex: 3,
+    marginHorizontal: wp('2%'),
+  },
   produceview: {
     marginVertical: hp('0.5%'),
-    height:hp('7.5'),
+    height: hp('7.5%'),
     backgroundColor: '#FFFFFF',
     elevation: 1,
     borderRadius: hp('2%'),
@@ -208,6 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: hp('0.5%'),
+    flex: 7,
   },
   date: {
     fontSize: hp('1.6%'),
@@ -255,5 +269,4 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
     fontWeight: '500',
   },
-  flatbox: {flexDirection: 'row', alignItems: 'center', marginLeft: wp('5%'),},
 });

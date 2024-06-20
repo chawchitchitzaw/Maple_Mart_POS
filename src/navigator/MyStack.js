@@ -8,24 +8,40 @@ import Edit_Profile from '../Screens/Profile/Edit_Profile';
 import Back from '../component/Back/Back';
 import Doo from '../Screens/Profile/Doo';
 import category from '../Screens/category';
+import {useEffect, useState} from 'react';
+import Amount from '../Screens/Amount/Amount';
+import Checkout from '../Screens/Amount/Checkout';
+import CashBtn from '../component/Product/CashBtn';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
-function MyStack() {
+const MyStack = () => {
+  const user = useSelector(state => state.user);
+  const token = user.token;
+  console.log('token', token);
   return (
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="View_Profile" component={View_Profile} />
-      <Stack.Screen name="Change_Password" component={Change_Password} />
-      <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
-      <Stack.Screen name="Back" component={Back} />
-      <Stack.Screen name="Doo" component={Doo} />
-      <Stack.Screen name="category" component={category} />
+      {token == null ? (
+        <Stack.Screen name="Login" component={Login} />
+      ) : (
+        <>
+          <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="View_Profile" component={View_Profile} />
+          <Stack.Screen name="Change_Password" component={Change_Password} />
+          <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
+          <Stack.Screen name="Back" component={Back} />
+          <Stack.Screen name="Doo" component={Doo} />
+          <Stack.Screen name="category" component={category} />
+          <Stack.Screen name="Amount" component={Amount} />
+          <Stack.Screen name="Checkout" component={Checkout} />
+        </>
+      )}
     </Stack.Navigator>
   );
-}
+};
 export default MyStack;

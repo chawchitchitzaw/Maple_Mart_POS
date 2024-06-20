@@ -15,34 +15,50 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useDispatch, useSelector} from 'react-redux';
+import {increment} from '../../Redux/Slice/CounterSlice';
+import {login} from '../../Redux/Slice/UserSlice';
 
 const Login = () => {
+  const value = useSelector(state => state.counter);
+  const dispatch = useDispatch();
+  console.log('redux value', value);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
+  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+
   const handleLogin = async () => {
+    const body = {
+      email: email,
+      password: password,
+      token_name: 'login token',
+    };
+    console.log('body');
     await axios
-      .post(
-        'http://128.199.127.121/fullfil_ecom/public/index.php/api/customer/login',
-        {email, password},
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            // Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
-          },
+      .post(`${baseUrl}/loginApi`, body, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          // Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
         },
-      )
+      })
       .then(res => {
-        console.log('res', res);
-        if (res) {
+        console.log('res', res.data[0]);
+        if (res.status == 200) {
           try {
-            AsyncStorage.setItem('token', res.data.token);
-            console.log('result');
-            navigation.navigate('Bottomnavigator', {
-              screen: 'Home',
-            });
+            dispatch(
+              login({
+                token: res.data[0],
+              }),
+            );
+            // AsyncStorage.setItem('token', res.data[0]);
+
+            // console.log('result');
+            // navigation.navigate('Bottomnavigator', {
+            //   screen: 'Home',
+            // });
             setEmail('');
             setPassword('');
           } catch (error) {
@@ -51,6 +67,42 @@ const Login = () => {
         }
       });
   };
+  // newjkllkfhgjukui
+
+  // const handleLogin = async () => {
+  //   console.log("api_fetching");
+
+  //   const myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/json");
+  //   myHeaders.append("Accept", "*/*");
+  //   // myHeaders.append(Authorization, 'Bare' + `${token}`)
+
+  //   const raw = JSON.stringify({
+  //     email: email,
+  //     password: password,
+  //   });
+
+  //   const requestOptions = {
+  //     method: "GET",
+  //     headers:  { 'Content-Type': 'application/json'},
+  //     body: raw,
+
+  //   };
+
+  //   fetch("http://192.168.100.11/pos-backend/public/api/loginApi", requestOptions)
+  //     .then((response) => response.text())
+  //     .then((result) => {
+  //       console.log("original_res", result);
+  //       console.log("obj", JSON.parse(result));
+  //       console.log("token", JSON.parse(result).token);
+  //       console.log("userData", JSON.parse(result).customer);
+
+  //       setToken(JSON.parse(result).token);
+  //     })
+  //     .catch((error) => console.error(error));
+  // };
+
+  // console.log("state_token", token);
 
   return (
     <>
