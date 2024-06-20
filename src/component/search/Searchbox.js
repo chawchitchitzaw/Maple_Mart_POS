@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Searchbox = () => {
+const Searchbox = ({ searchPhrase, setSearchPhrase }) => {
   return (
     <KeyboardAvoidingView behavior={'position'}>
       <TouchableWithoutFeedback onPress={TextInput.dismiss}>
@@ -21,6 +21,9 @@ const Searchbox = () => {
             placeholder="Search"
             placeholderTextColor="#9C9C9C"
             style={styles.txt}
+            value={searchPhrase}
+            onChangeText={setSearchPhrase}
+
           />
           <Image
             source={require('../../Assets/search_icon.png')}

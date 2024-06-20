@@ -1,9 +1,10 @@
 // SearchScreen.js
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity,SafeAreaView,Image,Dimensions } from 'react-native';import Icon from 'react-native-vector-icons/Ionicons';
+import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity,SafeAreaView,Image,Dimensions,ActivityIndicator } from 'react-native';import Icon from 'react-native-vector-icons/Ionicons';
 import cola from '../Assets/cola.png';
 import search_icon from '../Assets/search_icon.png';
 import { useNavigation } from '@react-navigation/native';
+import Searchbox from '../component/search/Searchbox';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,36 +15,46 @@ const apidata='https://fakestoreapi.com/products';
 const width = Dimensions.get('window').width-10;
 const SearchScreen = () => {
   //API
-  const [data,setData] = useState([]);
-  const [error,setError] = useState(null);
-  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+  const [items,setItems] = useState([]);
+  
 
   useEffect(() => {
     fetchData(apidata);
-  },[]);
-  const fetchData = async(url) => {
-    try {
-    const response = await axios.get(url);
-    
-    setData(response.data);
-    
-        }catch(error){
-          console.error(error);
-          
-        }
-  }
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    if (query) {
-      const newData = data.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-      setFilteredData(newData);
-    } else {
-      setFilteredData(data);
-    }
-  };
+  }, []);
+  
 
+  const fetchData = async (url) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(url);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+  };
+  const handleSearch = text => {
+    setSearchQuery(text);
+    const filteredData = data.filter(item => item.title.toLowerCase().includes(text.toLowerCase())
+    );
+    setData(filteredData);
+  };
+  const uniqueItems = data.filter((item, index, self) =>
+    index === self.findIndex((t) => t.category === item.category)
+  );
+  const testRender = ({item}) => {
+    return(
+     <TouchableOpacity style={styles.box}>
+    <View>
+      <Text style={styles.bar}> {item.category} </Text>
+    </View>
+    </TouchableOpacity>
+    );
+  };
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail')}>
       <Image source={{uri:item.image}} style={{width:wp('30'),height:hp('20'),alignSelf:'center',resizeMode:'contain'}}/>
@@ -51,26 +62,33 @@ const SearchScreen = () => {
       <Text style={styles.txtprice}>{item.price}</Text>
     </TouchableOpacity>
   );
-
   return (
 
     <View style={styles.container}>
-      <View style={styles.searchbar}>
+      
         <View style={styles.search}>
-          <Image source={search_icon} style={{height: 20, width: 20}} />
+          <Image source={search_icon} style={{height: 20, width: 20, marginRight:5}} />
           <TextInput
             style={styles.textsearch}
             placeholder="Search"
             value={searchQuery}
-            onChangeText={(query) => handleSearch(query)}
+            onChangeText={text => handleSearch(text)}
           />
         </View>
-        <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('category')}>
-        <View style={styles.txtcategory}>
-          <Text style={{fontWeight:'900',fontSize:20}}>C</Text>
+        
+        <View>
+          <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={uniqueItems}
+          keyExtractor={item=>item.id.toString()}
+          renderItem={testRender}
+          />
         </View>
-        </TouchableOpacity>
-      </View>
+        
+        {loading ? (
+        <ActivityIndicator size="large" color="#FF6D1A"  style={{flex:1, justifyContent:'center', alignItems:'center'}}/>
+      ) : (
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data}
@@ -79,52 +97,52 @@ const SearchScreen = () => {
         numColumns={2}
         columnWrapperStyle={styles.row}
       />
+      )}
     </View>
 
   );
 };
 
 const styles = StyleSheet.create({
-  searchbar:{
-    flexDirection: 'row',
-    justifyContent:'space-between',
+  // searchbar:{
+  //   flexDirection: 'row',
+  //   justifyContent:'space-between',
     
+  // },
+  bar:{
+    fontFamily: 'DMSans',
+    fontSize: 14,
+    marginLeft: 5,
+    color: '#4F4F4F',
+    fontWeight: '600',
+    margin:hp('.5'),
+    padding:hp('.5'),
+    
+  },
+  box:{
+    justifyContent:'center',
+    backgroundColor:'#fff',
+    alignItems:'center',
+    marginHorizontal:hp('.5'),
+    marginVertical:hp('1'),
+    //marginTop:-2,
+    borderRadius:hp('20'),
+    borderColor:'black',
+    //flexDirection:'row',
+    //height:hp('7'),
+  },
+  textsearch:{
+    width:wp('50'),
   },
   category:{
     alignItems:'center',
     justifyContent:'center',
     width:wp('13%'),
   },
-  txtcategory:{
-      backgroundColor: '#fff',
-      borderRadius: 15,
-      //marginHorizontal:hp('2.5'),
-      paddingHorizontal:hp('2.5'),
-      //paddingVertical:hp('4'),
-      flexDirection: 'row',
-      alignItems: 'center',
-      //fontWeight:'bold',
-      height:hp('8'),
-      width:wp('12'),
-  },
   container: {
     flex: 1,
     paddingHorizontal: 10,
     
-  },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 30,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  searchInput: {
-    flex: 1,
-    marginLeft: 10,
   },
   row: {
     //flex: 1,
@@ -135,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius:hp('2'),
     backgroundColor: '#fff',
     padding: 5,
-    elevation: 1,
+    //elevation: 1,
     marginVertical: 3,
     marginHorizontal: 3,
     
@@ -161,16 +179,11 @@ const styles = StyleSheet.create({
       borderRadius: 25,
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical:hp('1'),
-      width:wp('81.5%'),
-      height:hp('8%'),
+      marginTop:hp('1'),
+      //width:wp('95%'),
+      height:hp('7%'),
     },
-    textsearch: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      marginLeft: 20,
-      fontFamily: 'DMSans',
-    },
+    
   
 });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Image, Text, Button,SafeAreaView,FlatList } from 'react-native';
+import { View, ScrollView, Image, Text, Button,SafeAreaView,FlatList, TouchableHighlight,TouchableOpacity } from 'react-native';
 import chips from '../../Assets/chips.png';
 import {
   widthPercentageToDP as wp,
@@ -8,7 +8,7 @@ import {
 import Back from '../../component/Back/Back';
 
 export const data = {
-  id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, quit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillua deserunt mollit anim id est laborum.',
 };
 
 const Itemdetail = () => {
@@ -27,6 +27,7 @@ const Itemdetail = () => {
         <Text style={styles.name}>{data.productname}</Text>
         <Text style={styles.pricetxt}>{data.price}</Text>
       </View>
+      
       <View style={styles.info2}>
       <View>
         <View style={styles.flatlistbox}>
@@ -41,18 +42,16 @@ const Itemdetail = () => {
             <Text style={styles.nametxt}>Description</Text>
             <Text style={styles.valuetxt}>{data.description}</Text>
         </View> 
-    </View>
-      {/* {data.map((item, index) => (
-        <View key={index} style={styles.flatlistbox}>
-            <Text style={styles.barcodetxt}>{item.barcode}</Text>
-           <Text style={styles.nametxt} selectable={true}>{item.name}</Text>
-        </View>
-    ))} */}
       </View>
+      </View>
+      
       
       </View>
     </ScrollView>
     </View>
+    <TouchableOpacity style={styles.addtocard}>
+        <Text style={{alignSelf:'center',fontSize:16,fontWeight:'700'}}>Add to Card</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -124,6 +123,17 @@ const styles = {
     fontFamily: 'DMSans',
     fontSize: 16,
     flex:1,
+  },
+  addtocard:{
+    position:'relative',
+    bottom:0,
+    left:0,
+    right:0,
+    backgroundColor:'orange',
+    padding:10,
+    width:wp('100'),
+    alignSelf:'flex-end'
+    
   },
   
 };

@@ -21,19 +21,23 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
+  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+
   const handleLogin = async () => {
+    const body = {
+      email: email,
+      password: password,
+      token_name: 'login token',
+    };
+
     await axios
-      .post(
-        'http://128.199.127.121/fullfil_ecom/public/index.php/api/customer/login',
-        {email, password},
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            // Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
-          },
+      .get(`${baseUrl}/loginApi`, body, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          // Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
         },
-      )
+      })
       .then(res => {
         console.log('res', res);
         if (res) {
