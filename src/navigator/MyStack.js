@@ -23,23 +23,31 @@ const Stack = createStackNavigator();
 const MyStack = () => {
   const user = useSelector(state => state.user);
   const token = user.token;
-  console.log('token', token);
+
   return (
     <Stack.Navigator
       initialRouteName="Bottomnavigator"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="View_Profile" component={View_Profile} />
-      <Stack.Screen name="Change_Password" component={Change_Password} />
-      <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
-      <Stack.Screen name="Back" component={Back} />
-      <Stack.Screen name="Doo" component={Doo} />
-      <Stack.Screen name="category" component={category} />
-      <Stack.Screen name="Scanner" component={Scanner} />
-      <Stack.Screen name="Itemdetail" component={Itemdetail} />
-      <Stack.Screen name="barcode" component={barcode} />
+      {token == null ? (
+        <Stack.Screen name="Login" component={Login} />
+      ) : (
+        <>
+          <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="View_Profile" component={View_Profile} />
+          <Stack.Screen name="Change_Password" component={Change_Password} />
+          <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
+          <Stack.Screen name="Back" component={Back} />
+          <Stack.Screen name="Doo" component={Doo} />
+          <Stack.Screen name="category" component={category} />
+          <Stack.Screen name="Scanner" component={Scanner} />
+          <Stack.Screen name="Itemdetail" component={Itemdetail} />
+          <Stack.Screen name="barcode" component={barcode} />
+          <Stack.Screen name="Amount" component={Amount} />
+          <Stack.Screen name="CashBtn" component={CashBtn} />
+          <Stack.Screen name="Checkout" component={Checkout} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };

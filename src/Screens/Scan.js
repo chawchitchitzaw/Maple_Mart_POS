@@ -56,10 +56,11 @@ const Scan = () => {
             onChangeText={setSearch}
             onSubmitEditing={handleSearch}
           />
-
-          <View style={styles.scanside}>
+          <TouchableOpacity
+            style={styles.scanside}
+            onPress={() => navigation.navigate('barcode')}>
             <Image source={scan} style={styles.scanimg} />
-          </View>
+          </TouchableOpacity>
         </View>
         <Buying_list items={product} setProduct={val => setProduct(val)} />
       </KeyboardAvoidingView>
