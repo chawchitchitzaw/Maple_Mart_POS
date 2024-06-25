@@ -72,13 +72,14 @@ const SearchScreen = () => {
     <View style={styles.container}>
       
         <View style={styles.search}>
-          <Image source={search_icon} style={{height: 20, width: 20, marginRight:5}} />
+          
           <TextInput
             style={styles.textsearch}
             placeholder="Search"
             value={searchQuery}
             onChangeText={text => handleSearch(text)}
           />
+          <Image source={search_icon} style={{height: 20, width: 20, marginRight:5}} />
         </View>
         
         <View>
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
     search: {
       backgroundColor: '#FFFFFF',
       paddingVertical: 5,
-      paddingHorizontal: 20,
+      paddingHorizontal: 15,
       //marginHorizontal: 20,
       borderRadius: 25,
       flexDirection: 'row',
@@ -187,6 +188,7 @@ const styles = StyleSheet.create({
       marginTop:hp('1'),
       //width:wp('95%'),
       height:hp('7%'),
+      justifyContent:'space-between'
     },
     
   

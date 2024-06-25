@@ -83,6 +83,7 @@ const Profile = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 width: '60%',
+                borderColor:'red',
               }}>
               <Image
                 source={require('../../Assets/logout.png')}
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: hp('2%'),
     borderWidth: 2,
-    borderColor: '#FED8B1',
+    borderColor: 'red',
     width: wp('60%'),
     paddingVertical: hp('1%'),
   },
@@ -140,13 +141,13 @@ const styles = StyleSheet.create({
   txt3: {
     fontSize: hp('2.5%'),
     fontWeight: '500',
-    color: '#606F89',
+    color: 'red',
     marginHorizontal: wp('5%'),
     padding: wp('1%'),
     fontFamily: 'DMSans',
   },
   imageborder: {
-    borderWidth: 1,
+    borderWidth: 1.5,
     backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
@@ -154,6 +155,7 @@ const styles = StyleSheet.create({
     width: wp('25%'),
     borderRadius: hp('100%'),
     overflow: 'hidden',
+    borderColor:'#FF6D1A',
   },
   imgtxt: {
     flexDirection: 'row',

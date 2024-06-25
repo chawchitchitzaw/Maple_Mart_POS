@@ -26,10 +26,9 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: hp('3%'),
     paddingVertical: hp('1%'),
-    height: hp('6%'),
+    height: hp('6.5%'),
     marginVertical: hp('1%'),
-    borderColor: '#FF6D1A',
-    borderWidth: 2,
+    backgroundColor: '#FF6D1A',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: hp('2.5%'),
     fontWeight: '500',
     fontFamily: 'DMSans',
-    color: '#FF6D1A',
+    color: '#fff',
     marginHorizontal: wp('5%'),
   
   },
