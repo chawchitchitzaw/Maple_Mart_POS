@@ -28,8 +28,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp('1%'),
     height: hp('6%'),
     marginVertical: hp('1%'),
-    borderColor: '#FF6D1A',
-    borderWidth: 2,
+    backgroundColor:'#FF6D1A',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: hp('2.5%'),
     fontWeight: '500',
     fontFamily: 'DMSans',
-    color: '#FF6D1A',
+    color: '#FFFFFF',
     marginHorizontal: wp('5%'),
   
   },

@@ -16,11 +16,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../Redux/Slice/UserSlice';
 
 const Profile = () => {
   const navigation = useNavigation();
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   const twoOptionAlert = () => {
     Alert.alert('Log out of your account?', '', [
@@ -55,8 +56,8 @@ const Profile = () => {
               />
             </View>
             <View style={{flex: 1, marginHorizontal: wp('5%')}}>
-              <Text style={styles.txt1}>Chaw Chit Chit Zaw</Text>
-              <Text style={styles.txt2}>Manager</Text>
+              <Text style={styles.txt1}>{user.name}</Text>
+              <Text style={styles.txt2}>{user.position}</Text>
             </View>
           </View>
         </ImageBackground>
@@ -68,33 +69,23 @@ const Profile = () => {
           flex: 1,
         }}>
         <View style={{paddingVertical: hp('5%')}}>
-          <Profilelist icon="edit" lable="Edit Profile" goto="Edit_Profile" />
+          <Profilelist
+            icon="edit"
+            lable="Edit Profile"
+            goto="Edit_Profile"
+            front="right"
+          />
           <Profilelist
             icon="lock"
             lable="Change Password"
             goto="Change_Password"
+            front="right"
           />
         </View>
 
-        <View style={{alignItems: 'center', marginVertical: hp('5%')}}>
-          <TouchableOpacity style={styles.tail} onPress={twoOptionAlert}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '60%',
-              }}>
-              <Image
-                source={require('../../Assets/logout.png')}
-                style={{
-                  height: hp('3%'),
-                  width: wp('5%'),
-                }}
-              />
-              <Text style={styles.txt3}>Log out</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.tail} onPress={twoOptionAlert}>
+          <Text style={styles.txt3}>Log out</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -117,13 +108,12 @@ const styles = StyleSheet.create({
     marginHorizontal: hp('1%'),
   },
   tail: {
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: hp('2%'),
-    borderWidth: 2,
-    borderColor: '#FED8B1',
-    width: wp('60%'),
+    backgroundColor: '#FF6D1A',
     paddingVertical: hp('1%'),
+    alignItems: 'center',
+    marginHorizontal: wp('5%'),
+    marginVertical: hp('7%'),
   },
   txt1: {
     fontSize: hp('2.5%'),
@@ -140,8 +130,7 @@ const styles = StyleSheet.create({
   txt3: {
     fontSize: hp('2.5%'),
     fontWeight: '500',
-    color: '#606F89',
-    marginHorizontal: wp('5%'),
+    color: '#FFFFFF',
     padding: wp('1%'),
     fontFamily: 'DMSans',
   },

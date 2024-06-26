@@ -1,49 +1,51 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Keyboard,
-} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import Back from '../../component/Back/Back';
 import CashBtn from '../../component/Product/CashBtn';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import Billlist from '../../component/Bill/Billlist';
+import Back from '../../component/Back/Back';
 
 const Checkout = () => {
   const navigation = useNavigation();
   return (
-    <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Back />
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-          }}>
-          <View style={styles.total}>
-            <Text style={styles.totaltxt1}>$ 250</Text>
-            <Text style={styles.totaltxt2}>Total Paid</Text>
-          </View>
-          <View style={styles.total}>
-            <Text style={styles.totaltxt1}>$ 2000</Text>
-            <Text style={styles.totaltxt2}>Change</Text>
-          </View>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Back />
+      </TouchableOpacity>
+
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.paybill}>
+        <View style={{alignItems: 'center', marginBottom: hp('5%')}}>
+          <Text style={styles.title}>SUNSET</Text>
         </View>
-        <View style={{marginTop: hp('17%')}}>
-          <CashBtn lable="PRINT BILL" goto="Edit_Profile" />
-          <CashBtn lable="NEW SALE" goto="Scan" />
+        <View style={styles.invoice}>
+          <Text style={styles.lefttxt}>Invoice No:</Text>
+          <Text style={styles.righttxt}>00020008418</Text>
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        <View style={styles.invoice}>
+          <Text style={styles.lefttxt}>Bill Date:</Text>
+          <Text style={styles.righttxt}>6/7/2024(3:00PM)</Text>
+        </View>
+        <View style={styles.invoice}>
+          <Text style={styles.lefttxt}>Casher:</Text>
+          <Text style={styles.righttxt}>Aye Aye</Text>
+        </View>
+        <View style={styles.invoice}>
+          <Text style={styles.lefttxt}>Customer Name:</Text>
+          <Text style={styles.righttxt}></Text>
+        </View>
+        <Billlist />
+      </ScrollView>
+
+      <View style={{marginVertical: hp('5%')}}>
+        <CashBtn lable="PRINT BILL" goto="Edit_Profile" />
+        <CashBtn lable="NEW SALE" goto="Scan" />
+      </View>
+    </View>
   );
 };
 
@@ -54,24 +56,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     padding: wp('5%'),
   },
-  total: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: hp('3%'),
-    marginBottom: hp('5%'),
-    flex: 1,
-  },
-  totaltxt1: {
-    fontWeight: 'bold',
+  title: {
+    color: '#FF6D1A',
+    fontWeight: '500',
     fontSize: hp('3.5%'),
     fontFamily: 'DMSans',
-    color: '#000000',
   },
-
-  totaltxt2: {
+  invoice: {
+    flexDirection: 'row',
+    marginHorizontal: wp('1%'),
+    marginVertical: hp('0.5%'),
+  },
+  lefttxt: {
     fontWeight: '500',
-    fontSize: hp('2.5%'),
+    fontSize: hp('2.2%'),
     fontFamily: 'DMSans',
-    color: '#000000',
+    flex: 3,
+  },
+  righttxt: {
+    fontWeight: '500',
+    fontSize: hp('2.2%'),
+    fontFamily: 'DMSans',
+    flex: 4,
+  },
+  paybill: {
+    backgroundColor: '#FFFFFF',
+    padding: hp('1%'),
+    height: hp('60%'),
+    elevation: 1,
   },
 });

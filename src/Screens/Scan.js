@@ -25,15 +25,15 @@ const Scan = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState(null);
   const [product, setProduct] = useState(data);
-  console.log('product', product);
+  // console.log('product', product);
 
   const handleSearch = () => {
     if (search == '#') {
       setProduct(data);
     } else {
       const filterProduct = product.filter(item => item.barcode === search);
-      console.log('searValue', search);
-      console.log('filter', filterProduct);
+      // console.log('searValue', search);
+      // console.log('filter', filterProduct);
       setProduct(prevItems => [...prevItems, filterProduct[0]]);
     }
   };
@@ -45,7 +45,7 @@ const Scan = () => {
           onPress={() => navigation.navigate('Amount')}
           style={styles.cbtn}>
           <Text style={styles.btxt}>CHARGE</Text>
-          <Text style={styles.bprice}>$ 0</Text>
+          <Text style={styles.bprice}> 0</Text>
         </TouchableOpacity>
         <View style={styles.barcodeside}>
           <TextInput

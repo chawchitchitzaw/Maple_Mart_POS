@@ -7,16 +7,10 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Back from '../../component/Back/Back';
-
-export const userData = {
-  id: 1,
-  name: 'Chaw Chit Chit Zaw',
-  position: 'Manager',
-  email: 'test@gmail.com',
-  gender: 'Female',
-};
+import {useSelector} from 'react-redux';
 
 const View_Profile = () => {
+  const user = useSelector(state => state.user);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FAFAFA'}}>
       <View>
@@ -35,19 +29,19 @@ const View_Profile = () => {
       <View>
         <View style={{marginBottom: hp('1%')}}>
           <Text style={styles.txt1}>User Name</Text>
-          <Text style={styles.txt2}>{userData.name}</Text>
+          <Text style={styles.txt2}>{user.name}</Text>
         </View>
         <View style={{marginBottom: hp('1%')}}>
           <Text style={styles.txt1}>Email</Text>
-          <Text style={styles.txt2}>{userData.email}</Text>
+          <Text style={styles.txt2}>{user.email}</Text>
         </View>
         <View style={{marginBottom: hp('1%')}}>
           <Text style={styles.txt1}>Position</Text>
-          <Text style={styles.txt2}>{userData.position}</Text>
+          <Text style={styles.txt2}>{user.position}</Text>
         </View>
         <View style={{marginBottom: hp('1%')}}>
           <Text style={styles.txt1}>Gender</Text>
-          <Text style={styles.txt2}>{userData.gender}</Text>
+          <Text style={styles.txt2}>{user?.gender}</Text>
         </View>
       </View>
     </SafeAreaView>

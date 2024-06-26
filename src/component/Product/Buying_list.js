@@ -17,50 +17,50 @@ import {ScrollView} from 'react-native-gesture-handler';
 export const data = [
   {
     id: 1,
-    name: 'Coca Cola  khio',
+    name: 'Coca Cola Can (24Can 1Box)',
     barcode: '#2642456',
-    price: '$20',
+    price: '3,500',
     qty: '2',
-    Total: '12444',
+    Total: '12,444',
   },
   {
     id: 2,
     barcode: '#9766593',
-    price: '$25',
+    price: '3,000',
     name: 'Sprite',
-    qty: '1',
-    Total: '12444',
+    qty: '123',
+    Total: '12,444',
   },
   {
     id: 3,
     barcode: '#7394293',
-    price: '$25',
+    price: '2,000',
     name: 'Chips',
     qty: '3',
-    Total: '12444',
+    Total: '12,444',
   },
   {
     id: 4,
     barcode: '#7569246',
-    price: '$20',
+    price: '7,000',
     name: 'Food',
     qty: '1',
-    Total: '12444',
+    Total: '12,444',
   },
   {
     id: 5,
     barcode: '#2568721',
-    price: '$20',
+    price: '12,000',
     name: 'Butter',
     qty: '1',
-    Total: '12444',
+    Total: '12,444',
   },
 ];
 
 const Buying_list = ({items, setProduct}) => {
   const handleDelete = id => {
     const filterProduct = items.filter(item => item.id !== id);
-    console.log('filter', filterProduct);
+    // console.log('filter', filterProduct);
     setProduct(filterProduct);
   };
 
@@ -69,21 +69,16 @@ const Buying_list = ({items, setProduct}) => {
       <View style={{marginTop: hp('5%')}}>
         <FlatList
           data={items ? items : []}
-          
           renderItem={({item}) => {
-            console.log('item', item);
+            // console.log('item', item);
             return (
               <View style={styles.produceview}>
                 {/* icon_and_price */}
                 <Text style={{...styles.listname, flex: 3}} numberOfLines={1}>
                   {item.name}
                 </Text>
-                <Text
-                  style={{...styles.listtxt, flex: 0.5, textAlign: 'center'}}>
+                <Text style={{...styles.listtxt, flex: 1, textAlign: 'center'}}>
                   {item.qty}
-                </Text>
-                <Text style={{...styles.listtxt, flex: 2, textAlign: 'center'}}>
-                  {item.price}
                 </Text>
                 <Text style={{...styles.listname, flex: 2, textAlign: 'right'}}>
                   {item.Total}
@@ -137,5 +132,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'DMSans',
   },
- 
 });

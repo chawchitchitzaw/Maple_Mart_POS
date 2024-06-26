@@ -83,7 +83,8 @@ const Amount = () => {
             onChangeText={val => setValue(val)}
           />
         </View>
-        <View style={{alignItems: 'center'}}>
+        <View style={{...styles.amountlist, marginBottom: hp('10%')}}>
+          <Text style={styles.besidebox}>Payment Method</Text>
           <SelectCountry
             style={styles.dropdown}
             selectedTextStyle={styles.selectedTextStyle}
@@ -98,9 +99,7 @@ const Amount = () => {
             }}
           />
         </View>
-        <View>
-          <CashBtn lable="PAY BILL" goto="Checkout" />
-        </View>
+        <CashBtn lable="PAY BILL" goto="Checkout" />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -143,12 +142,12 @@ const styles = StyleSheet.create({
   },
 
   dropdown: {
-    margin: hp('5%'),
+    elevation: 1,
     height: wp('15%'),
-    width: wp('50%'),
     backgroundColor: '#FFFFFF',
     borderRadius: hp('2%'),
     paddingHorizontal: wp('3%'),
+    flex: 2,
   },
 
   placeholderStyle: {

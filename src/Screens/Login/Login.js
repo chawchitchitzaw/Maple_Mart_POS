@@ -9,7 +9,6 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
@@ -20,9 +19,10 @@ import {increment} from '../../Redux/Slice/CounterSlice';
 import {login} from '../../Redux/Slice/UserSlice';
 
 const Login = () => {
-  const value = useSelector(state => state.counter);
+  const user = useSelector(state => state.user);
+  console.log('user', user);
+
   const dispatch = useDispatch();
-  console.log('redux value', value);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
@@ -45,20 +45,19 @@ const Login = () => {
         },
       })
       .then(res => {
-        console.log('res', res.data[0]);
-        if (res.status == 200) {
+        console.log('res from axios', res.data);
+        if (res.data.status === 200) {
           try {
             dispatch(
               login({
                 token: res.data[0],
+                email: res.data[1].email,
+                profile_url: res.data[1].profile_photo_url,
+                id: res.data[1].id,
+                name: res.data[1].name,
+                position: res.data[1].role,
               }),
             );
-            // AsyncStorage.setItem('token', res.data[0]);
-
-            // console.log('result');
-            // navigation.navigate('Bottomnavigator', {
-            //   screen: 'Home',
-            // });
             setEmail('');
             setPassword('');
           } catch (error) {
@@ -67,42 +66,6 @@ const Login = () => {
         }
       });
   };
-  // newjkllkfhgjukui
-
-  // const handleLogin = async () => {
-  //   console.log("api_fetching");
-
-  //   const myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/json");
-  //   myHeaders.append("Accept", "*/*");
-  //   // myHeaders.append(Authorization, 'Bare' + `${token}`)
-
-  //   const raw = JSON.stringify({
-  //     email: email,
-  //     password: password,
-  //   });
-
-  //   const requestOptions = {
-  //     method: "GET",
-  //     headers:  { 'Content-Type': 'application/json'},
-  //     body: raw,
-
-  //   };
-
-  //   fetch("http://192.168.100.11/pos-backend/public/api/loginApi", requestOptions)
-  //     .then((response) => response.text())
-  //     .then((result) => {
-  //       console.log("original_res", result);
-  //       console.log("obj", JSON.parse(result));
-  //       console.log("token", JSON.parse(result).token);
-  //       console.log("userData", JSON.parse(result).customer);
-
-  //       setToken(JSON.parse(result).token);
-  //     })
-  //     .catch((error) => console.error(error));
-  // };
-
-  // console.log("state_token", token);
 
   return (
     <>

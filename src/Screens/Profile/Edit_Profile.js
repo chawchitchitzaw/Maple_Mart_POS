@@ -14,16 +14,18 @@ import React, {useState} from 'react';
 import lady from '../../Assets/lady.png';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icons from 'react-native-vector-icons/SimpleLineIcons';
-import {userData} from './View_Profile';
+
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Back from '../../component/Back/Back';
+import {useSelector} from 'react-redux';
 
 const Edit_Profile = () => {
-  const [imgUrl, setImgUrl] = useState('');
+  const userData = useSelector(state => state.user);
+  const [imgUrl, setImgUrl] = useState(userData.profile_url);
   const [name, setName] = useState(userData.name);
   const [email, setEmail] = useState(userData.email);
   const [gender, setGEnder] = useState(userData.gender);
@@ -50,8 +52,8 @@ const Edit_Profile = () => {
               {imgUrl ? (
                 <Image
                   source={{uri: imgUrl}}
-                  style={{height: '100%', width: '100%'}}
-                  resizeMode="contain"
+                  style={{height: '100%', width: '100%', borderRadius: 100}}
+                  resizeMode="cover"
                 />
               ) : (
                 <Image
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: hp('100%'),
     overflow: 'hidden',
-    padding:wp('3%')
+    // padding: wp('3%'),
   },
   write: {
     fontSize: hp('2%'),

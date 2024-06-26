@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
@@ -8,7 +8,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Profilelist = ({icon, lable, goto}) => {
+const Profilelist = ({icon, lable, goto, front}) => {
   const navigation = useNavigation();
 
   return (
@@ -16,8 +16,12 @@ const Profilelist = ({icon, lable, goto}) => {
       style={styles.container}
       onPress={() => navigation.navigate(goto)}>
       <View style={styles.icon_lable}>
-        <Icon name={icon} size={25} color="#606F89" />
-        <Text style={styles.txt1}>{lable}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Icon name={icon} size={25} color="#606F89" />
+          <Text style={styles.txt1}>{lable}</Text>
+        </View>
+
+        <Icon name={front} size={25} color="#606F89" />
       </View>
     </TouchableOpacity>
   );
@@ -29,7 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     elevation: 1,
     borderRadius: hp('2%'),
-    backgroundColor: '#FFFFFF',
     padding: wp('2%'),
     marginHorizontal: wp('5%'),
     marginVertical: hp('1%'),
@@ -46,5 +49,7 @@ const styles = StyleSheet.create({
     marginHorizontal: wp('3%'),
     flexDirection: 'row',
     paddingVertical: hp('0.5%'),
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

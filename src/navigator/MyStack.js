@@ -6,7 +6,6 @@ import View_Profile from '../Screens/Profile/View_Profile';
 import Change_Password from '../Screens/Profile/Change_Password';
 import Edit_Profile from '../Screens/Profile/Edit_Profile';
 import Back from '../component/Back/Back';
-import Doo from '../Screens/Profile/Doo';
 import {useEffect, useState} from 'react';
 import Amount from '../Screens/Amount/Amount';
 import Checkout from '../Screens/Amount/Checkout';
@@ -23,6 +22,7 @@ const Stack = createStackNavigator();
 const MyStack = () => {
   const user = useSelector(state => state.user);
   const token = user.token;
+  console.log('is there token', token);
 
   return (
     <Stack.Navigator
@@ -38,7 +38,6 @@ const MyStack = () => {
           <Stack.Screen name="Change_Password" component={Change_Password} />
           <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
           <Stack.Screen name="Back" component={Back} />
-          <Stack.Screen name="Doo" component={Doo} />
           <Stack.Screen name="category" component={category} />
           <Stack.Screen name="Scanner" component={Scanner} />
           <Stack.Screen name="Itemdetail" component={Itemdetail} />

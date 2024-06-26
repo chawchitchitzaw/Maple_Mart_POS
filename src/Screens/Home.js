@@ -22,11 +22,11 @@ import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width - 10;
 
 export const data = [
-  {id: 1, name: 'chips', img: chips, price: '$20'},
-  {id: 2, name: 'cola', img: cola, price: '$25'},
-  {id: 3, name: 'sprite', img: sprite, price: '$25'},
-  {id: 4, name: 'butter', img: butter, price: '$20'},
-  {id: 5, name: 'food', img: food, price: '$20'},
+  {id: 1, name: 'chips', img: chips, price: '3,500'},
+  {id: 2, name: 'cola', img: cola, price: '3,000'},
+  {id: 3, name: 'sprite', img: sprite, price: '2,000'},
+  {id: 4, name: 'butter', img: butter, price: '7,000'},
+  {id: 5, name: 'food', img: food, price: '12,000'},
 ];
 
 const Home = () => {
