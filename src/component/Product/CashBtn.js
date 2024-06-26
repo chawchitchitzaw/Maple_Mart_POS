@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: hp('3%'),
     paddingVertical: hp('1%'),
-    height: hp('6%'),
+    height: hp('6.5%'),
     marginVertical: hp('1%'),
     backgroundColor:'#FF6D1A',
     alignItems: 'center',

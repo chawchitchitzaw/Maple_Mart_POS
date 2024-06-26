@@ -64,7 +64,7 @@ const Edit_Profile = () => {
               )}
             </View>
             <TouchableOpacity style={styles.camera} onPress={openCamera}>
-              <Icons name="camera" size={30} color={'black'} />
+              <Icons name="camera" size={25} color={'#fff'} />
             </TouchableOpacity>
           </View>
           <View>
@@ -143,13 +143,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'DMSans',
     padding: hp('1%'),
-    color: '#000000',
+    color: '#FFF',
   },
   imageborder: {
     height: wp('30%'),
     width: wp('30%'),
-    borderWidth: 1,
-    borderColor: '#000000',
+    borderWidth: 1.5,
+    borderColor: '#FF6D1A',
     backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   savebtn: {
     width: wp('25%'),
     height: hp('5%'),
-    backgroundColor: '#FED8B1',
+    backgroundColor: '#FF6D1A',
     borderRadius: hp('2%'),
     alignItems: 'center',
     justifyContent: 'center',
@@ -181,9 +181,9 @@ const styles = StyleSheet.create({
     paddingVertical: hp('1%'),
   },
   camera: {
-    backgroundColor: '#FED8B1',
+    backgroundColor: '#FF6D1A',
     borderRadius: hp('5%'),
-    padding: hp('0.5%'),
+    padding: hp('.9%'),
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

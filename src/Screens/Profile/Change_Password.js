@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: hp('2%'),
     fontWeight: '500',
     fontFamily: 'DMSans',
-    color: '#000000',
+    color: '#fff',
   },
   box: {
     backgroundColor: '#FFFFFF',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   savebtn: {
     width: wp('25%'),
     height: hp('5%'),
-    backgroundColor: '#FED8B1',
+    backgroundColor: '#FF6D1A',
     borderRadius: hp('2%'),
     alignItems: 'center',
     justifyContent: 'center',

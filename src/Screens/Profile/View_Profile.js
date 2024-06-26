@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   imageborder: {
     height: wp('30%'),
     width: wp('30%'),
-    borderWidth: 1,
-    borderColor: '#000000',
+    borderWidth: 1.5,
+    borderColor: '#FF6D1A',
     backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',

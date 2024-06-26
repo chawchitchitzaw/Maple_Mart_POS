@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     width: '100%',
-    backgroundColor:'orange',
+    backgroundColor:'#FF6D1A',
     height:50,
     fontWeight:'800',
     
   },
   touch:{
-    backgroundColor:'orange',
+  //backgroundColor:'orange',
   },  
   
 });

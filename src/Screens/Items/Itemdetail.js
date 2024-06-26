@@ -50,7 +50,7 @@ const Itemdetail = () => {
     </ScrollView>
     </View>
     <TouchableOpacity style={styles.addtocard}>
-        <Text style={{alignSelf:'center',fontSize:16,fontWeight:'700'}}>Add to Card</Text>
+        <Text style={{alignSelf:'center',fontSize:16,fontWeight:'700',color:'#fff'}}>Add to Card</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -129,7 +129,7 @@ const styles = {
     bottom:0,
     left:0,
     right:0,
-    backgroundColor:'orange',
+    backgroundColor:'#FF6D1A',
     padding:10,
     width:wp('100'),
     alignSelf:'flex-end'

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingVertical: wp('0.5%'),
     marginHorizontal: wp('5%'),
-    borderRadius: hp('3%'),
+    borderRadius: hp('5%'),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

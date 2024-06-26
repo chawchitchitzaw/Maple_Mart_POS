@@ -76,7 +76,7 @@ const Bottomnavigator = () => {
                   backgroundColor: '#FF6D1A',
                   borderRadius: 30,
                 }}>
-                <Ionicons name="scan" size={30} color={'#E3E3E3'} />
+                <Ionicons name="scan" size={30} color={'#fff'} />
               </View>
             </View>
           ),

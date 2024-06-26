@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
   },
   imageborder: {
-    borderWidth: 1,
+    borderWidth: 1.5,
     backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     width: wp('25%'),
     borderRadius: hp('100%'),
     overflow: 'hidden',
+    borderColor:'#FF6D1A',
   },
   imgtxt: {
     flexDirection: 'row',
