@@ -8,7 +8,6 @@ import {
   Alert,
 } from 'react-native';
 import React from 'react';
-import lady from '../../Assets/lady.png';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Profilelist from '../../component/Profile/Profilelist';
@@ -50,9 +49,9 @@ const Profile = () => {
           <View style={styles.imgtxt}>
             <View style={styles.imageborder}>
               <Image
-                source={lady}
-                style={{height: '80%', width: '80%'}}
-                resizeMode="contain"
+                source={{uri: user.profile_url}}
+                style={{height: '100%', width: '100%', borderRadius: 100}}
+                resizeMode="cover"
               />
             </View>
             <View style={{flex: 1, marginHorizontal: wp('5%')}}>
@@ -143,7 +142,7 @@ const styles = StyleSheet.create({
     width: wp('25%'),
     borderRadius: hp('100%'),
     overflow: 'hidden',
-    borderColor:'#FF6D1A',
+    borderColor: '#FF6D1A',
   },
   imgtxt: {
     flexDirection: 'row',
