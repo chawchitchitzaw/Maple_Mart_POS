@@ -20,7 +20,7 @@ const Checkout = () => {
 
       <ScrollView showsVerticalScrollIndicator={false} style={styles.paybill}>
         <View style={{alignItems: 'center', marginBottom: hp('5%')}}>
-          <Text style={styles.title}>Maple</Text>
+          <Text style={styles.title}>Maple Mart</Text>
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Invoice No:</Text>

@@ -6,7 +6,7 @@ import {
   FlatList,
   SafeAreaView,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import chips from '../Assets/chips.png';
@@ -36,10 +36,22 @@ export const data = [
 ];
 
 const Home = () => {
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail')}>
-      <Image source={item.img} style={{width:wp('30'),height:hp('25'),alignSelf:'center',resizeMode:'contain',}}/>
-      <Text style={styles.txtname} numberOfLines={2}>{item.name}</Text>
+  const renderItem = ({item}) => (
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => navigation.navigate('Itemdetail')}>
+      <Image
+        source={item.img}
+        style={{
+          width: wp('30'),
+          height: hp('25'),
+          alignSelf: 'center',
+          resizeMode: 'contain',
+        }}
+      />
+      <Text style={styles.txtname} numberOfLines={2}>
+        {item.name}
+      </Text>
       <Text style={styles.txtprice}>{item.price}</Text>
     </TouchableOpacity>
   );
@@ -48,13 +60,9 @@ const Home = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
-          <Text style={styles.sentences}>
-            <Text style={{color: '#FF6D1A'}}>POS</Text> System
-          </Text>
+          <Text style={styles.sentences}>Maple Mart</Text>
           <Searchbox />
         </View>
-
-        
 
         <Text style={styles.textidea}>Revenue</Text>
 
@@ -68,7 +76,7 @@ const Home = () => {
         </View>
         <Text style={styles.textidea}>Best Seller</Text>
 
-        <View style={{marginHorizontal:wp('2')}}>
+        <View style={{marginHorizontal: wp('2')}}>
           <FlatList
             showsHorizontalScrollIndicator={false}
             data={data}
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 3,
-    marginBottom:hp('2'),
+    marginBottom: hp('2'),
   },
   row: {
     //flex: 1,
@@ -100,7 +108,7 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
     marginHorizontal: wp('5%'),
     paddingVertical: hp('2.5%'),
-    color: '#000000',
+    color: '#FF6D1A',
     fontWeight: '500',
   },
   textidea: {
@@ -111,14 +119,13 @@ const styles = StyleSheet.create({
     marginLeft: wp('5%'),
     marginVertical: hp('2%'),
   },
-  
+
   total: {
     fontSize: hp('2%'),
     fontFamily: 'DMSans',
     padding: wp('2%'),
     fontWeight: '500',
     marginHorizontal: wp('3%'),
-    
   },
   revenue: {
     marginHorizontal: wp('2%'),
@@ -129,32 +136,29 @@ const styles = StyleSheet.create({
     width: wp('46%'),
     marginVertical: 1,
     flex: 1,
-    
   },
   revenuebox: {
     flexDirection: 'row',
     flex: 2,
-    marginHorizontal:wp('2'),
+    marginHorizontal: wp('2'),
   },
   item: {
-    width: width / 2-10,
+    width: width / 2 - 10,
     //height:hp('30'),
-    borderRadius:hp('2'),
+    borderRadius: hp('2'),
     backgroundColor: '#fff',
     padding: 5,
     //elevation: 1,
     marginVertical: 3,
     marginHorizontal: 5,
-    
-    
   },
-  txtname:{
-    fontSize:16,
-    fontWeight:'650',
-    marginLeft:5,
+  txtname: {
+    fontSize: 16,
+    fontWeight: '650',
+    marginLeft: 5,
   },
-   txtprice:{
-    fontSize:12,
-    marginLeft:5,
+  txtprice: {
+    fontSize: 12,
+    marginLeft: 5,
   },
 });

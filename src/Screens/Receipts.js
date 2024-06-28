@@ -6,111 +6,117 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Button,
   TextInput,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import search_icon from '../Assets/search_icon.png';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-date-picker';
-import {useState} from 'react';
+import moment from 'moment';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import moment from 'moment';
 export const data = [
   {
     id: 1,
     barcode: '#2642456',
     price: '3,500',
-    date: '02-05-2024',
+    date: '2024-05-02', // Use ISO format for consistent date comparisons
     time: '04:10 pm',
   },
   {
     id: 2,
     barcode: '#9766593',
     price: '3,000',
-    date: '02-05-2024',
+    date: '2024-05-02',
     time: '04:12 pm',
   },
   {
     id: 3,
     barcode: '#7394293',
     price: '2,000',
-    date: '02-05-2024',
+    date: '2024-05-02',
     time: '04:15 pm',
   },
   {
     id: 4,
     barcode: '#7569246',
     price: '7,000',
-    date: '05-05-2024',
+    date: '2024-05-05',
     time: '02:10 pm',
   },
   {
     id: 5,
     barcode: '#2568721',
     price: '12,000',
-    date: '05-05-2024',
+    date: '2024-05-07',
     time: '08:10 am',
   },
-];
-const select = [
-  {label: '25/5/2024', value: '1'},
-  {label: '26/5/2024', value: '2'},
 ];
 
 const Receipts = () => {
   const navigation = useNavigation();
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
   const [product, setProduct] = useState(data);
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState();
+  const [endDate, setEndDate] = useState(new Date());
   const [openDateModal, setOpenDateModal] = useState(false);
-  const [openTimeModal, setOpenTimeModal] = useState(false);
+  const [openEndDateModal, setOpenEndDateModal] = useState(false);
 
   const produceData = ({item}) => {
     return (
       <View style={styles.produceview}>
-        {/* icon_and_price */}
-
         <AntDesign
           name="creditcard"
           size={25}
           color={'#606F89'}
-          style={{
-            marginHorizontal: wp('3%'),
-            flex: 1,
-          }}
+          style={{marginHorizontal: wp('3%'), flex: 1}}
         />
         <View style={{marginHorizontal: wp('2%'), flex: 2}}>
           <Text style={styles.price}>{item.price}</Text>
           <Text style={styles.date}>{item.date}</Text>
         </View>
-
         <Text style={styles.bar}>{item.barcode}</Text>
       </View>
     );
   };
 
   const handleSearch = () => {
-    if (search == '#') {
+    if (search === '#') {
       setProduct(data);
     } else {
-      const filterProduct = data.filter(item => item.barcode == search);
-      console.log('searValue', search);
-      console.log('filter', filterProduct);
+      const filterProduct = data.filter(item => item.barcode === search);
       setProduct(filterProduct);
     }
   };
 
+  // Effect hook to filter data when date or endDate changes
+  useEffect(() => {
+    filterData();
+  }, [date, endDate]);
+
+  useEffect(() => {
+    setProduct(data);
+  }, []);
+
+  const filterData = () => {
+    const filteredData = data.filter(item => {
+      const itemDate = moment(item.date, 'YYYY-MM-DD');
+      return (
+        itemDate.isSameOrAfter(moment(date).startOf('day')) &&
+        itemDate.isSameOrBefore(moment(endDate).endOf('day'))
+      );
+    });
+    setProduct(filteredData);
+  };
+
   return (
-    <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <View style={styles.secview}>
           <TextInput
@@ -130,7 +136,7 @@ const Receipts = () => {
             style={styles.timebox}
             onPress={() => setOpenDateModal(true)}>
             <Text style={styles.timetxt}>
-              {moment(date).format('DD-MM-YY')}
+              {moment(date).format('DD-MM-YYYY')}
             </Text>
           </TouchableOpacity>
           <DatePicker
@@ -138,58 +144,45 @@ const Receipts = () => {
             open={openDateModal}
             date={date}
             mode="date"
-            onConfirm={e => {
+            onConfirm={selectedDate => {
               setOpenDateModal(false);
-              setDate(e);
-              setProduct(
-                data.filter(
-                  item => moment(e).format('DD-MM-YYYY') == item.date,
-                ),
-              );
+              setDate(selectedDate);
             }}
-            onCancel={() => {
-              setOpenDateModal(false);
-            }}
+            onCancel={() => setOpenDateModal(false)}
           />
-          {/* <TouchableOpacity
+
+          <TouchableOpacity
             style={styles.timebox}
-            onPress={() => setOpenTimeModal(true)}>
-            <Text style={styles.timetxt}>{moment(time).format('LTS')}</Text>
+            onPress={() => setOpenEndDateModal(true)}>
+            <Text style={styles.timetxt}>
+              {moment(endDate).format('DD-MM-YYYY')}
+            </Text>
           </TouchableOpacity>
           <DatePicker
             modal
-            open={openTimeModal}
-            date={new Date()}
-            mode="time"
-            onConfirm={e => {
-              setOpenTimeModal(false);
-              setTime(e);
-              console.log('time test', moment(e).format('hh:mm a'));
-              setProduct(
-                product.filter(
-                  item => moment(e).format('hh:mm a') >= item.time,
-                ),
-              );
+            open={openEndDateModal}
+            date={endDate}
+            mode="date"
+            onConfirm={selectedDate => {
+              setOpenEndDateModal(false);
+              setEndDate(selectedDate);
             }}
-            onCancel={() => {
-              setOpenTimeModal(false);
-            }}
-          /> */}
-        </View>
-        <View style={{marginTop: 10}}>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            data={product}
-            keyExtractor={item => item.id.toString()}
-            renderItem={produceData}
+            onCancel={() => setOpenEndDateModal(false)}
           />
         </View>
+
+        <FlatList
+          data={product}
+          keyExtractor={item => item.id.toString()}
+          renderItem={produceData}
+        />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
 
 export default Receipts;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

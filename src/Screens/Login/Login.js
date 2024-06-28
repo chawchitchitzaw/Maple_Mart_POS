@@ -60,7 +60,6 @@ const Login = () => {
             );
             setEmail('');
             setPassword('');
-            // console.log('test123', res.data[0]);
           } catch (error) {
             console.log('error_in', error);
           }
@@ -73,7 +72,7 @@ const Login = () => {
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>
-            Welcome to <Text style={{color: '#FF6D1A'}}>Maple</Text>
+            Welcome to <Text style={{color: '#FF6D1A'}}>Maple</Text> Mart
           </Text>
         </View>
         <View style={styles.inputView}>
