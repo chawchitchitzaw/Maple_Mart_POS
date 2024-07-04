@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
   const [data, setData] = useState();
   const [sale, setSale] = useState();
   const [qty, setQty] = useState();
-  console.log('datatas', data);
+  //console.log('datatas', data);
   useEffect(() => {
     fetchData();
     fetchSale();
@@ -39,7 +39,7 @@ const Home = ({navigation}) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('result bestseller', resp);
+    //console.log('result bestseller', resp);
     if (resp.data['status'] === true) {
       setData(resp.data[0]);
     }
@@ -53,7 +53,7 @@ const Home = ({navigation}) => {
       },
     });
 
-    console.log('total sale response', resp.data['1'][0].total_qty);
+    //console.log('total sale response', resp.data['1'][0].total_qty);
 
     if (resp.data['status'] === 200) {
       setSale(resp.data['0'][0].total_sale);
@@ -80,7 +80,7 @@ const Home = ({navigation}) => {
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => navigation.navigate('Itemdetail')}>
+      onPress={() => navigation.navigate('Itemdetail', { product: item })}>
       <Image
         source={{uri: `${img_url}/${item.image}`}}
         style={{
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
 
   total: {
-    fontSize: hp('2%'),
+    fontSize: hp('2.5%'),
     fontFamily: 'DMSans',
     padding: wp('2%'),
     fontWeight: '500',

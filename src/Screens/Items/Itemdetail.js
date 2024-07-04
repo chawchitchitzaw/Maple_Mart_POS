@@ -11,36 +11,38 @@ export const data = {
   id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, quit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillua deserunt mollit anim id est laborum.',
 };
 
-const Itemdetail = () => {
+const Itemdetail = ({route}) => {
   //const {product,setProduct}= useState(data);
-  
+  const imageUrl = 'http://192.168.100.11/pos-backend/public/storage';
+  const { product } = route.params;
+  console.log("products", product)
   return (
     <SafeAreaView>
       <Back lable={'Details'}/>
       <View>
     <ScrollView style = {styles.container} showsVerticalScrollIndicator={false}>
       <View>
-        <View style={styles.imagebox}>
-      <Image style={styles.image} source={chips} />
-      </View>
+        
+      <Image style={styles.image} source={{uri: `${imageUrl}/${product.image}`}} />
+    
       <View style={styles.info}>
-        <Text style={styles.name}>{data.productname}</Text>
-        <Text style={styles.pricetxt}>{data.price}</Text>
+        <Text style={styles.name}>{product.product_name}</Text>
+        <Text style={styles.pricetxt}>{product.sell_price} MMK</Text>
       </View>
       
       <View style={styles.info2}>
       <View>
         <View style={styles.flatlistbox}>
             <Text style={styles.nametxt}>Barcode</Text>
-            <Text style={styles.valuetxt} selectable={true}>{data.barcode}</Text>
+            <Text style={styles.valuetxt} selectable={true}>{product.barcode}</Text>
         </View> 
         <View style={styles.flatlistbox}>
             <Text style={styles.nametxt}>Category</Text>
-            <Text style={styles.valuetxt}>{data.name}</Text>
+            <Text style={styles.valuetxt}>{product.category_name}</Text>
         </View> 
         <View style={styles.flatlistbox}>
             <Text style={styles.nametxt}>Description</Text>
-            <Text style={styles.valuetxt}>{data.description}</Text>
+            <Text style={styles.valuetxt}>{product.description}</Text>
         </View> 
       </View>
       </View>
@@ -70,18 +72,22 @@ const styles = {
     
   },
   imagebox: {
-    flex:1,
+    // flex:1,
     backgroundColor: '#fff',
     width:wp('100'),
+    height: hp(10),
     //height:hp('30'),
     alignSelf:'center'
     
   },
   image: {
-    margin:wp('1'),
-    flex:1,
-    alignSelf:'center'
-    
+    // margin:wp('1'),
+    // flex:1,
+     alignSelf:'center',
+    height: hp('40'),
+    width: wp('90'),
+    resizeMode:'contain',
+
   },
   info: {
     marginTop: 5,
@@ -117,7 +123,7 @@ const styles = {
     fontSize: 16,
     fontFamily: 'DMSans',
     flex:2,
-    lineHeight: 24,
+    //lineHeight: 24,
   },
   nametxt: {
     fontFamily: 'DMSans',
@@ -125,14 +131,15 @@ const styles = {
     flex:1,
   },
   addtocard:{
-    position:'relative',
-    bottom:0,
-    left:0,
-    right:0,
-    backgroundColor:'#FF6D1A',
-    padding:10,
-    width:wp('100'),
-    alignSelf:'flex-end'
+     position:'relative',
+     bottom:0,
+     left:0,
+     right:0,
+     backgroundColor:'#FF6D1A',
+     padding:10,
+     //position:'absolute',
+     width:wp('100'),
+     alignSelf:'flex-end',
     
   },
   

@@ -1,39 +1,38 @@
-// SearchScreen.js
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity,SafeAreaView,Image,Dimensions,ActivityIndicator } from 'react-native';import Icon from 'react-native-vector-icons/Ionicons';
-import cola from '../Assets/cola.png';
-import search_icon from '../Assets/search_icon.png';
-import { useNavigation } from '@react-navigation/native';
-import Searchbox from '../component/search/Searchbox';
+import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity,SafeAreaView,Image,Dimensions,ActivityIndicator,KeyboardAvoidingView,TouchableWithoutFeedback } from 'react-native';import Icon from 'react-native-vector-icons/Ionicons';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import axios from 'axios';
-const apidata='https://fakestoreapi.com/products';
+import {useSelector} from 'react-redux';
+//import Searchbox from '../component/search/Searchbox';
 
 const width = Dimensions.get('window').width-10;
-const SearchScreen = () => {
-  //API
+const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+
+const Items = ({navigation}) => {
+  const imageUrl = 'http://192.168.100.11/pos-backend/public/storage/';
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
-  const [selected,setSelected] = useState(null);
-  const [category,setCategory] = useState([]);
-  
+  const [loading, setLoading] = useState(true);
+  const user = useSelector(state => state.user);
+  const token = user.token;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoryResponse = await axios.get('http://192.168.100.11/pos-backend/public/api/category/getCategoryData',{
+        const categoryResponse = await axios.get(`${baseUrl}/category/getCategoryData`,{
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
-        const productResponse = await axios.get('http://192.168.100.11/pos-backend/public/api/product/getProductData',{
+        const productResponse = await axios.get(`${baseUrl}/product/getProductData`,{
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -44,7 +43,8 @@ const SearchScreen = () => {
         setCategories(categoryResponse.data[0]);
         setProducts(productResponse.data[0]);
         setFilteredProducts(productResponse.data[0]);
-        console.log('aaaaaaaaaaaaaaaaaa',productResponse.data[0]);
+        // console.log('aaaaaaaaaaaaaaaaaa',productResponse.data[0]);
+        // console.log('bbbbbbbbbbbbbbbbbb',categoryResponse.data[0]);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -54,142 +54,199 @@ const SearchScreen = () => {
 
     fetchData();
   }, []);
-  
 
-  const fetchData = async (url) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(url);
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    filterProducts();
+  }, [selectedCategory, searchQuery, products]);
+
+  const filterProducts = () => {
+    let filtered = products;
+
+    if (selectedCategory) {
+      filtered = filtered.filter(product => product.category_name === selectedCategory);
     }
-    setLoading(false);
-  };
-  //HandleSearch
-  const handleSearch = text => {
-    setSearchQuery(text);
-    const filteredData = data.filter(item => item.title.toLowerCase().includes(text.toLowerCase())
-    );
-    setData(filteredData);
-  };
-//UniqueItems
-  const uniqueItems = data.filter((item, index, self) =>
-    index === self.findIndex((t) => t.category === item.category)
-  );
-//selectitem
 
-  const testRender = ({item}) => {
-    return(
-     <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Itemdetail')}>
-    <View>
-      <Text style={styles.bar}> {item.category} </Text>
-    </View>
-    </TouchableOpacity>
-    );
-  };
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail')}>
-      <Image source={{uri:item.image}} style={{width:wp('30'),height:hp('20'),alignSelf:'center',resizeMode:'contain'}}/>
-      <Text style={styles.txtname} numberOfLines={2}>{item.title}</Text>
-      <Text style={styles.txtprice}>{item.price}</Text>
-    </TouchableOpacity>
-  );
-  return (
+    if (searchQuery) {
+      filtered = filtered.filter(product => 
+        product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
-    <View style={styles.container}>
+    setFilteredProducts(filtered);
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FF6D1A" />
+      </View>
+    );
+  }
+  const CategorySelector = ({ categories, selectedCategory, setSelectedCategory }) => (
+    <View style={styles.categorySelector}>
       
-        <View style={styles.search}>
-          
-          <TextInput
-            style={styles.textsearch}
-            placeholder="Search"
-            value={searchQuery}
-            onChangeText={text => handleSearch(text)}
-          />
-          <Image source={search_icon} style={{height: 20, width: 20, marginRight:5}} />
-        </View>
-        
-        <View>
-          <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={uniqueItems}
-          keyExtractor={item=>item.id.toString()}
-          renderItem={testRender}
-          />
-        </View>
-        
-        {loading ? (
-        <ActivityIndicator size="large" color="#FF6D1A"  style={{flex:1, justifyContent:'center', alignItems:'center'}}/>
-      ) : (
       <FlatList
-        showsVerticalScrollIndicator={false}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={categories}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => setSelectedCategory(item.name)}
+            style={[
+              styles.categoryButton,
+              { backgroundColor: selectedCategory === item.name ? '#FF6D1A' : '#fff',
+                
+               },
+            ]}
+          >
+            <Text style={[styles.categoryButtonText,{color: selectedCategory === item.name ? '#fff' : '#000000'}]}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
       />
-      )}
     </View>
+  );
 
+  const SearchBox = ({ searchQuery, setSearchQuery }) => (
+    <KeyboardAvoidingView behavior={'position'}>
+        <TouchableWithoutFeedback onPress={TextInput.dismiss}>
+          <View style={styles.container1}>
+            <TextInput
+              placeholder="Search"
+              placeholderTextColor="#9C9C9C"
+              style={styles.txt1}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+  
+            />
+            <Image
+              source={require('../Assets/search_icon.png')}
+              style={styles.img1}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+  );
+
+  const ProductList = ({ products }) => (
+    <View style={{marginBottom:hp('18')}}>
+    <FlatList
+      showsVerticalScrollIndicator={false}
+      data={products}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail', { product: item })}>
+        <Image source={{uri: `${imageUrl}/${item.image}`}} style={{width:wp('30'),height:hp('20'),alignSelf:'center',resizeMode:'contain'}}/>
+        <Text style={styles.txtname} numberOfLines={2}>{item.product_name}</Text>
+        <Text style={styles.txtprice}>{item.sell_price}</Text>
+        </TouchableOpacity>
+      )}
+      numColumns={2}
+      columnWrapperStyle={styles.row}
+    />
+    </View>
+  );
+
+
+  return (
+    <SafeAreaView style={styles.container}>
+  
+     
+        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+    
+      <View style={styles.container2}>
+        <CategorySelector
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+      
+      <ProductList products={filteredProducts} />
+      </View>
+    </SafeAreaView>
   );
 };
 
+
+
+
+
+
+
 const styles = StyleSheet.create({
-  // searchbar:{
-  //   flexDirection: 'row',
-  //   justifyContent:'space-between',
-    
-  // },
-  bar:{
-    fontFamily: 'DMSans',
-    fontSize: 14,
-    marginLeft: 5,
-    color: '#4F4F4F',
-    fontWeight: '600',
-    margin:hp('.5'),
-    padding:hp('.5'),
-    
-  },
-  box:{
-    justifyContent:'center',
-    backgroundColor:'#fff',
-    alignItems:'center',
-    marginHorizontal:hp('.5'),
-    marginVertical:hp('1'),
-    //marginTop:-2,
-    borderRadius:hp('20'),
-    borderColor:'black',
-    //flexDirection:'row',
-    //height:hp('7'),
-  },
-  textsearch:{
-    width:wp('50'),
-  },
-  category:{
-    alignItems:'center',
-    justifyContent:'center',
-    width:wp('13%'),
-  },
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    backgroundColor: '#FAFAFA',
+    paddingTop: wp('7%'),
+    //paddingHorizontal:wp('5'),
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categorySelector: {
     
   },
   row: {
     //flex: 1,
     justifyContent: 'space-between',
   },
+  heading: {
+    fontSize: 24,
+    marginBottom: 10,
+  },
+  categoryButton: {
+    
+    padding: wp('2'),
+    marginHorizontal: wp('1'),
+    marginVertical: wp('1'),
+    borderRadius:wp('20'),
+    elevation:1,
+  },
+  categoryButtonText: {
+    //color: 'white',
+  },
+  
+  productItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  container1: {
+    //flex: 1,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: wp('0.5%'),
+    marginHorizontal: wp('5%'),
+    borderRadius: hp('5%'),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 1,
+  },
+  img1: {
+    height: hp('2.5%'),
+    width: hp('2.5%'),
+    marginHorizontal: wp('5%'),
+  },
+  txt1: {
+    fontWeight: '500',
+    fontSize: hp('2.5%'),
+    marginHorizontal: wp('5%'),
+    fontFamily: 'DMSans',
+  },
+  container2:{
+    padding:wp('5'),
+  },
   item: {
-    width: width / 2-10,
+    width: width / 2-wp('5'),
     borderRadius:hp('2'),
     backgroundColor: '#fff',
     padding: 5,
-    //elevation: 1,
+    elevation: 1,
     marginVertical: 3,
     marginHorizontal: 3,
+
     
     
   },
@@ -202,24 +259,6 @@ const styles = StyleSheet.create({
     fontSize:12,
     marginLeft:5,
   },
-
-
- 
-    search: {
-      backgroundColor: '#FFFFFF',
-      paddingVertical: 5,
-      paddingHorizontal: 15,
-      //marginHorizontal: 20,
-      borderRadius: 25,
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop:hp('1'),
-      //width:wp('95%'),
-      height:hp('7%'),
-      justifyContent:'space-between'
-    },
-    
-  
 });
 
-export default SearchScreen;
+export default Items;
