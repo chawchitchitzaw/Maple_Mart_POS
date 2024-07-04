@@ -21,7 +21,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Back from '../../component/Back/Back';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import axios from 'axios';
+import {login} from '../../Redux/Slice/UserSlice';
 
 const Edit_Profile = () => {
   const userData = useSelector(state => state.user);
@@ -30,12 +32,55 @@ const Edit_Profile = () => {
   const [email, setEmail] = useState(userData.email);
   const [gender, setGEnder] = useState(userData.gender);
   const [position, setPosition] = useState(userData.position);
-
+  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const user = useSelector(state => state.user);
+  const token = user.token;
+  const dispatch = useDispatch();
+  console.log('token', token);
   const openCamera = async () => {
-    const result = await launchImageLibrary();
+    const result = await launchImageLibrary({
+      includeBase64: true,
+    });
 
-    console.log('resp image', result);
-    setImgUrl(result.assets[0].uri);
+    console.log('open camera result image', result.assets[0].base64);
+    setImgUrl(result.assets[0].base64);
+  };
+
+  const handleSave = async () => {
+    const body = {
+      user_id: userData.id,
+      name: name,
+      email: email,
+      gender: gender,
+      image: imgUrl,
+    };
+
+    console.log('body from edit', body);
+    await axios
+      .post(`${baseUrl}/account/editProfileApi`, body, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        console.log('res from axios', res.data);
+        if (res.data.status === true) {
+          dispatch(
+            login({
+              email: res.data.result[0].email,
+              profile_url: res.data.result[0].image,
+              id: res.data.result[0].id,
+              name: res.data.result[0].name,
+              position: res.data.result[0].role,
+              gender: res.data.result[0].gender,
+              staff_id: res.data.result[0].staff_id,
+            }),
+          );
+        } else {
+        }
+      });
   };
 
   return (
@@ -51,7 +96,9 @@ const Edit_Profile = () => {
             <View style={styles.imageborder}>
               {imgUrl ? (
                 <Image
-                  source={{uri: imgUrl}}
+                  source={{
+                    uri: `data:image/png;base64,${imgUrl}`,
+                  }}
                   style={{height: '100%', width: '100%', borderRadius: 100}}
                   resizeMode="cover"
                 />
@@ -76,7 +123,7 @@ const Edit_Profile = () => {
                   placeholderTextColor="#9C9C9C"
                   style={styles.write}
                   value={name}
-                  onChange={setName}
+                  onChangeText={setName}
                 />
               </View>
             </View>
@@ -88,7 +135,7 @@ const Edit_Profile = () => {
                   placeholderTextColor="#9C9C9C"
                   style={styles.write}
                   value={email}
-                  onChange={setEmail}
+                  onChangeText={setEmail}
                 />
               </View>
             </View>
@@ -100,7 +147,8 @@ const Edit_Profile = () => {
                   placeholderTextColor="#9C9C9C"
                   style={styles.write}
                   value={position}
-                  onChange={setPosition}
+                  onChangeText={setPosition}
+                  editable={false}
                 />
               </View>
             </View>
@@ -112,14 +160,14 @@ const Edit_Profile = () => {
                   placeholderTextColor="#9C9C9C"
                   style={styles.write}
                   value={gender}
-                  onChange={setGEnder}
+                  onChangeText={setGEnder}
                 />
               </View>
             </View>
           </View>
 
           <View style={{alignItems: 'flex-end', margin: wp('5%')}}>
-            <TouchableOpacity style={styles.savebtn}>
+            <TouchableOpacity style={styles.savebtn} onPress={handleSave}>
               <Text style={styles.txt2}>Save</Text>
             </TouchableOpacity>
           </View>

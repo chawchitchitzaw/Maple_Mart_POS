@@ -35,7 +35,7 @@ const Login = () => {
       password: password,
       token_name: 'login token',
     };
-    console.log('body');
+    console.log('body', body);
     await axios
       .post(`${baseUrl}/loginApi`, body, {
         headers: {
@@ -45,19 +45,22 @@ const Login = () => {
         },
       })
       .then(res => {
-        console.log('res from axios', res.data);
+        console.log('res from axios', res.data.result);
         if (res.data.status === 200) {
           try {
             dispatch(
               login({
-                token: res.data[0],
-                email: res.data[1].email,
-                profile_url: res.data[1].profile_photo_url,
-                id: res.data[1].id,
-                name: res.data[1].name,
-                position: res.data[1].role,
+                token: res.data.token,
+                email: res.data.result.email,
+                profile_url: res.data.result.image,
+                id: res.data.result.id,
+                name: res.data.result.name,
+                position: res.data.result.role,
+                gender: res.data.result.gender,
+                staff_id: res.data.result.staff_id,
               }),
             );
+
             setEmail('');
             setPassword('');
           } catch (error) {

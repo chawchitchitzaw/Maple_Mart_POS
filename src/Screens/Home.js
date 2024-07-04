@@ -9,39 +9,80 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import chips from '../Assets/chips.png';
-import cola from '../Assets/cola.png';
-import sprite from '../Assets/sprite.png';
-import butter from '../Assets/butter.png';
-import food from '../Assets/food.png';
-import Searchbox from '../component/search/Searchbox';
+import axios from 'axios';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width - 20;
+import {useSelector} from 'react-redux';
+const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+const img_url = 'http://192.168.100.11/pos-backend/public/storage/';
 
-export const data = [
-  {id: 1, name: 'chips', img: chips, price: '$20'},
-  {id: 2, name: 'cola', img: cola, price: '$25'},
-  {id: 3, name: 'sprite', img: sprite, price: '$25'},
-  {id: 4, name: 'butter', img: butter, price: '$20'},
-  {id: 5, name: 'food', img: food, price: '$20'},
-  {id: 6, name: 'chips', img: chips, price: '$20'},
-  {id: 7, name: 'cola', img: cola, price: '$25'},
-  {id: 8, name: 'sprite', img: sprite, price: '$25'},
-  {id: 9, name: 'butter', img: butter, price: '$20'},
-  {id: 10, name: 'food', img: food, price: '$20'},
-];
+const Home = ({navigation}) => {
+  const user = useSelector(state => state.user);
+  const token = user.token;
+  const [data, setData] = useState();
+  const [sale, setSale] = useState();
+  const [qty, setQty] = useState();
+  console.log('datatas', data);
+  useEffect(() => {
+    fetchData();
+    fetchSale();
+  }, []);
+  const fetchData = async () => {
+    const resp = await axios.get(`${baseUrl}/bestSeller`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('result bestseller', resp);
+    if (resp.data['status'] === true) {
+      setData(resp.data[0]);
+    }
+  };
+  const fetchSale = async () => {
+    const resp = await axios.get(`${baseUrl}/totalSaleQty`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-const Home = () => {
+    console.log('total sale response', resp.data['1'][0].total_qty);
+
+    if (resp.data['status'] === 200) {
+      setSale(resp.data['0'][0].total_sale);
+      setQty(resp.data['1'][0].total_qty);
+    }
+  };
+  // const fetchTotalSale = async () => {
+  //   try {
+  //     const resp = await axios.get(`${baseUrl}/totalSale`, {
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     console.log('total sale response', resp.data);
+  //     // Assuming your API returns the total sale value
+  //     setTotalSale(resp.data.totalSale); // adjust according to your API response structure
+  //   } catch (error) {
+  //     console.error('Error fetching total sale:', error);
+  //   }
+  // };
+
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.item}
       onPress={() => navigation.navigate('Itemdetail')}>
       <Image
-        source={item.img}
+        source={{uri: `${img_url}/${item.image}`}}
         style={{
           width: wp('30'),
           height: hp('25'),
@@ -50,18 +91,17 @@ const Home = () => {
         }}
       />
       <Text style={styles.txtname} numberOfLines={2}>
-        {item.name}
+        {item.product_name}
       </Text>
-      <Text style={styles.txtprice}>{item.price}</Text>
+      <Text style={styles.txtprice}>{item.sell_price}</Text>
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
+        <View style={styles.lab}>
           <Text style={styles.sentences}>Maple Mart</Text>
-          <Searchbox />
         </View>
 
         <Text style={styles.textidea}>Revenue</Text>
@@ -69,9 +109,11 @@ const Home = () => {
         <View style={styles.revenuebox}>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Sale</Text>
+            <Text style={styles.total}>{sale}</Text>
           </View>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Quantity</Text>
+            <Text style={styles.total}>{qty}</Text>
           </View>
         </View>
         <Text style={styles.textidea}>Best Seller</Text>
@@ -98,16 +140,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     marginBottom: hp('2'),
   },
-  row: {
-    //flex: 1,
-    //justifyContent: 'space-between',
-    //marginRight:10,
+  lab: {
+    backgroundColor: '#FFFFFF',
+    padding: hp('1%'),
+    paddingVertical: hp('2%'),
+    alignItems: 'center',
+    elevation: 1,
   },
   sentences: {
     fontSize: hp('3%'),
     fontFamily: 'DMSans',
     marginHorizontal: wp('5%'),
-    paddingVertical: hp('2.5%'),
     color: '#FF6D1A',
     fontWeight: '500',
   },

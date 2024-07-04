@@ -17,6 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../Redux/Slice/UserSlice';
+import lady from '../../Assets/lady.png';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -48,11 +49,19 @@ const Profile = () => {
           <Text style={styles.title}>Profile</Text>
           <View style={styles.imgtxt}>
             <View style={styles.imageborder}>
-              <Image
-                source={{uri: user.profile_url}}
-                style={{height: '100%', width: '100%', borderRadius: 100}}
-                resizeMode="cover"
-              />
+              {!user.profile_url ? (
+                <Image
+                  source={lady}
+                  style={{height: '90%', width: '90%', borderRadius: 100}}
+                  resizeMode="contain"
+                />
+              ) : (
+                <Image
+                  source={{uri: `data:image/png;base64,${user.profile_url}`}}
+                  style={{height: '100%', width: '100%', borderRadius: 100}}
+                  resizeMode="cover"
+                />
+              )}
             </View>
             <View style={{flex: 1, marginHorizontal: wp('5%')}}>
               <Text style={styles.txt1}>{user.name}</Text>
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
   },
   tail: {
     borderRadius: hp('2%'),
-    backgroundColor: '#FF6D1A',
+    backgroundColor: '#FF2400',
     paddingVertical: hp('1%'),
     alignItems: 'center',
     marginHorizontal: wp('5%'),

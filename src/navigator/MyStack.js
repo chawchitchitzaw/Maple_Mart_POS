@@ -13,7 +13,6 @@ import CashBtn from '../component/Product/CashBtn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 import category from '../Screens/Items/category';
-import Scanner from '../Screens/Scanner';
 import Itemdetail from '../Screens/Items/Itemdetail';
 import barcode from '../Screens/barcode/barcode';
 
@@ -39,7 +38,6 @@ const MyStack = () => {
           <Stack.Screen name="Edit_Profile" component={Edit_Profile} />
           <Stack.Screen name="Back" component={Back} />
           <Stack.Screen name="category" component={category} />
-          <Stack.Screen name="Scanner" component={Scanner} />
           <Stack.Screen name="Itemdetail" component={Itemdetail} />
           <Stack.Screen name="barcode" component={barcode} />
           <Stack.Screen name="Amount" component={Amount} />

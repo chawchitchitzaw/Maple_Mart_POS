@@ -19,11 +19,19 @@ const View_Profile = () => {
 
       <View style={styles.imageside}>
         <View style={styles.imageborder}>
-          <Image
-            source={lady}
-            style={{height: '100%', width: '100%'}}
-            resizeMode="contain"
-          />
+          {!user.profile_url ? (
+            <Image
+              source={lady}
+              style={{height: '100%', width: '100%', borderRadius: 100}}
+              resizeMode="contain"
+            />
+          ) : (
+            <Image
+              source={{uri: `data:image/png;base64,${user.profile_url}`}}
+              style={{height: '100%', width: '100%', borderRadius: 100}}
+              resizeMode="contain"
+            />
+          )}
         </View>
       </View>
       <View>
@@ -41,7 +49,7 @@ const View_Profile = () => {
         </View>
         <View style={{marginBottom: hp('1%')}}>
           <Text style={styles.txt1}>Gender</Text>
-          <Text style={styles.txt2}>{user?.gender}</Text>
+          <Text style={styles.txt2}>{user.gender}</Text>
         </View>
       </View>
     </SafeAreaView>
@@ -77,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: hp('100%'),
     overflow: 'hidden',
-    padding: wp('3%'),
+    // padding: wp('3%'), 
   },
   imageside: {
     alignItems: 'center',
