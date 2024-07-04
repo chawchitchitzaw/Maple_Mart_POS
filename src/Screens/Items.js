@@ -24,7 +24,35 @@ const SearchScreen = () => {
   
 
   useEffect(() => {
-    fetchData(apidata);
+    const fetchData = async () => {
+      try {
+        const categoryResponse = await axios.get('http://192.168.100.11/pos-backend/public/api/category/getCategoryData',{
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const productResponse = await axios.get('http://192.168.100.11/pos-backend/public/api/product/getProductData',{
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setCategories(categoryResponse.data[0]);
+        setProducts(productResponse.data[0]);
+        setFilteredProducts(productResponse.data[0]);
+        console.log('aaaaaaaaaaaaaaaaaa',productResponse.data[0]);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
   
 
