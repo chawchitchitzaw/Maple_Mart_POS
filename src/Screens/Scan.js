@@ -20,12 +20,31 @@ import Buying_list from '../component/Product/Buying_list';
 import {useState} from 'react';
 import {data} from '../component/Product/Buying_list';
 import scan from '../Assets/scan.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, removeItemFromCart } from '../store/cartSlice';
+import { getProducts } from '../store/productSlice';
 
 const Scan = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState(null);
   const [product, setProduct] = useState(data);
-  // console.log('product', product);
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  console.log("cartItems from selector", cartItems)
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const products = useSelector((state) => state.products.items);
+  const productStatus = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error);
+  const grandTotal = cartItems.reduce((total, item) => {
+    return total + (item.quantity * item.sell_price);
+  }, 0);
+useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(getProducts());
+    }
+  }, [dispatch, productStatus]);
+
 
   const handleSearch = () => {
     if (search == '#') {
@@ -42,10 +61,10 @@ const Scan = () => {
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Amount')}
+          onPress={() => {navigation.navigate('Amount')}}
           style={styles.cbtn}>
           <Text style={styles.btxt}>CHARGE</Text>
-          <Text style={styles.bprice}> 0</Text>
+          <Text style={styles.bprice}>{grandTotal} MMK</Text>
         </TouchableOpacity>
         <View style={styles.barcodeside}>
           <TextInput
@@ -62,7 +81,7 @@ const Scan = () => {
             <Image source={scan} style={styles.scanimg} />
           </TouchableOpacity>
         </View>
-        <Buying_list items={product} setProduct={val => setProduct(val)} />
+        <Buying_list items={cartItems} setProduct={val => setProduct(val)} />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );

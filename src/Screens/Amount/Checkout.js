@@ -1,6 +1,8 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import {chargeOut} from '../../store/cartSlice';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,6 +14,11 @@ import Back from '../../component/Back/Back';
 
 const Checkout = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const handleNewSale = () => {
+    dispatch(chargeOut());
+    navigation.navigate('Scan');
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -42,8 +49,8 @@ const Checkout = () => {
       </ScrollView>
 
       <View style={{marginVertical: hp('5%')}}>
-        <CashBtn lable="PRINT BILL" goto="Edit_Profile" />
-        <CashBtn lable="NEW SALE" goto="Scan" />
+        <CashBtn lable="PRINT BILL" onPress={() => navigation.navigate('Edit_Profile')} />
+        <CashBtn lable="NEW SALE" onPress={handleNewSale}  />
       </View>
     </View>
   );

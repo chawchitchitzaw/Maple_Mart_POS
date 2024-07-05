@@ -2,12 +2,30 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, removeItemFromCart } from '../../store/cartSlice';
+import { getProducts } from '../../store/productSlice';
 const BarcodeScanner = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcodeData, setBarcodeData] = useState('');
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const products = useSelector((state) => state.products.items);
+  const productStatus = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error);
 
+  useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(getProducts());
+    }
+  }, [dispatch, productStatus]);
+
+  const addToCartHandler = () => {
+    console.log("selected Proudcts", product)
+    dispatch(addItemToCart([product]));
+  };
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -20,7 +38,7 @@ const BarcodeScanner = () => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setBarcodeData(data);
-    Alert.alert('Add Item', `Barcode: ${data}`, [{ text: 'OK', onPress: () => setScanned(false) }]);
+    Alert.alert('Add Item', `Barcode: ${data}`, [{ text: 'OK', onPress: () => addToCartHandler() }]);
   };
 
   if (hasPermission === null) {

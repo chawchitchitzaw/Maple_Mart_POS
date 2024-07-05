@@ -46,9 +46,9 @@ const Billlist = () => {
   const testRender = ({item}) => {
     return (
       <View style={styles.bill}>
-        <Text style={styles.itemtxt}>{item.name}</Text>
-        <Text style={styles.qty}>{item.qty}</Text>
-        <Text style={styles.amount}>{item.price}</Text>
+        <Text style={styles.itemtxt}>{item.product_name}</Text>
+        <Text style={styles.qty}>{item.quantity}</Text>
+        <Text style={styles.amount}>{item.sell_price}</Text>
       </View>
     );
   };

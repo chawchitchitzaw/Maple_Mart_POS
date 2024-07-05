@@ -9,7 +9,8 @@ import {thunk} from 'redux-thunk';
 import {persistReducer, persistStore} from 'redux-persist';
 import CounterSlice from '../Slice/CounterSlice';
 import UserSlice from '../Slice/UserSlice';
-
+import productReducer from '../../store/productSlice';
+import cartReducer from '../../store/cartSlice';
 // export const store = configureStore({
 //   reducer: {
 //     counter: CounterSlice,
@@ -19,12 +20,14 @@ import UserSlice from '../Slice/UserSlice';
 const rootReducer = combineReducers({
   counter: CounterSlice,
   user: UserSlice,
+  products: productReducer,
+  cart: cartReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['counter'],
+  whitelist: ['counter', 'cart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

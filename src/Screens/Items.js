@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+
 //import Searchbox from '../component/search/Searchbox';
 
 const width = Dimensions.get('window').width-10;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, ScrollView, Image, Text, Button,SafeAreaView,FlatList, TouchableHighlight,TouchableOpacity } from 'react-native';
 import chips from '../../Assets/chips.png';
 import {
@@ -6,16 +6,38 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Back from '../../component/Back/Back';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, removeItemFromCart } from '../../store/cartSlice';
+import { getProducts } from '../../store/productSlice';
 
-export const data = {
-  id:1, barcode:'123456789123', name:'Drink', price:'1500',productname:'Coca Cola',description:'Lorem ipsum dolor sit amet, quit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillua deserunt mollit anim id est laborum.',
-};
+
 
 const Itemdetail = ({route}) => {
   //const {product,setProduct}= useState(data);
   const imageUrl = 'http://192.168.100.11/pos-backend/public/storage';
   const { product } = route.params;
-  console.log("products", product)
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const products = useSelector((state) => state.products.items);
+  const productStatus = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error);
+
+  useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(getProducts());
+    }
+  }, [dispatch, productStatus]);
+
+  const addToCartHandler = () => {
+    console.log("selected Proudcts", product)
+    dispatch(addItemToCart(product));
+  };
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeItemFromCart(id));
+  };
+
   return (
     <SafeAreaView>
       <Back lable={'Details'}/>
@@ -51,7 +73,7 @@ const Itemdetail = ({route}) => {
       </View>
     </ScrollView>
     </View>
-    <TouchableOpacity style={styles.addtocard}>
+    <TouchableOpacity style={styles.addtocard} onPress={() => addToCartHandler(product.barcode)}>
         <Text style={{alignSelf:'center',fontSize:16,fontWeight:'700',color:'#fff'}}>Add to Card</Text>
       </TouchableOpacity>
     </SafeAreaView>

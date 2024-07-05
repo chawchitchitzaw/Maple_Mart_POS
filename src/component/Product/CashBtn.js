@@ -7,13 +7,13 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const CashBtn = ({lable, goto}) => {
+const CashBtn = ({lable, onPress}) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate(goto)}>
+      onPress={onPress}>
       <View style={styles.icon_lable}>
         <Text style={styles.txt1}>{lable}</Text>
       </View>

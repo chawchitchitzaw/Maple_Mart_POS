@@ -7,7 +7,7 @@ import {
   Keyboard,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
@@ -17,6 +17,9 @@ import Back from '../../component/Back/Back';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SelectCountry} from 'react-native-element-dropdown';
 import CashBtn from '../../component/Product/CashBtn';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, removeItemFromCart } from '../../store/cartSlice';
+import { getProducts } from '../../store/productSlice';
 
 const local_data = [
   {
@@ -29,10 +32,39 @@ const local_data = [
   },
 ];
 
+const calculateDiscount = (totalAmount) => {
+  if (totalAmount >= 1000000) {
+    return Math.ceil(totalAmount / 30);
+  } else if (totalAmount >= 500000) {
+    return Math.ceil(totalAmount / 20);
+  } else if (totalAmount >= 50000) {
+    return Math.ceil(totalAmount / 10);
+  } else {
+    return 0;
+  }
+};
+
 const Amount = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const [pay, setPay] = useState('1');
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  console.log("cartItems from selector", cartItems)
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const products = useSelector((state) => state.products.items);
+  const productStatus = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error);
+  const grandTotal = cartItems.reduce((total, item) => {
+    return total + (item.quantity * item.sell_price);
+  }, 0);
+  const totalDiscount = calculateDiscount(grandTotal);
+useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(getProducts());
+    }
+  }, [dispatch, productStatus]);
+
   return (
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
@@ -42,41 +74,23 @@ const Amount = () => {
         <View style={styles.amountlist}>
           <Text style={styles.besidebox}>Total</Text>
 
-          <TextInput
-            placeholder="Enter Amont"
-            placeholderTextColor="#9C9C9C"
-            style={styles.inputtxt}
-            value={value}
-            onChangeText={val => setValue(val)}
-          />
+          <Text style={styles.inputtxt}>{grandTotal}</Text>
         </View>
         <View style={styles.amountlist}>
           <Text style={styles.besidebox}>Discount</Text>
 
-          <TextInput
-            placeholder="Enter Amont"
-            placeholderTextColor="#9C9C9C"
-            style={styles.inputtxt}
-            value={value}
-            onChangeText={val => setValue(val)}
-          />
+          <Text style={styles.inputtxt}>{totalDiscount}</Text>
         </View>
         <View style={styles.amountlist}>
           <Text style={styles.besidebox}>Net Total</Text>
 
-          <TextInput
-            placeholder="Enter Amont"
-            placeholderTextColor="#9C9C9C"
-            style={styles.inputtxt}
-            value={value}
-            onChangeText={val => setValue(val)}
-          />
+          <Text style={styles.inputtxt}>{grandTotal-totalDiscount}</Text>
         </View>
         <View style={styles.amountlist}>
           <Text style={styles.besidebox}>Cash Received</Text>
 
           <TextInput
-            placeholder="Enter Amont"
+            placeholder="Enter Amount"
             placeholderTextColor="#9C9C9C"
             style={styles.inputtxt}
             value={value}
@@ -99,7 +113,7 @@ const Amount = () => {
             }}
           />
         </View>
-        <CashBtn lable="PAY BILL" goto="Checkout" />
+        <CashBtn lable="PAY BILL" onPress={() => navigation.navigate('Checkout')} />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -130,6 +144,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp('5%'),
     height: hp('6.5%'),
     flex: 2,
+    textAlign:'right',
+    textAlignVertical:'center',
   },
   besidebox: {
     color: '#606F89',
