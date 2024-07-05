@@ -150,9 +150,10 @@ const styles = StyleSheet.create({
   sentences: {
     fontSize: hp('3%'),
     fontFamily: 'DMSans',
-    marginHorizontal: wp('5%'),
+    //marginHorizontal: wp('5%'),
     color: '#FF6D1A',
-    fontWeight: '500',
+    fontWeight: '700',
+    
   },
   textidea: {
     fontWeight: '500',

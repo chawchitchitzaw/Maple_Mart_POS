@@ -236,7 +236,8 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans',
   },
   container2:{
-    padding:wp('5'),
+    marginTop:hp('1'),
+    paddingHorizontal:wp('5'),
   },
   item: {
     width: width / 2-wp('5'),
