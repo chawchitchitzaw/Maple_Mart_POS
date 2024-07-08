@@ -18,10 +18,12 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../Redux/Slice/UserSlice';
 import lady from '../../Assets/lady.png';
+import axios from 'axios';
 
 const Profile = () => {
   const navigation = useNavigation();
   const user = useSelector(state => state.user);
+  // console.log('user', user);
   const dispatch = useDispatch();
   const twoOptionAlert = () => {
     Alert.alert('Log out of your account?', '', [
@@ -34,7 +36,26 @@ const Profile = () => {
       {
         text: 'Ok',
         onPress: () => {
-          dispatch(logout());
+          const token = user.token;
+          console.log('token', user.token);
+          axios
+            .post(
+              'http://192.168.100.11/pos-backend/public/api/logoutApi',
+              {},
+              {
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${user.token}`,
+                },
+              },
+            )
+            .then(resp => {
+              if (resp.status === 200) {
+                dispatch(logout());
+              }
+            });
+          // dispatch(logout());
         },
       },
     ]);
@@ -56,6 +77,7 @@ const Profile = () => {
                   resizeMode="contain"
                 />
               ) : (
+                //base64
                 <Image
                   source={{uri: `data:image/png;base64,${user.profile_url}`}}
                   style={{height: '100%', width: '100%', borderRadius: 100}}

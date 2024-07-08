@@ -14,7 +14,6 @@ import React, {useState} from 'react';
 import lady from '../../Assets/lady.png';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icons from 'react-native-vector-icons/SimpleLineIcons';
-
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {
   widthPercentageToDP as wp,
@@ -24,6 +23,7 @@ import Back from '../../component/Back/Back';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import {login} from '../../Redux/Slice/UserSlice';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Edit_Profile = () => {
   const userData = useSelector(state => state.user);
@@ -78,101 +78,102 @@ const Edit_Profile = () => {
               staff_id: res.data.result[0].staff_id,
             }),
           );
-        } else {
-        }
+        } 
       });
   };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FAFAFA'}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView style={{flex: 1}}>
-          <StatusBar barStyle={'dark-content'} backgroundColor="#FAFAFA" />
-          <View>
-            <Back lable={'Edit Profile'} />
-          </View>
+      <KeyboardAwareScrollView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView style={{flex: 1}}>
+            <StatusBar barStyle={'dark-content'} backgroundColor="#FAFAFA" />
+            <View>
+              <Back lable={'Edit Profile'} />
+            </View>
 
-          <View style={styles.imageside}>
-            <View style={styles.imageborder}>
-              {imgUrl ? (
-                <Image
-                  source={{
-                    uri: `data:image/png;base64,${imgUrl}`,
-                  }}
-                  style={{height: '100%', width: '100%', borderRadius: 100}}
-                  resizeMode="cover"
-                />
-              ) : (
-                <Image
-                  source={lady}
-                  style={{height: '100%', width: '100%'}}
-                  resizeMode="contain"
-                />
-              )}
+            <View style={styles.imageside}>
+              <View style={styles.imageborder}>
+                {imgUrl ? (
+                  <Image
+                    source={{
+                      uri: `data:image/png;base64,${imgUrl}`,
+                    }}
+                    style={{height: '100%', width: '100%', borderRadius: 100}}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <Image
+                    source={lady}
+                    style={{height: '100%', width: '100%'}}
+                    resizeMode="contain"
+                  />
+                )}
+              </View>
+              <TouchableOpacity style={styles.camera} onPress={openCamera}>
+                <Icons name="camera" size={25} color={'#fff'} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.camera} onPress={openCamera}>
-              <Icons name="camera" size={25} color={'#fff'} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <View style={{marginBottom: hp('1%')}}>
-              <Text style={styles.txt1}>User Name</Text>
-              <View style={styles.box}>
-                <TextInput
-                  placeholder="Enter your name"
-                  placeholderTextColor="#9C9C9C"
-                  style={styles.write}
-                  value={name}
-                  onChangeText={setName}
-                />
+            <View>
+              <View style={{marginBottom: hp('1%')}}>
+                <Text style={styles.txt1}>User Name</Text>
+                <View style={styles.box}>
+                  <TextInput
+                    placeholder="Enter your name"
+                    placeholderTextColor="#9C9C9C"
+                    style={styles.write}
+                    value={name}
+                    onChangeText={setName}
+                  />
+                </View>
+              </View>
+              <View style={{marginBottom: hp('1%')}}>
+                <Text style={styles.txt1}>Email</Text>
+                <View style={styles.box}>
+                  <TextInput
+                    placeholder="example@gmail.com"
+                    placeholderTextColor="#9C9C9C"
+                    style={styles.write}
+                    value={email}
+                    onChangeText={setEmail}
+                  />
+                </View>
+              </View>
+              <View style={{marginBottom: hp('1%')}}>
+                <Text style={styles.txt1}>Position</Text>
+                <View style={styles.box}>
+                  <TextInput
+                    placeholder="Enter"
+                    placeholderTextColor="#9C9C9C"
+                    style={styles.write}
+                    value={position}
+                    onChangeText={setPosition}
+                    editable={false}
+                  />
+                </View>
+              </View>
+              <View style={{marginBottom: hp('1%')}}>
+                <Text style={styles.txt1}>Gender</Text>
+                <View style={styles.box}>
+                  <TextInput
+                    placeholder="Enter"
+                    placeholderTextColor="#9C9C9C"
+                    style={styles.write}
+                    value={gender}
+                    onChangeText={setGEnder}
+                  />
+                </View>
               </View>
             </View>
-            <View style={{marginBottom: hp('1%')}}>
-              <Text style={styles.txt1}>Email</Text>
-              <View style={styles.box}>
-                <TextInput
-                  placeholder="example@gmail.com"
-                  placeholderTextColor="#9C9C9C"
-                  style={styles.write}
-                  value={email}
-                  onChangeText={setEmail}
-                />
-              </View>
-            </View>
-            <View style={{marginBottom: hp('1%')}}>
-              <Text style={styles.txt1}>Position</Text>
-              <View style={styles.box}>
-                <TextInput
-                  placeholder="Enter"
-                  placeholderTextColor="#9C9C9C"
-                  style={styles.write}
-                  value={position}
-                  onChangeText={setPosition}
-                  editable={false}
-                />
-              </View>
-            </View>
-            <View style={{marginBottom: hp('1%')}}>
-              <Text style={styles.txt1}>Gender</Text>
-              <View style={styles.box}>
-                <TextInput
-                  placeholder="Enter"
-                  placeholderTextColor="#9C9C9C"
-                  style={styles.write}
-                  value={gender}
-                  onChangeText={setGEnder}
-                />
-              </View>
-            </View>
-          </View>
 
-          <View style={{alignItems: 'flex-end', margin: wp('5%')}}>
-            <TouchableOpacity style={styles.savebtn} onPress={handleSave}>
-              <Text style={styles.txt2}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+            <View style={{alignItems: 'flex-end', margin: wp('5%')}}>
+              <TouchableOpacity style={styles.savebtn} onPress={handleSave}>
+                <Text style={styles.txt2}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

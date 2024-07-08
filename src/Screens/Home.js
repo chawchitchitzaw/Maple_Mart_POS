@@ -60,27 +60,9 @@ const Home = ({navigation}) => {
       setQty(resp.data['1'][0].total_qty);
     }
   };
-  // const fetchTotalSale = async () => {
-  //   try {
-  //     const resp = await axios.get(`${baseUrl}/totalSale`, {
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     console.log('total sale response', resp.data);
-  //     // Assuming your API returns the total sale value
-  //     setTotalSale(resp.data.totalSale); // adjust according to your API response structure
-  //   } catch (error) {
-  //     console.error('Error fetching total sale:', error);
-  //   }
-  // };
 
   const renderItem = ({item}) => (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => navigation.navigate('Itemdetail', { product: item })}>
+    <View style={styles.item}>
       <Image
         source={{uri: `${img_url}/${item.image}`}}
         style={{
@@ -94,7 +76,7 @@ const Home = ({navigation}) => {
         {item.product_name}
       </Text>
       <Text style={styles.txtprice}>{item.sell_price}</Text>
-    </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -109,11 +91,11 @@ const Home = ({navigation}) => {
         <View style={styles.revenuebox}>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Sale</Text>
-            <Text style={styles.total}>{sale}</Text>
+            <Text style={{...styles.total, textAlign: 'center'}}>{sale}</Text>
           </View>
           <View style={styles.revenue}>
             <Text style={styles.total}>Total Quantity</Text>
-            <Text style={styles.total}>{qty}</Text>
+            <Text style={{...styles.total, textAlign: 'center'}}>{qty}</Text>
           </View>
         </View>
         <Text style={styles.textidea}>Best Seller</Text>

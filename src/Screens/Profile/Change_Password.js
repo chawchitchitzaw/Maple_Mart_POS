@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: '#FFFFFF',
     padding: wp('1%'),
-    borderWidth: 1,
     borderRadius: hp('2%'),
     marginHorizontal: wp('5%'),
     marginVertical: hp('1%'),
+    elevation: 1,
   },
   write: {
     fontSize: hp('1.8%'),

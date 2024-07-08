@@ -17,6 +17,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {increment} from '../../Redux/Slice/CounterSlice';
 import {login} from '../../Redux/Slice/UserSlice';
+import Maplepos from '../../Assets/Maplepos.png';
 
 const Login = () => {
   const user = useSelector(state => state.user);
