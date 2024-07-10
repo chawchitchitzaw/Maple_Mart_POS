@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch,useSelector} from 'react-redux';
 import {chargeOut} from '../../store/cartSlice';
@@ -12,16 +12,49 @@ import CashBtn from '../../component/Product/CashBtn';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Billlist from '../../component/Bill/Billlist';
 import Back from '../../component/Back/Back';
-
+import axios from 'axios';
 const Checkout = () => {
   const navigation = useNavigation();
-  const route = useRoute();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
   const handleNewSale = () => {
     dispatch(chargeOut());
     navigation.navigate('Scan');
   };
+  const [invoice,setInvoice] = useState([]);
+  const [invoiceNumber,setInvoiceNumber]= useState(null);
+  const [date,setDate]= useState(null);
+  const user = useSelector(state => state.user);
+  const token = user.token;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const invoiceapi = await axios.get('http://192.168.100.11/pos-backend/public/api/invoiceId',{
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setInvoice(invoiceapi.data[0]);
+        const invoices= invoiceapi.data[0];
+        if(invoices.length > 0){
+          const lastInvoice = invoices[invoices.length - 1];
+          setInvoiceNumber(lastInvoice.invoice_id);
+          setDate(lastInvoice.updated_at);
+        } else{
+          setInvoiceNumber('No invoices found');
+        }
+        console.log('hahahhahahah',invoiceapi.data[0]);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -34,11 +67,11 @@ const Checkout = () => {
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Invoice No:</Text>
-          <Text style={styles.righttxt}>00020008418</Text>
+          <Text style={styles.righttxt}>{invoiceNumber}</Text>
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Bill Date:</Text>
-          <Text style={styles.righttxt}>6/7/2024(3:00PM)</Text>
+          <Text style={styles.righttxt}>{date}</Text>
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Casher:</Text>
@@ -46,7 +79,7 @@ const Checkout = () => {
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Customer Name:</Text>
-          <Text style={styles.righttxt}>---</Text>
+          <Text style={styles.righttxt}>    -</Text>
         </View>
         <Billlist />
       </ScrollView>

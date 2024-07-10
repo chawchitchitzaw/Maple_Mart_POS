@@ -20,8 +20,7 @@ import CashBtn from '../../component/Product/CashBtn';
 import {useDispatch, useSelector} from 'react-redux';
 import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
 import {getProducts} from '../../store/productSlice';
-import axios from 'axios';
-const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+
 const local_data = [
   {
     value: '1',
@@ -52,7 +51,7 @@ const Amount = () => {
   const dispatch = useDispatch();
   const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
   const cartItems = useSelector(state => state.cart.items);
-  // console.log('cartItems from selector', cartItems);
+  
   const totalAmount = useSelector(state => state.cart.totalAmount);
   const products = useSelector(state => state.products.items);
   const productStatus = useSelector(state => state.products.status);
@@ -105,13 +104,12 @@ const Amount = () => {
         body: JSON.stringify(data),
       });
 
-      console.log('asdf', response);
+      
       const res = await response.json();
-      console.log('res from fetch', res);
-      console.log('response==>', res.data);
+      
       if (res.status) {
         console.log('Order placed successfully');
-        navigation.navigate('Checkout');
+        navigation.navigate('Checkout',{value,totalDiscount,pay});
       } else {
         console.log('Order placement failed');
       }
@@ -133,7 +131,7 @@ const Amount = () => {
 
   // Example usage
   const randomNum = generateRandomNumber();
-
+  console.log('111111111111',value)
   return (
     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
@@ -158,6 +156,7 @@ const Amount = () => {
             placeholder="Enter Amount"
             placeholderTextColor="#9C9C9C"
             style={styles.inputtxt}
+            keyboardType="numeric"
             value={value}
             onChangeText={setValue}
           />

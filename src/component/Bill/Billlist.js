@@ -1,10 +1,11 @@
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-import React from 'react';
+import React,{useState} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { useSelector } from 'react-redux';
+import { useRoute} from '@react-navigation/native';
 
 
 const Billlist = () => {
@@ -12,6 +13,7 @@ const Billlist = () => {
   const grandTotal = cartItems.reduce((total, item) => {
     return total + (item.quantity * item.sell_price);
   }, 0);
+ 
   const testRender = ({item}) => {
     return (
       <View style={styles.bill}>
@@ -21,7 +23,11 @@ const Billlist = () => {
       </View>
     );
   };
-
+  const route = useRoute();
+  const {value,totalDiscount,pay} = route.params;
+  const tax = grandTotal*(8/100);
+  const total = grandTotal+tax;
+    
   return (
     <View>
       <View style={styles.item}>
@@ -41,23 +47,23 @@ const Billlist = () => {
       </View>
       <View style={styles.nettotal}>
         <Text style={styles.lefttxt}>Tax Amount:</Text>
-        <Text style={styles.righttxt}>800</Text>
+        <Text style={styles.righttxt}>{tax}</Text>
       </View>
       <View style={styles.nettotal}>
         <Text style={styles.lefttxt}>Net Total:</Text>
-        <Text style={styles.righttxt}>150,800</Text>
+        <Text style={styles.righttxt}>{total}</Text>
       </View>
       <View style={styles.nettotal}>
         <Text style={styles.lefttxt}>Paid Amount:</Text>
-        <Text style={styles.righttxt}>155,800</Text>
+        <Text style={styles.righttxt}>{value}</Text>
       </View>
       <View style={styles.nettotal}>
         <Text style={styles.lefttxt}>Change Amount:</Text>
-        <Text style={styles.righttxt}>5,000</Text>
+        <Text style={styles.righttxt}>{value-total}</Text>
       </View>
       <View style={styles.nettotal}>
         <Text style={styles.lefttxt}>Cash:</Text>
-        <Text style={styles.righttxt}>150,800</Text>
+        <Text style={styles.righttxt}>{total}</Text>
       </View>
       <Text style={styles.thank}> Thank you for shopping with us!</Text>
     </View>
