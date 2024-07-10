@@ -1,5 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity,SafeAreaView,Image,Dimensions,ActivityIndicator,KeyboardAvoidingView,TouchableWithoutFeedback } from 'react-native';import Icon from 'react-native-vector-icons/Ionicons';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  TextInput,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+  Dimensions,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -9,7 +23,7 @@ import {useSelector} from 'react-redux';
 
 //import Searchbox from '../component/search/Searchbox';
 
-const width = Dimensions.get('window').width-10;
+const width = Dimensions.get('window').width - 10;
 const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
 
 const Items = ({navigation}) => {
@@ -26,24 +40,32 @@ const Items = ({navigation}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoryResponse = await axios.get(`${baseUrl}/category/getCategoryData`,{
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+        const categoryResponse = await axios.get(
+          `${baseUrl}/category/getCategoryData`,
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
-        const productResponse = await axios.get(`${baseUrl}/product/getProductData`,{
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+        );
+        const productResponse = await axios.get(
+          `${baseUrl}/product/getProductData`,
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         setCategories(categoryResponse.data[0]);
         setProducts(productResponse.data[0]);
+
         setFilteredProducts(productResponse.data[0]);
+
         // console.log('aaaaaaaaaaaaaaaaaa',productResponse.data[0]);
         // console.log('bbbbbbbbbbbbbbbbbb',categoryResponse.data[0]);
         setLoading(false);
@@ -63,13 +85,15 @@ const Items = ({navigation}) => {
   const filterProducts = () => {
     let filtered = products;
 
-    if (selectedCategory) {
-      filtered = filtered.filter(product => product.category_name === selectedCategory);
+    if (selectedCategory && selectedCategory !== 'all') {
+      filtered = filtered.filter(
+        product => product.category_name === selectedCategory,
+      );
     }
 
     if (searchQuery) {
-      filtered = filtered.filter(product => 
-        product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+      filtered = filtered.filter(product =>
+        product.product_name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -83,96 +107,147 @@ const Items = ({navigation}) => {
       </View>
     );
   }
-  const CategorySelector = ({ categories, selectedCategory, setSelectedCategory }) => (
+  const CategorySelector = ({
+    categories,
+    selectedCategory,
+    setSelectedCategory,
+  }) => (
     <View style={styles.categorySelector}>
-      
-      <FlatList
+      <TouchableOpacity
+        onPress={() => {
+          console.log('calleding');
+          setSelectedCategory('all');
+          // console.log('products', products);
+          setFilteredProducts(products);
+        }}
+        style={[
+          styles.categoryButton,
+          {
+            backgroundColor: selectedCategory === 'all' ? '#FF6D1A' : '#fff',
+          },
+        ]}>
+        <Text
+          style={[
+            styles.categoryButtonText,
+            {color: selectedCategory === 'all' ? '#fff' : '#000000'},
+          ]}>
+          All
+        </Text>
+      </TouchableOpacity>
+      {categories?.map(item => (
+        <TouchableOpacity
+          onPress={() => setSelectedCategory(item.name)}
+          style={[
+            styles.categoryButton,
+            {
+              backgroundColor:
+                selectedCategory === item.name ? '#FF6D1A' : '#fff',
+            },
+          ]}>
+          <Text
+            style={[
+              styles.categoryButtonText,
+              {color: selectedCategory === item.name ? '#fff' : '#000000'},
+            ]}>
+            {item.name}
+          </Text>
+        </TouchableOpacity>
+      ))}
+      {/* <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={categories}
         keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => setSelectedCategory(item.name)}
             style={[
               styles.categoryButton,
-              { backgroundColor: selectedCategory === item.name ? '#FF6D1A' : '#fff',
-                
-               },
-            ]}
-          >
-            <Text style={[styles.categoryButtonText,{color: selectedCategory === item.name ? '#fff' : '#000000'}]}>{item.name}</Text>
+              {
+                backgroundColor:
+                  selectedCategory === item.name ? '#FF6D1A' : '#fff',
+              },
+            ]}>
+            <Text
+              style={[
+                styles.categoryButtonText,
+                {color: selectedCategory === item.name ? '#fff' : '#000000'},
+              ]}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+        )} */}
+      {/* /> */}
+    </View>
+  );
+
+  const SearchBox = ({searchQuery, setSearchQuery}) => (
+    <KeyboardAvoidingView behavior={'position'}>
+      <TouchableWithoutFeedback onPress={TextInput.dismiss}>
+        <View style={styles.container1}>
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="#9C9C9C"
+            style={styles.txt1}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          <Image
+            source={require('../Assets/search_icon.png')}
+            style={styles.img1}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+  );
+
+  const ProductList = ({products}) => (
+    <View style={{marginBottom: hp('18')}}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={products}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => navigation.navigate('Itemdetail', {product: item})}>
+            <Image
+              source={{uri: `${imageUrl}/${item.image}`}}
+              style={{
+                width: wp('30'),
+                height: hp('20'),
+                alignSelf: 'center',
+                resizeMode: 'contain',
+              }}
+            />
+            <Text style={styles.txtname} numberOfLines={2}>
+              {item.product_name}
+            </Text>
+            <Text style={styles.txtprice}>{item.sell_price}</Text>
           </TouchableOpacity>
         )}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
       />
     </View>
   );
-
-  const SearchBox = ({ searchQuery, setSearchQuery }) => (
-    <KeyboardAvoidingView behavior={'position'}>
-        <TouchableWithoutFeedback onPress={TextInput.dismiss}>
-          <View style={styles.container1}>
-            <TextInput
-              placeholder="Search"
-              placeholderTextColor="#9C9C9C"
-              style={styles.txt1}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-  
-            />
-            <Image
-              source={require('../Assets/search_icon.png')}
-              style={styles.img1}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-  );
-
-  const ProductList = ({ products }) => (
-    <View style={{marginBottom:hp('18')}}>
-    <FlatList
-      showsVerticalScrollIndicator={false}
-      data={products}
-      keyExtractor={item => item.id.toString()}
-      renderItem={({ item }) => (
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Itemdetail', { product: item })}>
-        <Image source={{uri: `${imageUrl}/${item.image}`}} style={{width:wp('30'),height:hp('20'),alignSelf:'center',resizeMode:'contain'}}/>
-        <Text style={styles.txtname} numberOfLines={2}>{item.product_name}</Text>
-        <Text style={styles.txtprice}>{item.sell_price}</Text>
-        </TouchableOpacity>
-      )}
-      numColumns={2}
-      columnWrapperStyle={styles.row}
-    />
-    </View>
-  );
-
 
   return (
     <SafeAreaView style={styles.container}>
-  
-     
-        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
-    
+      <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
       <View style={styles.container2}>
         <CategorySelector
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
-      
-      <ProductList products={filteredProducts} />
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+
+        <ProductList products={filteredProducts} />
       </View>
     </SafeAreaView>
   );
 };
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -187,7 +262,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   categorySelector: {
-    
+    flexDirection: 'row',
   },
   row: {
     //flex: 1,
@@ -198,17 +273,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   categoryButton: {
-    
     padding: wp('2'),
     marginHorizontal: wp('1'),
     marginVertical: wp('1'),
-    borderRadius:wp('20'),
-    elevation:1,
+    borderRadius: wp('20'),
+    elevation: 1,
   },
   categoryButtonText: {
     //color: 'white',
   },
-  
+
   productItem: {
     padding: 10,
     borderBottomWidth: 1,
@@ -236,27 +310,27 @@ const styles = StyleSheet.create({
     marginHorizontal: wp('5%'),
     fontFamily: 'DMSans',
   },
-  container2:{
-    marginTop:hp('1'),
-    paddingHorizontal:wp('5'),
+  container2: {
+    marginTop: hp('1'),
+    paddingHorizontal: wp('5'),
   },
   item: {
-    width: width / 2-wp('5'),
-    borderRadius:hp('2'),
+    width: width / 2 - wp('5'),
+    borderRadius: hp('2'),
     backgroundColor: '#fff',
     padding: 5,
     elevation: 1,
     marginVertical: 3,
     marginHorizontal: 3,
   },
-  txtname:{
-    fontSize:16,
-    fontWeight:'650',
-    marginLeft:5,
+  txtname: {
+    fontSize: 16,
+    fontWeight: '650',
+    marginLeft: 5,
   },
-   txtprice:{
-    fontSize:12,
-    marginLeft:5,
+  txtprice: {
+    fontSize: 12,
+    marginLeft: 5,
   },
 });
 

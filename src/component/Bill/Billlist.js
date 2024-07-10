@@ -4,20 +4,19 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-
-const Billlist = () => {
-  const cartItems = useSelector((state) => state.cart.items);
+const Billlist = ({method}) => {
+  const cartItems = useSelector(state => state.cart.items);
   const grandTotal = cartItems.reduce((total, item) => {
-    return total + (item.quantity * item.sell_price);
+    return total + item.quantity * item.sell_price;
   }, 0);
   const testRender = ({item}) => {
     return (
       <View style={styles.bill}>
         <Text style={styles.itemtxt}>{item.product_name}</Text>
         <Text style={styles.qty}>{item.quantity}</Text>
-        <Text style={styles.amount}>{item.sell_price*item.quantity}</Text>
+        <Text style={styles.amount}>{item.sell_price * item.quantity}</Text>
       </View>
     );
   };
@@ -56,7 +55,7 @@ const Billlist = () => {
         <Text style={styles.righttxt}>5,000</Text>
       </View>
       <View style={styles.nettotal}>
-        <Text style={styles.lefttxt}>Cash:</Text>
+        <Text style={styles.lefttxt}> {method} :</Text>
         <Text style={styles.righttxt}>150,800</Text>
       </View>
       <Text style={styles.thank}> Thank you for shopping with us!</Text>
