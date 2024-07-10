@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFAFA',
-    paddingTop: wp('7%'),
+    paddingTop: wp('1'),
     //paddingHorizontal:wp('5'),
   },
   loadingContainer: {
