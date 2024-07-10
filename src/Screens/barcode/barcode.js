@@ -2,14 +2,16 @@
 import React from 'react';
 import { StyleSheet, View,SafeAreaView,Text,TouchableOpacity } from 'react-native';
 import BarcodeScanner from './BarcodeScanner';
+import {useNavigation} from '@react-navigation/native';
 
 const Barcode = () => {
+  const navigation = useNavigation();
   return (
     
     <View style={styles.container}>
       <BarcodeScanner style={{}}/>
-      <TouchableOpacity style={styles.touch}>
-      <Text style={styles.txtbottom}>List</Text>
+      <TouchableOpacity style={styles.touch} onPress={() => navigation.goBack()}>
+      <Text style={styles.txtbottom}>Cart</Text>
       </TouchableOpacity>
     </View>
     
@@ -23,22 +25,23 @@ const styles = StyleSheet.create({
     //bottom:15,
   },
   txtbottom:{
-    paddingTop:9,
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight:'800',
+  },
+  touch:{
+  //backgroundColor:'orange',paddingTop:9,
     alignItems:'center',
     justifyContent:'center',
     position: 'absolute',
     bottom: 0,
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
+    
+    
     width: '100%',
     backgroundColor:'#FF6D1A',
     height:50,
-    fontWeight:'800',
     
-  },
-  touch:{
-  //backgroundColor:'orange',
   },  
   
 });

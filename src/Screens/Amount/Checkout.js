@@ -1,8 +1,9 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {chargeOut} from '../../store/cartSlice';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,6 +16,7 @@ import Back from '../../component/Back/Back';
 const Checkout = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const handleNewSale = () => {
     dispatch(chargeOut());
     navigation.navigate('Scan');
@@ -39,11 +41,11 @@ const Checkout = () => {
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Casher:</Text>
-          <Text style={styles.righttxt}>Aye Aye</Text>
+          <Text style={styles.righttxt}>{user.name}</Text>
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Customer Name:</Text>
-          <Text style={styles.righttxt}></Text>
+          <Text style={styles.righttxt}>---</Text>
         </View>
         <Billlist />
       </ScrollView>

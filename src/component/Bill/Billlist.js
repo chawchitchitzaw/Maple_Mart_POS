@@ -4,51 +4,20 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-export const data = [
-  {
-    id: 1,
-    name: 'Coca Cola Can (24Can 1Box)',
-    barcode: '#2642456',
-    price: '3,500',
-    qty: '2',
-  },
-  {
-    id: 2,
-    barcode: '#9766593',
-    price: '3,000',
-    name: 'Sprite',
-    qty: '123',
-  },
-  {
-    id: 3,
-    barcode: '#7394293',
-    price: '2,000',
-    name: 'Chips',
-    qty: '3',
-  },
-  {
-    id: 4,
-    barcode: '#7569246',
-    price: '7,000',
-    name: 'Food',
-    qty: '1',
-  },
-  {
-    id: 5,
-    barcode: '#2568721',
-    price: '12,000',
-    name: 'Butter',
-    qty: '1',
-  },
-];
+import { useSelector } from 'react-redux';
+
 
 const Billlist = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+  const grandTotal = cartItems.reduce((total, item) => {
+    return total + (item.quantity * item.sell_price);
+  }, 0);
   const testRender = ({item}) => {
     return (
       <View style={styles.bill}>
         <Text style={styles.itemtxt}>{item.product_name}</Text>
         <Text style={styles.qty}>{item.quantity}</Text>
-        <Text style={styles.amount}>{item.sell_price}</Text>
+        <Text style={styles.amount}>{item.sell_price*item.quantity}</Text>
       </View>
     );
   };
@@ -62,13 +31,13 @@ const Billlist = () => {
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={data}
+        data={cartItems}
         keyExtractor={item => item.id.toString()}
         renderItem={testRender}
       />
       <View style={styles.total}>
         <Text style={styles.lefttxt}>Total:</Text>
-        <Text style={styles.righttxt}>1,500,000</Text>
+        <Text style={styles.righttxt}>{grandTotal}</Text>
       </View>
       <View style={styles.nettotal}>
         <Text style={styles.lefttxt}>Tax Amount:</Text>
