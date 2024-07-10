@@ -7,19 +7,20 @@ import {
   Keyboard,
   TextInput,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import axios from 'axios';
 import Back from '../../component/Back/Back';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SelectCountry } from 'react-native-element-dropdown';
 import CashBtn from '../../component/Product/CashBtn';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, removeItemFromCart } from '../../store/cartSlice';
-import { getProducts } from '../../store/productSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
+import {getProducts} from '../../store/productSlice';
 
 import axios from 'axios';
 const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
@@ -34,7 +35,7 @@ const local_data = [
   },
 ];
 
-const calculateDiscount = (totalAmount) => {
+const calculateDiscount = totalAmount => {
   if (totalAmount >= 1000000) {
     return Math.ceil(totalAmount / 30);
   } else if (totalAmount >= 500000) {
@@ -51,17 +52,31 @@ const Amount = () => {
   const [value, setValue] = useState('');
   const [pay, setPay] = useState('1');
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
-  const products = useSelector((state) => state.products.items);
-  const productStatus = useSelector((state) => state.products.status);
-  const error = useSelector((state) => state.products.error);
-  const user = useSelector(state => state.user);
-  const token = user.token;
+  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const cartItems = useSelector(state => state.cart.items);
+  // console.log('cartItems from selector', cartItems);
+  const totalAmount = useSelector(state => state.cart.totalAmount);
+  const products = useSelector(state => state.products.items);
+  const productStatus = useSelector(state => state.products.status);
+  const error = useSelector(state => state.products.error);
   const grandTotal = cartItems.reduce((total, item) => {
     return total + item.quantity * item.sell_price;
   }, 0);
   const totalDiscount = calculateDiscount(grandTotal);
+  const id = useSelector(state => state.user.id);
+  const token = useSelector(state => state.user.token);
+  const route = useRoute();
+
+  const broughtItem = route.params.broughtItem;
+
+  const newData = broughtItem.map(item => ({
+    product_id: item.id,
+    unit_price: item.sell_price,
+    total: item.quantity * item.sell_price,
+    qty: item.quantity,
+  }));
+
+  const newString = JSON.stringify(newData);
 
   useEffect(() => {
     if (productStatus === 'idle') {
@@ -69,50 +84,58 @@ const Amount = () => {
     }
   }, [dispatch, productStatus]);
 
-  const handlePayment = () => {
-    
-    const orderItems = cartItems.map((item) => ({
-      product_id: item.id,
-      qty: item.quantity,
-      unit_price: item.sell_price,
-      total: item.quantity * item.sell_price,
-    }));
-  
+  const handlecheckout = async () => {
     const data = {
-      customer_id: 1, // Replace with actual customer ID
-      payment_id: pay,
+      user_id: id,
+      customer_id: randomNum,
+      payment_id: randomNum,
       total_amount: grandTotal,
       discount: totalDiscount,
       sub_total: grandTotal - totalDiscount,
-      payment_status: 'paid', // or 'pending' based on the actual status
-      order_item: orderItems,
-      user_id: 1, // Replace with actual user ID
+      payment_status: 'paid',
+      order_item: newString,
     };
-  
-    console.log('Data to be sent:', data);
-  
-    axios
-      .post(`${baseUrl}/createOrder`, data, {
+
+    try {
+      const response = await fetch(`${baseUrl}/createOrder`, {
+        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        console.log('Order created successfully', response.data);
-        navigation.navigate('Checkout');
-      })
-      .catch((error) => {
-        console.error('Error creating order:', error);
-        if (error.response) {
-          console.error('Error response data:', error.response.data);
-          console.error('Error response status:', error.response.status);
-          console.error('Error response headers:', error.response.headers);
-        }
+        body: JSON.stringify(data),
       });
+
+      console.log('asdf', response);
+      const res = await response.json();
+      console.log('res from fetch', res);
+      console.log('response==>', res.data);
+      if (res.status) {
+        console.log('Order placed successfully');
+        navigation.navigate('Checkout');
+      } else {
+        console.log('Order placement failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-  
+
+  function generateRandomNumber() {
+    const min = 1;
+    const max = 99999999;
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Convert randomNumber to a string and pad with leading zeros if necessary
+    const formattedRandomNumber = randomNumber.toString().padStart(8, '0');
+
+    return formattedRandomNumber;
+  }
+
+  // Example usage
+  const randomNum = generateRandomNumber();
+
   return (
     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
@@ -138,7 +161,7 @@ const Amount = () => {
             placeholderTextColor="#9C9C9C"
             style={styles.inputtxt}
             value={value}
-            onChangeText={(val) => setValue(val)}
+            onChangeText={setValue}
           />
         </View>
         <View style={{ ...styles.amountlist, marginBottom: hp('10%') }}>
@@ -157,7 +180,7 @@ const Amount = () => {
             }}
           />
         </View>
-        <CashBtn lable="PAY BILL" onPress={()=> navigation.navigate('Checkout',{order:data})} />
+        <CashBtn lable="PAY BILL" onPress={handlecheckout} />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );

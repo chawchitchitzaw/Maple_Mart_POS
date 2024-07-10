@@ -11,6 +11,7 @@ import {
   Keyboard,
 } from 'react-native';
 import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import lady from '../../Assets/lady.png';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icons from 'react-native-vector-icons/SimpleLineIcons';
@@ -26,6 +27,7 @@ import {login} from '../../Redux/Slice/UserSlice';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Edit_Profile = () => {
+  const navigation = useNavigation();
   const userData = useSelector(state => state.user);
   const [imgUrl, setImgUrl] = useState(userData.profile_url);
   const [name, setName] = useState(userData.name);
@@ -78,8 +80,9 @@ const Edit_Profile = () => {
               staff_id: res.data.result[0].staff_id,
             }),
           );
-        } 
-      });
+        }
+      })
+      .then(() => navigation.goBack());
   };
 
   return (

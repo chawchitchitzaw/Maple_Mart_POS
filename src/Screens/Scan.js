@@ -20,48 +20,96 @@ import Buying_list from '../component/Product/Buying_list';
 import {useState} from 'react';
 import {data} from '../component/Product/Buying_list';
 import scan from '../Assets/scan.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, removeItemFromCart } from '../store/cartSlice';
-import { getProducts } from '../store/productSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {addItemToCart, removeItemFromCart} from '../store/cartSlice';
+import {getProducts} from '../store/productSlice';
+import {fetchProducts} from '../api/productsApi';
+import axios from 'axios';
 
 const Scan = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState(null);
-  const [product, setProduct] = useState(data);
-
+  const [product, setProduct] = useState();
+  console.log('productssss', product);
+  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
-  console.log("cartItems from selector", cartItems)
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
-  const products = useSelector((state) => state.products.items);
-  const productStatus = useSelector((state) => state.products.status);
-  const error = useSelector((state) => state.products.error);
+  const cartItems = useSelector(state => state.cart.items);
+  const totalAmount = useSelector(state => state.cart.totalAmount);
+  // const products = useSelector(state => state.products);
+  const user = useSelector(state => state.user);
+  const token = user.token;
+  const productStatus = useSelector(state => state.products.status);
+  const error = useSelector(state => state.products.error);
   const grandTotal = cartItems.reduce((total, item) => {
-    return total + (item.quantity * item.sell_price);
+    return total + item.quantity * item.sell_price;
   }, 0);
-useEffect(() => {
+  useEffect(() => {
     if (productStatus === 'idle') {
       dispatch(getProducts());
     }
   }, [dispatch, productStatus]);
 
+  // useEffect(() => {
+  //   console.log('inital page');
+  //   getProduct();
+  // }, []);
+
+  // const getProduct = async () => {
+  //   const products = await fetchProducts();
+  //   // setProduct(products);
+  //   console.log('product function ', products);
+  //   // return products;
+  // };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const productResponse = await axios.get(
+        `${baseUrl}/product/getProductData`,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setProduct(productResponse.data[0]);
+    };
+
+    fetchData();
+  }, []);
 
   const handleSearch = () => {
-    if (search == '#') {
-      setProduct(data);
+    console.log('searchhh', search);
+    // if (!search) {
+    //   // Handle case where search is empty (optional)
+    //   // For example: show all cart items or display a message
+    //   setProduct(cartItems);
+    //   return;
+    // }
+    const filterProduct = product.filter(item => item.barcode === search);
+    console.log('filterpp', filterProduct);
+
+    if (filterProduct.length > 0) {
+      // If matching products are found, update the state with filtered products
+      dispatch(addItemToCart(filterProduct[0]));
     } else {
-      const filterProduct = product.filter(item => item.barcode === search);
-      // console.log('searValue', search);
-      // console.log('filter', filterProduct);
-      setProduct(prevItems => [...prevItems, filterProduct[0]]);
+      // Handle case where no matching products are found (optional)
+      // For example: show an alert or handle it based on your app logic
+      // setProduct([]);
     }
   };
+  // console.log('productrr', products);
 
   return (
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <TouchableOpacity
-          onPress={() => {navigation.navigate('Amount')}}
+          onPress={() => {
+            navigation.navigate('Amount',{
+            broughtItem:cartItems,
+          });
+          }}
           style={styles.cbtn}>
           <Text style={styles.btxt}>CHARGE</Text>
           <Text style={styles.bprice}>{grandTotal} MMK</Text>

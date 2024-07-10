@@ -248,9 +248,6 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginVertical: 3,
     marginHorizontal: 3,
-
-    
-    
   },
   txtname:{
     fontSize:16,
