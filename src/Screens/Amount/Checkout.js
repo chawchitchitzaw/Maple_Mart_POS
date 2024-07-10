@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {chargeOut} from '../../store/cartSlice';
 
 import {

@@ -13,7 +13,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import axios from 'axios';
 import Back from '../../component/Back/Back';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SelectCountry } from 'react-native-element-dropdown';
@@ -21,7 +20,6 @@ import CashBtn from '../../component/Product/CashBtn';
 import {useDispatch, useSelector} from 'react-redux';
 import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
 import {getProducts} from '../../store/productSlice';
-
 import axios from 'axios';
 const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
 const local_data = [
