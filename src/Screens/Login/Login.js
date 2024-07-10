@@ -46,7 +46,7 @@ const Login = () => {
         },
       })
       .then(res => {
-        console.log('res from axios', res.data.result);
+        console.log('res from axios', res);
         if (res.data.status === 200) {
           try {
             dispatch(

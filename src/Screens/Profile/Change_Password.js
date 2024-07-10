@@ -13,6 +13,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Back from '../../component/Back/Back';
+import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,11 +21,15 @@ import {
 import {useSelector} from 'react-redux';
 
 const Change_Password = () => {
+  const navigation = useNavigation();
   const [currentpassword, setCurrentPassword] = useState('');
   const [newpassword, setNewPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
   const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
   const id = useSelector(state => state.user.id);
+  const token = useSelector(state => state.user.token);
+  // const user = useSelector(state => state.user);
+  // const token = user.token;
   const handlesavebtn = async () => {
     const body = {
       user_id: id,
@@ -39,6 +44,7 @@ const Change_Password = () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(res => {
@@ -51,7 +57,8 @@ const Change_Password = () => {
         } else {
           Alert.alert('Failed', 'Failed to change password');
         }
-      });
+      })
+      .then(() => navigation.goBack());
   };
 
   return (
