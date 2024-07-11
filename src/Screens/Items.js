@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFAFA',
-    paddingTop: wp('1'),
+    paddingTop: wp('2'),
     //paddingHorizontal:wp('5'),
   },
   loadingContainer: {

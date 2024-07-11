@@ -15,49 +15,15 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-date-picker';
+import {useSelector} from 'react-redux';
 import moment from 'moment';
+import axios from 'axios';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-export const data = [
-  {
-    id: 1,
-    barcode: '#2642456',
-    price: '3,500',
-    date: '2024-05-02', // Use ISO format for consistent date comparisons
-    time: '04:10 pm',
-  },
-  {
-    id: 2,
-    barcode: '#9766593',
-    price: '3,000',
-    date: '2024-05-02',
-    time: '04:12 pm',
-  },
-  {
-    id: 3,
-    barcode: '#7394293',
-    price: '2,000',
-    date: '2024-05-02',
-    time: '04:15 pm',
-  },
-  {
-    id: 4,
-    barcode: '#7569246',
-    price: '7,000',
-    date: '2024-05-05',
-    time: '02:10 pm',
-  },
-  {
-    id: 5,
-    barcode: '#2568721',
-    price: '12,000',
-    date: '2024-05-07',
-    time: '08:10 am',
-  },
-];
+
 
 const Receipts = () => {
   const navigation = useNavigation();
@@ -67,22 +33,45 @@ const Receipts = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [openDateModal, setOpenDateModal] = useState(false);
   const [openEndDateModal, setOpenEndDateModal] = useState(false);
+  const [data,setData] = useState([]);
+  const user = useSelector(state => state.user);
+  const token = user.token;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const invoiceapi = await axios.get('http://192.168.100.11/pos-backend/public/api/invoiceId',{
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
+        setData(invoiceapi.data[0]);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        
+      }
+    };
+
+    fetchData();
+  }, []);
   const produceData = ({item}) => {
     return (
-      <View style={styles.produceview}>
+      <TouchableOpacity style={styles.produceview}>
         <AntDesign
           name="creditcard"
           size={25}
           color={'#606F89'}
           style={{marginHorizontal: wp('3%'), flex: 1}}
         />
-        <View style={{marginHorizontal: wp('2%'), flex: 2}}>
-          <Text style={styles.price}>{item.price}</Text>
-          <Text style={styles.date}>{item.date}</Text>
+        <View style={{marginHorizontal: wp('1%'), flex: 3}}>
+          <Text style={styles.price}>{item.sub_total}</Text>
+          <Text style={styles.date} numberOfLines={1}>{item.updated_at}</Text>
         </View>
-        <Text style={styles.bar}>{item.barcode}</Text>
-      </View>
+        <Text style={styles.bar} >{item.invoice_id}</Text>
+      </TouchableOpacity>
     );
   };
 
@@ -172,7 +161,7 @@ const Receipts = () => {
         </View>
 
         <FlatList
-          data={product}
+          data={data}
           keyExtractor={item => item.id.toString()}
           renderItem={produceData}
         />
@@ -191,7 +180,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: hp('2.2%'),
-    marginLeft: wp('3%'),
+    //marginLeft: wp('3%'),
     color: '#606F89',
     fontWeight: '500',
     fontFamily: 'DMSans',
@@ -218,7 +207,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: hp('1.6%'),
-    marginLeft: wp('3%'),
+    //marginLeft: wp('3%'),
     color: '#606F89',
     fontWeight: '500',
     fontFamily: 'DMSans',

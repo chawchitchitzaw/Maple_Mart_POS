@@ -65,7 +65,7 @@ const Amount = () => {
   const route = useRoute();
 
   const broughtItem = route.params.broughtItem;
-
+  const tax = (grandTotal-totalDiscount)*(8/100);
   const newData = broughtItem.map(item => ({
     product_id: item.id,
     unit_price: item.sell_price,
@@ -88,7 +88,7 @@ const Amount = () => {
       payment_id: randomNum,
       total_amount: grandTotal,
       discount: totalDiscount,
-      sub_total: grandTotal - totalDiscount,
+      sub_total: (grandTotal - totalDiscount)+tax,
       payment_status: 'paid',
       order_item: newString,
     };
@@ -131,7 +131,6 @@ const Amount = () => {
 
   // Example usage
   const randomNum = generateRandomNumber();
-  console.log('111111111111',value)
   return (
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
@@ -147,8 +146,8 @@ const Amount = () => {
           <Text style={styles.inputtxt}>{totalDiscount}</Text>
         </View>
         <View style={styles.amountlist}>
-          <Text style={styles.besidebox}>Net Total</Text>
-          <Text style={styles.inputtxt}>{grandTotal - totalDiscount}</Text>
+          <Text style={styles.besidebox}>Net Total(+Tax)</Text>
+          <Text style={styles.inputtxt}>{(grandTotal - totalDiscount)+tax}</Text>
         </View>
         <View style={styles.amountlist}>
           <Text style={styles.besidebox}>Cash Received</Text>

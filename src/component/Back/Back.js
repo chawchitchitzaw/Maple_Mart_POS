@@ -18,7 +18,7 @@ const Back = ({lable}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backbtn} onPress={handleBack}>
-        <Ionicons name="chevron-back" size={25} color={'#FF6D1A'} />
+        <Ionicons name="chevron-back" size={25} color={'#FF6D1A'}style={{marginLeft:hp('2%')}}/>
       </TouchableOpacity>
 
       <View style={styles.lab}>

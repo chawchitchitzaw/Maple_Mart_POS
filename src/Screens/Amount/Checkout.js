@@ -16,12 +16,17 @@ import axios from 'axios';
 const Checkout = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const route = useRoute();
+  const cash_method = route.params.pay;
+  const discount = route.params.totalDiscount;
+  console.log('cash', route.params.pay);
   const handleNewSale = () => {
     dispatch(chargeOut());
     navigation.navigate('Scan');
   };
   const [invoice,setInvoice] = useState([]);
   const [invoiceNumber,setInvoiceNumber]= useState(null);
+  const [total,setTotal]= useState(null);
   const [date,setDate]= useState(null);
   const user = useSelector(state => state.user);
   const token = user.token;
@@ -41,6 +46,7 @@ const Checkout = () => {
         if(invoices.length > 0){
           const lastInvoice = invoices[invoices.length - 1];
           setInvoiceNumber(lastInvoice.invoice_id);
+          setTotal(lastInvoice.sub_total);
           setDate(lastInvoice.updated_at);
         } else{
           setInvoiceNumber('No invoices found');
@@ -81,7 +87,7 @@ const Checkout = () => {
           <Text style={styles.lefttxt}>Customer Name:</Text>
           <Text style={styles.righttxt}>    -</Text>
         </View>
-        <Billlist method={cash_method} />
+        <Billlist method={cash_method} sub_total={total} discount={discount}/>
       </ScrollView>
 
       <View style={{marginVertical: hp('5%')}}>
