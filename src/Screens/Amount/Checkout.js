@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React, { useState,useEffect } from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {chargeOut} from '../../store/cartSlice';
 
 import {
@@ -81,7 +81,7 @@ const Checkout = () => {
           <Text style={styles.lefttxt}>Customer Name:</Text>
           <Text style={styles.righttxt}>    -</Text>
         </View>
-        <Billlist />
+        <Billlist method={cash_method} />
       </ScrollView>
 
       <View style={{marginVertical: hp('5%')}}>

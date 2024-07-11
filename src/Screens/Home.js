@@ -94,7 +94,7 @@ const Home = ({navigation}) => {
             <Text style={{...styles.total, textAlign: 'center'}}>{sale}</Text>
           </View>
           <View style={styles.revenue}>
-            <Text style={styles.total}>Total Quantity</Text>
+            <Text style={styles.total}>Total Qty</Text>
             <Text style={{...styles.total, textAlign: 'center'}}>{qty}</Text>
           </View>
         </View>
@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     //marginHorizontal: wp('5%'),
     color: '#FF6D1A',
     fontWeight: '700',
-    
   },
   textidea: {
     fontWeight: '500',

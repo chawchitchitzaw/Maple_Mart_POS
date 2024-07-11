@@ -14,8 +14,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Back from '../../component/Back/Back';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SelectCountry } from 'react-native-element-dropdown';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {SelectCountry} from 'react-native-element-dropdown';
 import CashBtn from '../../component/Product/CashBtn';
 import {useDispatch, useSelector} from 'react-redux';
 import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
@@ -109,7 +109,7 @@ const Amount = () => {
       
       if (res.status) {
         console.log('Order placed successfully');
-        navigation.navigate('Checkout',{value,totalDiscount,pay});
+        navigation.navigate('Checkout', {pay: pay == 1 ? 'Cash' : 'Card',value,totalDiscount});
       } else {
         console.log('Order placement failed');
       }
@@ -133,7 +133,7 @@ const Amount = () => {
   const randomNum = generateRandomNumber();
   console.log('111111111111',value)
   return (
-    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Back />
@@ -161,7 +161,7 @@ const Amount = () => {
             onChangeText={setValue}
           />
         </View>
-        <View style={{ ...styles.amountlist, marginBottom: hp('10%') }}>
+        <View style={{...styles.amountlist, marginBottom: hp('10%')}}>
           <Text style={styles.besidebox}>Payment Method</Text>
           <SelectCountry
             style={styles.dropdown}
@@ -172,7 +172,7 @@ const Amount = () => {
             valueField="value"
             labelField="lable"
             placeholder="Payment"
-            onChange={(e) => {
+            onChange={e => {
               setPay(e.value);
             }}
           />

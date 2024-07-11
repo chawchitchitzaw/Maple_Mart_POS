@@ -7,11 +7,10 @@ import {
 import { useSelector } from 'react-redux';
 import { useRoute} from '@react-navigation/native';
 
-
-const Billlist = () => {
-  const cartItems = useSelector((state) => state.cart.items);
+const Billlist = ({method}) => {
+  const cartItems = useSelector(state => state.cart.items);
   const grandTotal = cartItems.reduce((total, item) => {
-    return total + (item.quantity * item.sell_price);
+    return total + item.quantity * item.sell_price;
   }, 0);
  
   const testRender = ({item}) => {
@@ -19,7 +18,7 @@ const Billlist = () => {
       <View style={styles.bill}>
         <Text style={styles.itemtxt}>{item.product_name}</Text>
         <Text style={styles.qty}>{item.quantity}</Text>
-        <Text style={styles.amount}>{item.sell_price*item.quantity}</Text>
+        <Text style={styles.amount}>{item.sell_price * item.quantity}</Text>
       </View>
     );
   };
@@ -62,7 +61,7 @@ const Billlist = () => {
         <Text style={styles.righttxt}>{value-total}</Text>
       </View>
       <View style={styles.nettotal}>
-        <Text style={styles.lefttxt}>Cash:</Text>
+        <Text style={styles.lefttxt}> {method} :</Text>
         <Text style={styles.righttxt}>{total}</Text>
       </View>
       <Text style={styles.thank}> Thank you for shopping with us!</Text>
