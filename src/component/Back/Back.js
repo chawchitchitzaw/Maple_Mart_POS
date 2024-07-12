@@ -63,9 +63,6 @@ const styles = StyleSheet.create({
     padding: wp('2%'),
     justifyContent: 'center',
     alignItems: 'center',
-    //elevation: 1,
-    //borderWidth:1,
-    //borderEndColor:'#FF6D1A',
     borderColor: '#FF6D1A',
   },
 });

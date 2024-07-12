@@ -153,31 +153,6 @@ const Items = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       ))}
-      {/* <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={categories}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() => setSelectedCategory(item.name)}
-            style={[
-              styles.categoryButton,
-              {
-                backgroundColor:
-                  selectedCategory === item.name ? '#FF6D1A' : '#fff',
-              },
-            ]}>
-            <Text
-              style={[
-                styles.categoryButtonText,
-                {color: selectedCategory === item.name ? '#fff' : '#000000'},
-              ]}>
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        )} */}
-      {/* /> */}
     </View>
   );
 

@@ -3,7 +3,6 @@ import React from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {chargeOut} from '../../store/cartSlice';
-
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,7 +10,6 @@ import {
 import CashBtn from '../../component/Product/CashBtn';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Billlist from '../../component/Bill/Billlist';
-import Back from '../../component/Back/Back';
 
 const Checkout = () => {
   const navigation = useNavigation();
@@ -26,10 +24,6 @@ const Checkout = () => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Back />
-      </TouchableOpacity>
-
       <ScrollView showsVerticalScrollIndicator={false} style={styles.paybill}>
         <View style={{alignItems: 'center', marginBottom: hp('5%')}}>
           <Text style={styles.title}>Maple Mart</Text>
@@ -54,10 +48,7 @@ const Checkout = () => {
       </ScrollView>
 
       <View style={{marginVertical: hp('5%')}}>
-        <CashBtn
-          lable="PRINT BILL"
-          onPress={() => navigation.navigate('Edit_Profile')}
-        />
+        <CashBtn lable="PRINT BILL" />
         <CashBtn lable="NEW SALE" onPress={handleNewSale} />
       </View>
     </View>

@@ -23,7 +23,6 @@ import axios from 'axios';
 const Profile = () => {
   const navigation = useNavigation();
   const user = useSelector(state => state.user);
-  // console.log('user', user);
   const dispatch = useDispatch();
   const twoOptionAlert = () => {
     Alert.alert('Log out of your account?', '', [
@@ -55,7 +54,6 @@ const Profile = () => {
                 dispatch(logout());
               }
             });
-          // dispatch(logout());
         },
       },
     ]);

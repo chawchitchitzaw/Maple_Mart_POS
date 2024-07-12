@@ -4,10 +4,7 @@ import {
   ScrollView,
   Image,
   Text,
-  Button,
   SafeAreaView,
-  FlatList,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import {
@@ -20,16 +17,10 @@ import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
 import {getProducts} from '../../store/productSlice';
 
 const Itemdetail = ({route}) => {
-  //const {product,setProduct}= useState(data);
   const imageUrl = 'http://192.168.100.11/pos-backend/public/storage';
   const {product} = route.params;
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart.items);
-  const totalAmount = useSelector(state => state.cart.totalAmount);
-  const products = useSelector(state => state.products.items);
   const productStatus = useSelector(state => state.products.status);
-  const error = useSelector(state => state.products.error);
-
   useEffect(() => {
     if (productStatus === 'idle') {
       dispatch(getProducts());
@@ -39,10 +30,6 @@ const Itemdetail = ({route}) => {
   const addToCartHandler = () => {
     console.log('selected Proudcts', product);
     dispatch(addItemToCart(product));
-  };
-
-  const removeFromCartHandler = id => {
-    dispatch(removeItemFromCart(id));
   };
 
   return (
@@ -111,19 +98,8 @@ const styles = {
     marginVertical: wp('3'),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //height:hp('6'),
-  },
-  imagebox: {
-    // flex:1,
-    backgroundColor: '#fff',
-    width: wp('100'),
-    height: hp(10),
-    //height:hp('30'),
-    alignSelf: 'center',
   },
   image: {
-    // margin:wp('1'),
-    // flex:1,
     alignSelf: 'center',
     height: hp('40'),
     width: wp('90'),
@@ -174,7 +150,6 @@ const styles = {
     right: 0,
     backgroundColor: '#FF6D1A',
     padding: 10,
-    //position:'absolute',
     width: wp('100'),
     alignSelf: 'flex-end',
   },

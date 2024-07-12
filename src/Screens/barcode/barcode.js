@@ -22,7 +22,6 @@ const Barcode = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //bottom:15,
   },
   txtbottom:{
     fontSize: 18,
@@ -31,13 +30,10 @@ const styles = StyleSheet.create({
     fontWeight:'800',
   },
   touch:{
-  //backgroundColor:'orange',paddingTop:9,
     alignItems:'center',
     justifyContent:'center',
     position: 'absolute',
     bottom: 0,
-    
-    
     width: '100%',
     backgroundColor:'#FF6D1A',
     height:50,

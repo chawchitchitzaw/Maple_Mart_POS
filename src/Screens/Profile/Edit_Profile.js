@@ -207,7 +207,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: hp('100%'),
     overflow: 'hidden',
-    // padding: wp('3%'),
   },
   write: {
     fontSize: hp('2%'),
