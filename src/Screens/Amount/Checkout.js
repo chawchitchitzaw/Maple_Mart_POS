@@ -63,10 +63,7 @@ const Checkout = () => {
   }, []);
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Back />
-      </TouchableOpacity>
-
+      
       <ScrollView showsVerticalScrollIndicator={false} style={styles.paybill}>
         <View style={{alignItems: 'center', marginBottom: hp('5%')}}>
           <Text style={styles.title}>Maple Mart</Text>

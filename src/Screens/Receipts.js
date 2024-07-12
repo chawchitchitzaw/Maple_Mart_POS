@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAFAFA',
     padding: wp('5%'),
+    paddingTop:wp('-5'),
   },
   price: {
     fontSize: hp('2.2%'),
