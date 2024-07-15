@@ -59,7 +59,7 @@ const Receipts = () => {
   }, []);
   const produceData = ({item}) => {
     return (
-      <TouchableOpacity style={styles.produceview}>
+      <TouchableOpacity style={styles.produceview} onPress={()=>navigation.navigate('InvoiceDetail',{productt: item})}>
         <AntDesign
           name="creditcard"
           size={25}

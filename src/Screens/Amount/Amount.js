@@ -65,7 +65,7 @@ const Amount = () => {
   const route = useRoute();
 
   const broughtItem = route.params.broughtItem;
-  const tax = (grandTotal-totalDiscount)*(8/100);
+  const tax = (grandTotal-totalDiscount)*(5/100);
   const newData = broughtItem.map(item => ({
     product_id: item.id,
     unit_price: item.sell_price,

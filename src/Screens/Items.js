@@ -66,8 +66,7 @@ const Items = ({navigation}) => {
 
         setFilteredProducts(productResponse.data[0]);
 
-        // console.log('aaaaaaaaaaaaaaaaaa',productResponse.data[0]);
-        // console.log('bbbbbbbbbbbbbbbbbb',categoryResponse.data[0]);
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -115,7 +114,6 @@ const Items = ({navigation}) => {
     <View style={styles.categorySelector}>
       <TouchableOpacity
         onPress={() => {
-          console.log('calleding');
           setSelectedCategory('all');
           // console.log('products', products);
           setFilteredProducts(products);
@@ -153,31 +151,6 @@ const Items = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       ))}
-      {/* <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={categories}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() => setSelectedCategory(item.name)}
-            style={[
-              styles.categoryButton,
-              {
-                backgroundColor:
-                  selectedCategory === item.name ? '#FF6D1A' : '#fff',
-              },
-            ]}>
-            <Text
-              style={[
-                styles.categoryButtonText,
-                {color: selectedCategory === item.name ? '#fff' : '#000000'},
-              ]}>
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        )} */}
-      {/* /> */}
     </View>
   );
 

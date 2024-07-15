@@ -15,6 +15,7 @@ import {useSelector} from 'react-redux';
 import category from '../Screens/Items/category';
 import Itemdetail from '../Screens/Items/Itemdetail';
 import barcode from '../Screens/barcode/barcode';
+import InvoiceDetail from '../component/ivoiceDetail/InvoiceDetail';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,8 @@ const MyStack = () => {
           <Stack.Screen name="Amount" component={Amount} />
           <Stack.Screen name="CashBtn" component={CashBtn} />
           <Stack.Screen name="Checkout" component={Checkout} />
+          <Stack.Screen name="InvoiceDetail" component={InvoiceDetail} />
+
         </>
       )}
     </Stack.Navigator>
