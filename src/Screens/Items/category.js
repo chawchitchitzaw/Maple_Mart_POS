@@ -34,7 +34,7 @@ const Items = () => {
 
   return (
     <SafeAreaView>
-      <View style={styles.bottomflat}>
+      <View >
         <Back lable={'Categories'} />
 
         <View>
@@ -54,12 +54,6 @@ const Items = () => {
 export default Items;
 
 const styles = StyleSheet.create({
-  search: {
-    marginLeft: 10,
-
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   box: {
     marginHorizontal: wp('5'),
     marginBottom: wp('1.5'),
@@ -79,34 +73,7 @@ const styles = StyleSheet.create({
     color: '#4F4F4F',
     fontWeight: 'bold',
   },
-  nametxt: {
-    fontFamily: 'DMSans',
-    fontSize: 16,
-    marginLeft: 5,
-    color: '#4F4F4F',
-    fontWeight: 'bold',
-  },
-  pricetxt: {
-    fontFamily: 'DMSans',
-    fontSize: 16,
-    marginLeft: 15,
-    color: '#4F4F4F',
-    fontWeight: 'bold',
-  },
-  container: {
-    marginTop: 20,
-  },
-  bottomflat: {
-    //marginTop:50,
-  },
   topflat: {
     marginTop: 20,
-  },
-  caption: {
-    fontFamily: 'DMSans',
-    fontSize: 24,
-    marginLeft: 15,
-    color: '#4F4F4F',
-    fontWeight: 'bold',
   },
 });

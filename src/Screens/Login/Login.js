@@ -15,9 +15,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
-import {increment} from '../../Redux/Slice/CounterSlice';
 import {login} from '../../Redux/Slice/UserSlice';
-import Maplepos from '../../Assets/Maplepos.png';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Login = () => {
   const user = useSelector(state => state.user);
@@ -26,6 +25,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const navigation = useNavigation();
 
   const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
@@ -94,9 +97,18 @@ const Login = () => {
             style={styles.TextInput}
             placeholder="Password"
             placeholderTextColor="#606F89"
-            secureTextEntry={true}
             onChangeText={setPassword}
+            secureTextEntry={!passwordVisible}
           />
+          <TouchableOpacity
+            onPress={togglePasswordVisibility}
+            style={styles.eyeIcon}>
+            <Ionicons
+              name={passwordVisible ? 'eye-outline' : 'eye-off-outline'}
+              size={24}
+              color="grey"
+            />
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
@@ -131,7 +143,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'DMSans',
   },
-
+  eyeIcon: {
+    position: 'absolute',
+    top: '33%',
+    right: 20,
+  },
   loginBtn: {
     borderRadius: hp('2%'),
     paddingHorizontal: wp('20%'),

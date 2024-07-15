@@ -18,9 +18,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SelectCountry} from 'react-native-element-dropdown';
 import CashBtn from '../../component/Product/CashBtn';
 import {useDispatch, useSelector} from 'react-redux';
-import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
 import {getProducts} from '../../store/productSlice';
-
 const local_data = [
   {
     value: '1',
@@ -55,7 +53,6 @@ const Amount = () => {
   const totalAmount = useSelector(state => state.cart.totalAmount);
   const products = useSelector(state => state.products.items);
   const productStatus = useSelector(state => state.products.status);
-  const error = useSelector(state => state.products.error);
   const grandTotal = cartItems.reduce((total, item) => {
     return total + item.quantity * item.sell_price;
   }, 0);

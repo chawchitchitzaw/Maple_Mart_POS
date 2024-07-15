@@ -19,6 +19,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useSelector} from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Change_Password = () => {
   const navigation = useNavigation();
@@ -28,8 +29,18 @@ const Change_Password = () => {
   const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
   const id = useSelector(state => state.user.id);
   const token = useSelector(state => state.user.token);
-  // const user = useSelector(state => state.user);
-  // const token = user.token;
+  const [curVisible, setcurVisible] = useState(false);
+  const [newVisible, setnewVisible] = useState(false);
+  const [conVisible, setconVisible] = useState(false);
+  const togglecurVisibility = () => {
+    setcurVisible(!curVisible);
+  };
+  const togglenewVisibility = () => {
+    setnewVisible(!newVisible);
+  };
+  const toggleconVisibility = () => {
+    setconVisible(!conVisible);
+  };
   const handlesavebtn = async () => {
     const body = {
       user_id: id,
@@ -80,7 +91,17 @@ const Change_Password = () => {
                   style={styles.write}
                   value={currentpassword}
                   onChangeText={setCurrentPassword}
+                  secureTextEntry={!curVisible}
                 />
+                <TouchableOpacity
+                  onPress={togglecurVisibility}
+                  style={styles.eyeIcon}>
+                  <Ionicons
+                    name={curVisible ? 'eye-outline' : 'eye-off-outline'}
+                    size={24}
+                    color="grey"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{marginTop: hp('2%')}}>
@@ -92,7 +113,17 @@ const Change_Password = () => {
                   style={styles.write}
                   value={newpassword}
                   onChangeText={setNewPassword}
+                  secureTextEntry={!newVisible}
                 />
+                <TouchableOpacity
+                  onPress={togglenewVisibility}
+                  style={styles.eyeIcon}>
+                  <Ionicons
+                    name={newVisible ? 'eye-outline' : 'eye-off-outline'}
+                    size={24}
+                    color="grey"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{marginTop: hp('2%')}}>
@@ -104,7 +135,17 @@ const Change_Password = () => {
                   style={styles.write}
                   value={confirmpassword}
                   onChangeText={setConfirmPassword}
+                  secureTextEntry={!conVisible}
                 />
+                <TouchableOpacity
+                  onPress={toggleconVisibility}
+                  style={styles.eyeIcon}>
+                  <Ionicons
+                    name={conVisible ? 'eye-outline' : 'eye-off-outline'}
+                    size={24}
+                    color="grey"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -156,5 +197,10 @@ const styles = StyleSheet.create({
     borderRadius: hp('2%'),
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  eyeIcon: {
+    position: 'absolute',
+    top: '33%',
+    right: 20,
   },
 });

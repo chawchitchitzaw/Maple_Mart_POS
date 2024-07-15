@@ -18,7 +18,12 @@ const Back = ({lable}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backbtn} onPress={handleBack}>
-        <Ionicons name="chevron-back" size={25} color={'#FF6D1A'}style={{marginLeft:hp('2%')}}/>
+        <Ionicons
+          name="chevron-back"
+          size={25}
+          color={'#FF6D1A'}
+          style={{marginLeft: wp('5%')}}
+        />
       </TouchableOpacity>
 
       <View style={styles.lab}>
@@ -32,7 +37,7 @@ export default Back;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAFAFA',
-    padding:hp('1%') ,
+    padding: hp('1%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -50,17 +55,14 @@ const styles = StyleSheet.create({
   },
   backbtn: {
     position: 'absolute',
-    left: -190,
+    left: wp(-53),
     top: -5,
     zIndex: 3,
     backgroundColor: '#FAFAFA',
-    borderRadius: hp('5%'),
+    borderRadius: wp('5%'),
     padding: wp('2%'),
     justifyContent: 'center',
     alignItems: 'center',
-    //elevation: 1,
-    //borderWidth:1,
-    //borderEndColor:'#FF6D1A',
-    borderColor:'#FF6D1A',
+    borderColor: '#FF6D1A',
   },
 });
