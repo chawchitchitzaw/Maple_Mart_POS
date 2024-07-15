@@ -115,7 +115,6 @@ const Items = ({navigation}) => {
       <TouchableOpacity
         onPress={() => {
           setSelectedCategory('all');
-          // console.log('products', products);
           setFilteredProducts(products);
         }}
         style={[

@@ -29,7 +29,6 @@ const BarcodeScanner = () => {
         });
 
         setProducts(productResponse.data[0]);
-        console.log('Fetched products:', productResponse.data[0]);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -50,13 +49,11 @@ const BarcodeScanner = () => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setBarcodeData(data);
-    console.log('Scanned barcode:', data);
     Alert.alert('Add Item', `Barcode: ${data}`, [{ text: 'OK', onPress: () => setScanned(false) }]);
   };
 
   const addToCartHandler = (barcode) => {
     const product = products.find(p => p.barcode === barcode);
-    console.log('ewewewewee',barcode)
     if (product) {
       dispatch(addItemToCart(product));
       console.log('Added product to cart:', product);

@@ -30,7 +30,7 @@ const Itemdetail = ({route}) => {
   }, [dispatch, productStatus]);
 
   const addToCartHandler = () => {
-    console.log("selected Proudcts", product)
+    
     dispatch(addItemToCart(product));
   };
 

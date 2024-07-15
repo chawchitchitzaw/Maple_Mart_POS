@@ -30,7 +30,6 @@ const Scan = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState(null);
   const [product, setProduct] = useState();
-  console.log('productssss', product);
   const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.items);
@@ -48,18 +47,6 @@ const Scan = () => {
       dispatch(getProducts());
     }
   }, [dispatch, productStatus]);
-
-  // useEffect(() => {
-  //   console.log('inital page');
-  //   getProduct();
-  // }, []);
-
-  // const getProduct = async () => {
-  //   const products = await fetchProducts();
-  //   // setProduct(products);
-  //   console.log('product function ', products);
-  //   // return products;
-  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,36 +67,32 @@ const Scan = () => {
   }, []);
 
   const handleSearch = () => {
-    console.log('searchhh', search);
-    // if (!search) {
-    //   // Handle case where search is empty (optional)
-    //   // For example: show all cart items or display a message
-    //   setProduct(cartItems);
-    //   return;
-    // }
+
+
     const filterProduct = product.filter(item => item.barcode === search);
-    console.log('filterpp', filterProduct);
+
 
     if (filterProduct.length > 0) {
       // If matching products are found, update the state with filtered products
       dispatch(addItemToCart(filterProduct[0]));
     } else {
-      // Handle case where no matching products are found (optional)
-      // For example: show an alert or handle it based on your app logic
-      // setProduct([]);
+
     }
   };
-  // console.log('productrr', products);
+  const chargehandle = () =>{
+    if(!grandTotal=== 0){
+      navigation.navigate('Amount',{
+        broughtItem:cartItems,
+      });
+    }
+  };
+
 
   return (
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Amount',{
-            broughtItem:cartItems,
-          });
-          }}
+          onPress={() => {chargehandle}}
           style={styles.cbtn}>
           <Text style={styles.btxt}>CHARGE</Text>
           <Text style={styles.bprice}>{grandTotal} MMK</Text>

@@ -19,7 +19,7 @@ const Checkout = () => {
   const route = useRoute();
   const cash_method = route.params.pay;
   const discount = route.params.totalDiscount;
-  console.log('cash', route.params.pay);
+  
   const handleNewSale = () => {
     dispatch(chargeOut());
     navigation.navigate('Scan');
@@ -51,7 +51,7 @@ const Checkout = () => {
         } else{
           setInvoiceNumber('No invoices found');
         }
-        console.log('hahahhahahah',invoiceapi.data[0]);
+        
         
       } catch (error) {
         console.error('Error fetching data:', error);
