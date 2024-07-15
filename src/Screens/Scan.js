@@ -80,7 +80,7 @@ const Scan = () => {
     }
   };
   const chargehandle = () =>{
-    if(!grandTotal=== 0){
+    if(!grandTotal == 0){
       navigation.navigate('Amount',{
         broughtItem:cartItems,
       });
@@ -92,7 +92,7 @@ const Scan = () => {
     <TouchableWithoutFeedback style={{flex: 1}} onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container}>
         <TouchableOpacity
-          onPress={() => {chargehandle}}
+          onPress={chargehandle}
           style={styles.cbtn}>
           <Text style={styles.btxt}>CHARGE</Text>
           <Text style={styles.bprice}>{grandTotal} MMK</Text>

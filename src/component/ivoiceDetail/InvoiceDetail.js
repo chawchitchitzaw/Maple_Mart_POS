@@ -61,11 +61,11 @@ const InvoiceDetail = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('Receipts')}>
         <Back />
       </TouchableOpacity>
-      <View style={styles.paybill}>
+      <ScrollView style={styles.paybill}>
         <View style={{alignItems: 'center', marginBottom: hp('5%')}}>
           <Text style={styles.title}>Maple Mart</Text>
         </View>
@@ -123,8 +123,8 @@ const InvoiceDetail = () => {
           </View>
           <Text style={styles.thank}> Thank you for shopping with us!</Text>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   paybill: {
     backgroundColor: '#FFFFFF',
     padding: hp('1%'),
-    height: hp('60%'),
+    height: hp('80%'),
     elevation: 1,
   },
   bill: {
