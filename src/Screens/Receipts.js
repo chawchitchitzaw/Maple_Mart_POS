@@ -128,68 +128,73 @@ const Receipts = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={styles.container}>
-        <View style={styles.secview}>
-          <TextInput
-            placeholder="Search"
-            placeholderTextColor="#9C9C9C"
-            value={search}
-            onChangeText={setSearch}
-            style={styles.txt}
-          />
-          <TouchableOpacity onPress={handleSearch}>
-            <Image source={search_icon} style={styles.img} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.timedate}>
-          <TouchableOpacity
-            style={styles.timebox}
-            onPress={() => setOpenDateModal(true)}>
-            <Text style={styles.timetxt}>
-              {moment(date).format('DD-MM-YYYY')}
-            </Text>
-          </TouchableOpacity>
-          <DatePicker
-            modal
-            open={openDateModal}
-            date={date}
-            mode="date"
-            onConfirm={selectedDate => {
-              setOpenDateModal(false);
-              setDate(selectedDate);
-            }}
-            onCancel={() => setOpenDateModal(false)}
-          />
-
-          <TouchableOpacity
-            style={styles.timebox}
-            onPress={() => setOpenEndDateModal(true)}>
-            <Text style={styles.timetxt}>
-              {moment(endDate).format('DD-MM-YYYY')}
-            </Text>
-          </TouchableOpacity>
-          <DatePicker
-            modal
-            open={openEndDateModal}
-            date={endDate}
-            mode="date"
-            onConfirm={selectedDate => {
-              setOpenEndDateModal(false);
-              setEndDate(selectedDate);
-            }}
-            onCancel={() => setOpenEndDateModal(false)}
-          />
-        </View>
-
-        <FlatList
-          data={data}
-          keyExtractor={item => item.id.toString()}
-          renderItem={produceData}
+    // <TouchableWithoutFeedback
+    //   onPress={() => {
+    //     Keyboard.dismiss();
+    //   }}>
+    <KeyboardAvoidingView style={styles.container}>
+      <View style={styles.secview}>
+        <TextInput
+          placeholder="Search"
+          placeholderTextColor="#9C9C9C"
+          value={search}
+          onChangeText={setSearch}
+          style={styles.txt}
         />
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        <TouchableOpacity onPress={handleSearch}>
+          <Image source={search_icon} style={styles.img} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.timedate}>
+        <TouchableOpacity
+          style={styles.timebox}
+          onPress={() => setOpenDateModal(true)}>
+          <Text style={styles.timetxt}>
+            {moment(date).format('DD-MM-YYYY')}
+          </Text>
+        </TouchableOpacity>
+        <DatePicker
+          modal
+          open={openDateModal}
+          date={date}
+          mode="date"
+          onConfirm={selectedDate => {
+            setOpenDateModal(false);
+            setDate(selectedDate);
+          }}
+          onCancel={() => setOpenDateModal(false)}
+        />
+
+        <TouchableOpacity
+          style={styles.timebox}
+          onPress={() => setOpenEndDateModal(true)}>
+          <Text style={styles.timetxt}>
+            {moment(endDate).format('DD-MM-YYYY')}
+          </Text>
+        </TouchableOpacity>
+        <DatePicker
+          modal
+          open={openEndDateModal}
+          date={endDate}
+          mode="date"
+          onConfirm={selectedDate => {
+            setOpenEndDateModal(false);
+            setEndDate(selectedDate);
+          }}
+          onCancel={() => setOpenEndDateModal(false)}
+        />
+      </View>
+
+      <FlatList
+        data={data}
+        nestedScrollEnabled
+        scrollEnabled
+        keyExtractor={item => item.id.toString()}
+        renderItem={produceData}
+      />
+    </KeyboardAvoidingView>
+    // </TouchableWithoutFeedback>
   );
 };
 

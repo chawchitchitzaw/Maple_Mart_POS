@@ -71,7 +71,7 @@ const Profile = () => {
               {!user.profile_url ? (
                 <Image
                   source={lady}
-                  style={{height: '90%', width: '90%', borderRadius: 100}}
+                  style={{height: '100%', width: '100%', borderRadius: 100}}
                   resizeMode="contain"
                 />
               ) : (
