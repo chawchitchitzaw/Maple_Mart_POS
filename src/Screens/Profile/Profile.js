@@ -36,7 +36,7 @@ const Profile = () => {
         text: 'Ok',
         onPress: () => {
           const token = user.token;
-          console.log('token', user.token);
+          // console.log('token', user.token);
           axios
             .post(
               'http://192.168.100.11/pos-backend/public/api/logoutApi',

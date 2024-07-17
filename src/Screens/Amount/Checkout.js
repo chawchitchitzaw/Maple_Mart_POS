@@ -10,6 +10,7 @@ import Billlist from '../../component/Bill/Billlist';
 import Back from '../../component/Back/Back';
 import axios from 'axios';
 import RNPrint from 'react-native-print';
+import moment from 'moment';
 
 const Checkout = () => {
   const navigation = useNavigation();
@@ -90,7 +91,7 @@ const Checkout = () => {
               <div class="container">
                 <div class="title">Maple Mart</div>
                 <div class="invoice"><span>Invoice No:</span><span>${invoiceNumber}</span></div>
-                <div class="invoice"><span>Bill Date:</span><span>${date}</span></div>
+                <div class="invoice"><span>Bill Date:</span><span>${moment(date).format('DD-MM-YYYY')}</span></div>
                 <div class="invoice"><span>Casher:</span><span>${user.name}</span></div>
                 <div class="invoice"><span>Customer Name:</span><span> -</span></div>
                 <div class="item">
@@ -107,6 +108,7 @@ const Checkout = () => {
                 <div class="invoice"><span>Net Total:</span><span>${SubTotal}</span></div>
                 <div class="invoice"><span>Paid Amount:</span><span>${valuee}</span></div>
                 <div class="invoice"><span>Change Amount:</span><span>${valuee-SubTotal}</span></div>
+                <div class="invoice"><span>${cash_method}:</span><span>${SubTotal}</span></div>
                 <div class="thank">Thank you for shopping with us!</div>
               </div>
             </body>
@@ -133,7 +135,7 @@ const Checkout = () => {
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Bill Date:</Text>
-          <Text style={styles.righttxt}>{date}</Text>
+          <Text style={styles.righttxt}>{moment(date).format('DD-MM-YYYY')}</Text>
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Casher:</Text>
@@ -178,6 +180,10 @@ const Checkout = () => {
           <View style={styles.nettotal}>
             <Text style={styles.lefttxt}>Change Amount:</Text>
             <Text style={styles.righttxt1}>{valuee-SubTotal}</Text>
+          </View>
+          <View style={styles.nettotal}>
+            <Text style={styles.lefttxt}>{cash_method}:</Text>
+            <Text style={styles.righttxt1}>{SubTotal}</Text>
           </View>
           <Text style={styles.thank}> Thank you for shopping with us!</Text>
         </View>

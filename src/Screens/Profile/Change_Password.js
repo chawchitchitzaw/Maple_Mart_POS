@@ -49,7 +49,7 @@ const Change_Password = () => {
       confirm_pwd: confirmpassword,
     };
 
-    console.log('body from c p', body);
+    // console.log('body from c p', body);
     await axios
       .post(`${baseUrl}/account/changePasswordApi`, body, {
         headers: {
@@ -59,7 +59,7 @@ const Change_Password = () => {
         },
       })
       .then(res => {
-        console.log('res from axios', res.data.status);
+        // console.log('res from axios', res.data.status);
         if (res.data.status === true) {
           Alert.alert('Success', 'Password changed successfully');
           setConfirmPassword('');

@@ -20,7 +20,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Login = () => {
   const user = useSelector(state => state.user);
-  console.log('user', user);
+  // console.log('user', user);
 
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ const Login = () => {
       password: password,
       token_name: 'login token',
     };
-    console.log('body', body);
+    // console.log('body', body);
     await axios
       .post(`${baseUrl}/loginApi`, body, {
         headers: {
@@ -49,7 +49,7 @@ const Login = () => {
         },
       })
       .then(res => {
-        console.log('res from axios', res);
+        // console.log('res from axios', res);
         if (res.data.status === 200) {
           try {
             dispatch(

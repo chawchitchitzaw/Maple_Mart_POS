@@ -23,8 +23,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-
-
 const Receipts = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
@@ -33,25 +31,28 @@ const Receipts = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [openDateModal, setOpenDateModal] = useState(false);
   const [openEndDateModal, setOpenEndDateModal] = useState(false);
-  const [data,setData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+  const [data, setData] = useState([]);
   const user = useSelector(state => state.user);
   const token = user.token;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const invoiceapi = await axios.get('http://192.168.100.11/pos-backend/public/api/invoiceId',{
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+        const invoiceapi = await axios.get(
+          'http://192.168.100.11/pos-backend/public/api/invoiceId',
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         setData(invoiceapi.data[0]);
-        
+        setOriginalData(invoiceapi.data[0]); // Store the original data
       } catch (error) {
-        console.error('Error fetching data:', error);
-        
+        // console.error('Error fetching data:', error);
       }
     };
 
@@ -59,7 +60,9 @@ const Receipts = () => {
   }, []);
   const produceData = ({item}) => {
     return (
-      <TouchableOpacity style={styles.produceview} onPress={()=>navigation.navigate('InvoiceDetail',{productt: item})}>
+      <TouchableOpacity
+        style={styles.produceview}
+        onPress={() => navigation.navigate('InvoiceDetail', {productt: item})}>
         <AntDesign
           name="creditcard"
           size={25}
@@ -68,19 +71,37 @@ const Receipts = () => {
         />
         <View style={{marginHorizontal: wp('1%'), flex: 3}}>
           <Text style={styles.price}>{item.sub_total}</Text>
-          <Text style={styles.date} numberOfLines={1}>{item.updated_at}</Text>
+          <Text style={styles.date} numberOfLines={1}>
+            {moment(item.updated_at).format('DD-MM-YYYY')}
+          </Text>
         </View>
-        <Text style={styles.bar} >{item.invoice_id}</Text>
+        <Text style={styles.bar}>{item.invoice_id}</Text>
       </TouchableOpacity>
     );
   };
 
   const handleSearch = () => {
-    if (search === '#') {
-      setProduct(data);
+    if (search === '') {
+      setData(originalData); // Restore original data if search is cleared
     } else {
-      const filterProduct = data.filter(item => item.barcode === search);
-      setProduct(filterProduct);
+      const filterProduct = originalData.filter(
+        // invoice => invoice.invoice_id.toLowerCase().includes(search.toLowerCase()) ,
+        invoice => {
+          const invoiceId = invoice.invoice_id.toLowerCase();
+          const searchInv = search.toLowerCase();
+
+          if (searchInv.includes('inv-')) {
+            // If search contains "INV-", search the entire invoice_id
+            return invoiceId.includes(searchInv);
+          } else {
+            // If search does not contain "INV-", search only the numeric part
+            const invoiceNumber = invoiceId.replace('inv-', '');
+            return invoiceNumber.includes(searchInv);
+          }
+        },
+      );
+
+      setData(filterProduct);
     }
   };
 
@@ -95,13 +116,15 @@ const Receipts = () => {
 
   const filterData = () => {
     const filteredData = data.filter(item => {
-      const itemDate = moment(item.date, 'YYYY-MM-DD');
+      const itemDate = moment(item.updated_at, 'YYYY-MM-DD');
+
       return (
         itemDate.isSameOrAfter(moment(date).startOf('day')) &&
         itemDate.isSameOrBefore(moment(endDate).endOf('day'))
       );
     });
-    setProduct(filteredData);
+
+    setData(filteredData);
   };
 
   return (
@@ -177,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAFAFA',
     padding: wp('5%'),
-    paddingTop:wp('-5'),
+    paddingTop: wp('-5'),
   },
   price: {
     fontSize: hp('2.2%'),

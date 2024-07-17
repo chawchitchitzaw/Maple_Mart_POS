@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
@@ -8,7 +8,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { ScrollView } from 'react-native-gesture-handler';
+import moment from 'moment';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const InvoiceDetail = () => {
   const navigation = useNavigation();
@@ -25,16 +26,21 @@ const InvoiceDetail = () => {
   const token = user.token;
   const username = user.name;
 
+  const cash_method = route.params.pay;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const invoiceapi = await axios.get('http://192.168.100.11/pos-backend/public/api/invoiceId', {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+        const invoiceapi = await axios.get(
+          'http://192.168.100.11/pos-backend/public/api/invoiceId',
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         setInvoice(invoiceapi.data[1]);
       } catch (error) {
@@ -47,7 +53,9 @@ const InvoiceDetail = () => {
 
   useEffect(() => {
     if (invoice.length > 0) {
-      const filtered = invoice.filter(invoicee => invoicee.invoice_id === invoiceid);
+      const filtered = invoice.filter(
+        invoicee => invoicee.invoice_id === invoiceid,
+      );
       setFilteredInvoices(filtered);
     }
   }, [invoice, invoiceid]);
@@ -75,7 +83,9 @@ const InvoiceDetail = () => {
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Bill Date:</Text>
-          <Text style={styles.righttxt} numberOfLines={1}>{date}</Text>
+          <Text style={styles.righttxt} numberOfLines={1}>
+            {moment(date).format('DD-MM-YYYY')}
+          </Text>
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Casher:</Text>
@@ -83,7 +93,7 @@ const InvoiceDetail = () => {
         </View>
         <View style={styles.invoice}>
           <Text style={styles.lefttxt}>Customer Name:</Text>
-          <Text style={styles.righttxt}>    -</Text>
+          <Text style={styles.righttxt}> -</Text>
         </View>
         <View>
           <View style={styles.item}>
@@ -107,7 +117,9 @@ const InvoiceDetail = () => {
           </View>
           <View style={styles.nettotal}>
             <Text style={styles.lefttxt}>Tax Amount:</Text>
-            <Text style={styles.righttxt1}>{(products.total_amount-products.discount)*(5/100)}</Text>
+            <Text style={styles.righttxt1}>
+              {(products.total_amount - products.discount) * (5 / 100)}
+            </Text>
           </View>
           <View style={styles.nettotal}>
             <Text style={styles.lefttxt}>Net Total:</Text>

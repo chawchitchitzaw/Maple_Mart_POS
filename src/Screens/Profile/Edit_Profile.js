@@ -38,13 +38,13 @@ const Edit_Profile = () => {
   const user = useSelector(state => state.user);
   const token = user.token;
   const dispatch = useDispatch();
-  console.log('token', token);
+  // console.log('token', token);
   const openCamera = async () => {
     const result = await launchImageLibrary({
       includeBase64: true,
     });
 
-    console.log('open camera result image', result.assets[0].base64);
+    // console.log('open camera result image', result.assets[0].base64);
     setImgUrl(result.assets[0].base64);
   };
 
@@ -57,7 +57,7 @@ const Edit_Profile = () => {
       image: imgUrl,
     };
 
-    console.log('body from edit', body);
+    // console.log('body from edit', body);
     await axios
       .post(`${baseUrl}/account/editProfileApi`, body, {
         headers: {
@@ -67,7 +67,7 @@ const Edit_Profile = () => {
         },
       })
       .then(res => {
-        console.log('res from axios', res.data);
+        // console.log('res from axios', res.data);
         if (res.data.status === true) {
           dispatch(
             login({
