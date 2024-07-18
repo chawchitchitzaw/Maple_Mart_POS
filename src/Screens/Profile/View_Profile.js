@@ -19,16 +19,18 @@ const View_Profile = () => {
 
       <View style={styles.imageside}>
         <View style={styles.imageborder}>
-          {!user.profile_url ? (
+          {user.profile_url ? (
             <Image
-              source={lady}
+              source={{
+                uri: `data:image/png;base64,${user.profile_url}`,
+              }}
               style={{height: '100%', width: '100%', borderRadius: 100}}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           ) : (
             <Image
-              source={{uri: `data:image/png;base64,${user.profile_url}`}}
-              style={{height: '100%', width: '100%', borderRadius: 100}}
+              source={lady}
+              style={{height: '100%', width: '100%'}}
               resizeMode="contain"
             />
           )}
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: hp('100%'),
     overflow: 'hidden',
-    // padding: wp('3%'), 
+    // padding: wp('3%'),
   },
   imageside: {
     alignItems: 'center',

@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -80,6 +81,7 @@ const Edit_Profile = () => {
               staff_id: res.data.result[0].staff_id,
             }),
           );
+          Alert.alert('Success', 'Profile changed successfully');
         }
       })
       .then(() => navigation.goBack());
