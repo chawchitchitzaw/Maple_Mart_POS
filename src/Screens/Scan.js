@@ -30,7 +30,7 @@ const Scan = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState(null);
   const [product, setProduct] = useState();
-  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.items);
   const totalAmount = useSelector(state => state.cart.totalAmount);

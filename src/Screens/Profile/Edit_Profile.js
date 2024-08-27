@@ -35,7 +35,7 @@ const Edit_Profile = () => {
   const [email, setEmail] = useState(userData.email);
   const [gender, setGEnder] = useState(userData.gender);
   const [position, setPosition] = useState(userData.position);
-  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
   const user = useSelector(state => state.user);
   const token = user.token;
   const dispatch = useDispatch();

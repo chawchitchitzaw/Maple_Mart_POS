@@ -32,7 +32,7 @@ const InvoiceDetail = () => {
     const fetchData = async () => {
       try {
         const invoiceapi = await axios.get(
-          'http://192.168.100.11/pos-backend/public/api/invoiceId',
+          'https://staging.aggademo.me/pos-backend/public/api/invoiceId',
           {
             headers: {
               Accept: 'application/json',

@@ -17,7 +17,7 @@ import {addItemToCart, removeItemFromCart} from '../../store/cartSlice';
 import {getProducts} from '../../store/productSlice';
 
 const Itemdetail = ({route}) => {
-  const imageUrl = 'http://192.168.100.11/pos-backend/public/storage';
+  const imageUrl = 'https://staging.aggademo.me/pos-backend/public/storage';
   const {product} = route.params;
   const dispatch = useDispatch();
   const productStatus = useSelector(state => state.products.status);

@@ -6,7 +6,7 @@ import { addItemToCart } from '../../store/cartSlice';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
 
 const BarcodeScanner = () => {
   const [products, setProducts] = useState([]);

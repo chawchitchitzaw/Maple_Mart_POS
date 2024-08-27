@@ -31,7 +31,7 @@ const Login = () => {
   };
   const navigation = useNavigation();
 
-  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
 
   const handleLogin = async () => {
     const body = {
@@ -39,7 +39,7 @@ const Login = () => {
       password: password,
       token_name: 'login token',
     };
-    // console.log('body', body);
+    console.log('body', body);
     await axios
       .post(`${baseUrl}/loginApi`, body, {
         headers: {
@@ -49,7 +49,7 @@ const Login = () => {
         },
       })
       .then(res => {
-        // console.log('res from axios', res);
+        console.log('res from axios', res);
         if (res.data.status === 200) {
           try {
             dispatch(
@@ -71,7 +71,8 @@ const Login = () => {
             console.log('error_in', error);
           }
         }
-      });
+      })
+      // .catch(error => console.log('login api error', error));
   };
 
   return (

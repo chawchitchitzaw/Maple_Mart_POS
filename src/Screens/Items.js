@@ -24,10 +24,10 @@ import {useSelector} from 'react-redux';
 //import Searchbox from '../component/search/Searchbox';
 
 const width = Dimensions.get('window').width - 10;
-const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
 
 const Items = ({navigation}) => {
-  const imageUrl = 'http://192.168.100.11/pos-backend/public/storage/';
+  const imageUrl = 'https://staging.aggademo.me/pos-backend/public/storage/';
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);

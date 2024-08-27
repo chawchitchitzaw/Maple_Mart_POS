@@ -47,7 +47,7 @@ const Amount = () => {
   const [value, setValue] = useState('');
   const [pay, setPay] = useState('1');
   const dispatch = useDispatch();
-  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
   const cartItems = useSelector(state => state.cart.items);
   
   const totalAmount = useSelector(state => state.cart.totalAmount);

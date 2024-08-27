@@ -39,7 +39,7 @@ const Profile = () => {
           // console.log('token', user.token);
           axios
             .post(
-              'http://192.168.100.11/pos-backend/public/api/logoutApi',
+              'https://staging.aggademo.me/pos-backend/public/api/logoutApi',
               {},
               {
                 headers: {

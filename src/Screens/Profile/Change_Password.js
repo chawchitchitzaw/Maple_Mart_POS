@@ -26,7 +26,7 @@ const Change_Password = () => {
   const [currentpassword, setCurrentPassword] = useState('');
   const [newpassword, setNewPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
-  const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
+  const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
   const id = useSelector(state => state.user.id);
   const token = useSelector(state => state.user.token);
   const [curVisible, setcurVisible] = useState(false);

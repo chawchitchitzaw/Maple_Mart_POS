@@ -17,8 +17,8 @@ import {
 import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width - 20;
 import {useSelector} from 'react-redux';
-const baseUrl = 'http://192.168.100.11/pos-backend/public/api';
-const img_url = 'http://192.168.100.11/pos-backend/public/storage/';
+const baseUrl = 'https://staging.aggademo.me/pos-backend/public/api';
+const img_url = 'https://staging.aggademo.me/pos-backend/public/storage/';
 
 const Home = ({navigation}) => {
   const user = useSelector(state => state.user);
